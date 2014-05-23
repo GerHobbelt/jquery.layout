@@ -1,7 +1,7 @@
 /**
- * @preserve jquery.layout 1.3.0 - Release Candidate 30.3
+ * @preserve jquery.layout 1.3.0 - Release Candidate 30.4
  * $Date: 2012-03-10 08:00:00 (Sat, 10 Mar 2012) $
- * $Rev: 303003 $
+ * $Rev: 303004 $
  *
  * Copyright (c) 2012 
  *   Fabrizio Balliano (http://www.fabrizioballiano.net)
@@ -23,6 +23,10 @@
  * {number=}	optional parameter
  * {*}			ALL types
  */
+
+// ==ClosureCompiler==
+// @output_file_name jquery.layout-1.3.0.rc30.4.min.js
+// ==/ClosureCompiler==
 
 // NOTE: For best readability, view with a fixed-width font and tabs equal to 4-chars
 
@@ -54,8 +58,8 @@ function runPluginCallbacks (Instance, a_fn) {
  */
 $.layout = {
 
-	version:	"1.3.rc30.3"
-,	revision:	0.033003 // 1.3.0 final = 1.0300 - major(n+).minor(nn)+patch(nn+)
+	version:	"1.3.rc30.4"
+,	revision:	0.033004 // 1.3.0 final = 1.0300 - major(n+).minor(nn)+patch(nn+)
 
 	// LANGUAGE CUSTOMIZATION
 ,	language: {
@@ -83,7 +87,7 @@ $.layout = {
 		mozilla:	!!$.browser.mozilla
 	,	webkit:		!!$.browser.webkit || !!$.browser.safari // webkit = jQ 1.4
 	,	msie:		!!$.browser.msie
-	,	isIE6:		!!$.browser.msie && $.browser.version === 6
+	,	isIE6:		!!$.browser.msie && $.browser.version == 6
 	,	version:	$.browser.version // not used in Layout core, but may be used by plugins
 	}
 
@@ -1012,7 +1016,7 @@ $.fn.layout = function (opts) {
 		// minWidth/Height means CSS width/height = 1px
 		var
 			$P	= $Ps[pane]
-			dir	= _c[pane].dir
+		,	dir	= _c[pane].dir
 		,	d	= {
 				minWidth:	1001 - cssW($P, 1000)
 			,	minHeight:	1001 - cssH($P, 1000)
@@ -2718,6 +2722,10 @@ $.fn.layout = function (opts) {
 			||	(!force && s.isClosed && !s.isShowing)			// already closed
 			) return queueNext();
 
+			// onclose_start callback - will CANCEL hide if returns false
+			// SKIP if just 'showing' a hidden pane as 'closed'
+			var abort = !s.isShowing && false === _execCallback(pane, o.onclose_start);
+
 			// transfer logic vars to temp vars
 			isShowing	= s.isShowing;
 			isHiding	= s.isHiding;
@@ -2726,9 +2734,7 @@ $.fn.layout = function (opts) {
 			delete s.isShowing;
 			delete s.isHiding;
 
-			// onclose_start callback - will CANCEL hide if returns false
-			// SKIP if just 'showing' a hidden pane as 'closed'
-			if (!isShowing && false === _execCallback(pane, o.onclose_start)) return queueNext();
+			if (abort) return queueNext();
 
 			doFX		= !noAnimation && !s.isClosed && (o.fxName_close != "none");
 			s.isMoving	= true;
