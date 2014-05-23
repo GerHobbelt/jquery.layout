@@ -1,7 +1,7 @@
 /**
  * @preserve
- * jquery.layout 1.3.0 - Release Candidate 30.76
- * $Date: 2012-12-07 08:00:00 (Fri, 7 Dec 2012) $
+ * jquery.layout 1.3.0 - Release Candidate 30.77
+ * $Date: 2012-12-17 08:00:00 (Mon, 17 Dec 2012) $
  * $Rev: 303007 $
  *
  * Copyright (c) 2012 
@@ -11,7 +11,7 @@
  * Dual licensed under the GPL (http://www.gnu.org/licenses/gpl.html)
  * and MIT (http://www.opensource.org/licenses/mit-license.php) licenses.
  *
- * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.76
+ * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.77
  *
  * Docs: http://layout.jquery-dev.net/documentation.html
  * Tips: http://layout.jquery-dev.net/tips.html
@@ -62,7 +62,7 @@ var	min		= Math.min
  */
 $.layout = {
 
-	version:	"1.3.rc30.76"
+	version:	"1.3.rc30.77"
 ,	revision:	0.033007 // 1.3.0 final = 1.0300 - major(n+).minor(nn)+patch(nn+)
 
 	// can update code here if $.browser is phased out or logic changes
@@ -449,17 +449,16 @@ $.layout = {
 		// a 'calculated' outerHeight can be passed so borders and/or padding are removed if needed
 		if (outerWidth <= 0) return 0;
 
-		if (!$.layout.browser.boxModel) return outerWidth;
-
-		// strip border and padding from outerWidth to get CSS Width
-		var b = $.layout.borderWidth
-		,	n = $.layout.cssNum
-		,	W = outerWidth
-				- b($E, "Left")
-				- b($E, "Right")
-				- n($E, "paddingLeft")		
-				- n($E, "paddingRight");
-
+		var bs	= !$.layout.browser.boxModel ? "border-box" : $.support.boxSizing ? $E.css("boxSizing") : "content-box"
+		,	b	= $.layout.borderWidth
+		,	n	= $.layout.cssNum
+		,	W	= outerWidth
+		;
+		// strip border and/or padding from outerWidth to get CSS Width
+		if (bs !== "border-box")
+			W -= (b($E, "Left") + b($E, "Right"));
+		if (bs === "content-box")
+			W -= (n($E, "paddingLeft") + n($E, "paddingRight"));
 		return max(0,W);
 	}
 
@@ -475,17 +474,16 @@ $.layout = {
 		// a 'calculated' outerHeight can be passed so borders and/or padding are removed if needed
 		if (outerHeight <= 0) return 0;
 
-		if (!$.layout.browser.boxModel) return outerHeight;
-
-		// strip border and padding from outerHeight to get CSS Height
-		var b = $.layout.borderWidth
-		,	n = $.layout.cssNum
-		,	H = outerHeight
-			- b($E, "Top")
-			- b($E, "Bottom")
-			- n($E, "paddingTop")
-			- n($E, "paddingBottom");
-
+		var bs	= !$.layout.browser.boxModel ? "border-box" : $.support.boxSizing ? $E.css("boxSizing") : "content-box"
+		,	b	= $.layout.borderWidth
+		,	n	= $.layout.cssNum
+		,	H	= outerHeight
+		;
+		// strip border and/or padding from outerHeight to get CSS Height
+		if (bs !== "border-box")
+			H -= (b($E, "Top") + b($E, "Bottom"));
+		if (bs === "content-box")
+			H -= (n($E, "paddingTop") + n($E, "paddingBottom"));
 		return max(0,H);
 	}
 
@@ -811,7 +809,7 @@ $.layout.optionsMap = {
 	layout: ("name,instanceKey,stateManagement,effects,inset,zIndexes,errors,"
 	+	"zIndex,scrollToBookmarkOnLoad,showErrorMessages,maskPanesEarly,"
 	+	"outset,resizeWithWindow,resizeWithWindowDelay,resizeWithWindowMaxDelay,"
-	+	"onresizeall,onresizeall_start,onresizeall_end,onload,onunload").split(",")
+	+	"onresizeall,onresizeall_start,onresizeall_end,onload,onload_start,onload_end,onunload,onunload_start,onunload_end").split(",")
 //	borderPanes: [ ALL options that are NOT specified as 'layout' ]
 	// default.panes options that apply to the center-pane (most options apply _only_ to border-panes)
 ,	center: ("paneClass,contentSelector,contentIgnoreSelector,findNestedContent,applyDemoStyles,triggerEventsOnLoad,"
@@ -5145,8 +5143,7 @@ $.ui.cookie = {
 	acceptsCookies: !!navigator.cookieEnabled
 
 ,	read: function (name) {
-		var
-			c		= document.cookie
+		var	c		= document.cookie
 		,	cs		= c ? c.split(';') : []
 		,	pair	// loop var
 		;
@@ -5154,25 +5151,25 @@ $.ui.cookie = {
 			pair = $.trim(cs[i]).split('='); // name=value pair
 			if (pair[0] == name) // found the layout cookie
 				return decodeURIComponent(pair[1]);
-
 		}
 		return null;
 	}
 
 ,	write: function (name, val, cookieOpts) {
-		var
-			params	= ''
-		,	date	= ''
+		var	params	= ""
+		,	date	= ""
 		,	clear	= false
 		,	o		= cookieOpts || {}
 		,	x		= o.expires  || null
 		,	t		= $.type(x)
 		;
-		if (x && x.toUTCString)
+		if (t === "date")
 			date = x;
-		else if (t === "string" && t > 0)
-			t = parseInt(t,10);
-		if (x === null || t === "number") {
+		else if (t === "string" && x > 0) {
+			x = parseInt(x,10);
+			t = "number";
+		}
+		if (t === "number") {
 			date = new Date();
 			if (x > 0)
 				date.setDate(date.getDate() + x);
