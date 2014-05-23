@@ -1,0 +1,16 @@
+# Editor backup files
+*~
+*.bak
+
+# experimental and R&D/test directories
+tmp/
+
+# npm/grunt temporaries
+node_modules/
+
+#JetBrains IDE
+.idea/
+
+# sublime project save
+*.sublime-project
+*.sublime-workspace
