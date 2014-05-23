@@ -1,7 +1,7 @@
 /**
  * @preserve
- * jquery.layout 1.3.0 - Release Candidate 30.72
- * $Date: 2012-24-13 08:00:00 (Wed, 24 Oct 2012) $
+ * jquery.layout 1.3.0 - Release Candidate 30.73
+ * $Date: 2012-27-13 08:00:00 (Sat, 27 Oct 2012) $
  * $Rev: 303007 $
  *
  * Copyright (c) 2012 
@@ -11,7 +11,7 @@
  * Dual licensed under the GPL (http://www.gnu.org/licenses/gpl.html)
  * and MIT (http://www.opensource.org/licenses/mit-license.php) licenses.
  *
- * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.71
+ * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.73
  *
  * Docs: http://layout.jquery-dev.net/documentation.html
  * Tips: http://layout.jquery-dev.net/tips.html
@@ -62,7 +62,7 @@ var	min		= Math.min
  */
 $.layout = {
 
-	version:	"1.3.rc30.72"
+	version:	"1.3.rc30.73"
 ,	revision:	0.033007 // 1.3.0 final = 1.0300 - major(n+).minor(nn)+patch(nn+)
 
 	// can update code here if $.browser is phased out or logic changes
@@ -303,7 +303,7 @@ $.layout = {
 		draggable:		!!$.fn.draggable // resizing
 	,	effects: {
 			core:		!!$.effects		// animimations (specific effects tested by initOptions)
-		,	slide:		$.effects && ($.effects.slide || $.effects.effect.slide) // default effect
+		,	slide:		$.effects && ($.effects.slide || ($.effects.effect && $.effects.effect.slide)) // default effect
 		}
 	}
 
@@ -2058,9 +2058,10 @@ $.fn.layout = function (opts) {
 					||	o.fxName	// options.west.fxName
 					||	d.fxName	// options.panes.fxName
 					||	"none"		// MEANS $.layout.defaults.panes.fxName == "" || false || null || 0
+				,	fxExists	= $.effects && ($.effects[fxName] || ($.effects.effect && $.effects.effect[fxName]))
 				;
 				// validate fxName to ensure is valid effect - MUST have effect-config data in options.effects
-				if (fxName === "none" || !options.effects[fxName] || !$.effects || (!$.effects[fxName] && !$.effects.effect[fxName]))
+				if (fxName === "none" || !options.effects[fxName] || !fxExists)
 					fxName = o[sName] = "none"; // effect not loaded OR unrecognized fxName
 
 				// set vars for effects subkeys to simplify logic
@@ -3946,6 +3947,8 @@ $.fn.layout = function (opts) {
 			if (!force && size === oldSize)
 				return queueNext();
 
+			s.newSize = size;
+
 			// onresize_start callback CANNOT cancel resizing because this would break the layout!
 			if (!skipCallback && state.initialized && s.isVisible)
 				_runCallbacks("onresize_start", pane);
@@ -3966,12 +3969,14 @@ $.fn.layout = function (opts) {
 					// reset zIndex after animation
 					$P.css({ zIndex: (s.isSliding ? z.pane_sliding : z.pane_normal) });
 					s.isMoving = false;
+					delete s.newSize;
 					sizePane_2(); // continue
 					queueNext();
 				});
 			}
 			else { // no animation
 				$P.css( dimName, newSize );	// resize pane
+				delete s.newSize;
 				// if pane is visible, then 
 				if ($P.is(":visible"))
 					sizePane_2(); // continue
@@ -4107,6 +4112,8 @@ $.fn.layout = function (opts) {
 				,	maxHeight:	newCenter.height
 				});
 				CSS = newCenter;
+				s.newWidth	= CSS.width;
+				s.newHeight	= CSS.height;
 				// convert OUTER width/height to CSS width/height 
 				CSS.width	= cssW($P, CSS.width);
 				// NEW - allow pane to extend 'below' visible area rather than hide it
@@ -4156,6 +4163,7 @@ $.fn.layout = function (opts) {
 				// east/west have same top, bottom & height as center
 				CSS.top		= newCenter.top;
 				CSS.bottom	= newCenter.bottom;
+				s.newSize	= newCenter.height
 				// NEW - allow pane to extend 'below' visible area rather than hide it
 				CSS.height	= cssH($P, newCenter.height);
 				s.maxHeight	= CSS.height;
@@ -4183,6 +4191,10 @@ $.fn.layout = function (opts) {
 
 			// reset visibility, if necessary
 			$P.css(visCSS);
+
+			delete s.newSize;
+			delete s.newWidth;
+			delete s.newHeight;
 
 			if (!s.isVisible)
 				return true; // DONE - next pane
