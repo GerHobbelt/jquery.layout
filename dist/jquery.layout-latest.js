@@ -11,7 +11,7 @@
  * and MIT (http://www.opensource.org/licenses/mit-license.php) licenses.
  *
  * SEE: http://layout.jquery-dev.net/LICENSE.txt
- * 
+ *
  * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.79
  *
  * Docs: http://layout.jquery-dev.net/documentation.html
@@ -365,9 +365,11 @@ $.layout = {
 		,	x	= d.css			// CSS hash
 		,	i	= { bottom: 0 }	// TEMP insets (bottom = complier hack)
 		,	N	= $.layout.cssNum
-		,	off = $E.offset()
-		,	b, p, ei			// TEMP border, padding
+		,	off, b, p, ei		// TEMP border, padding
 		;
+		if (!$E.is(":visible")) return d; // TODO: Testing?
+
+		off = $E.offset();
 		d.offsetLeft = off.left;
 		d.offsetTop  = off.top;
 
