@@ -1,7 +1,7 @@
 /**
  * @preserve
- * jquery.layout 1.3.0 - Release Candidate 30.75
- * $Date: 2012-12-01 08:00:00 (Sat, 1 Dec 2012) $
+ * jquery.layout 1.3.0 - Release Candidate 30.76
+ * $Date: 2012-12-07 08:00:00 (Fri, 7 Dec 2012) $
  * $Rev: 303007 $
  *
  * Copyright (c) 2012 
@@ -11,7 +11,7 @@
  * Dual licensed under the GPL (http://www.gnu.org/licenses/gpl.html)
  * and MIT (http://www.opensource.org/licenses/mit-license.php) licenses.
  *
- * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.75
+ * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.76
  *
  * Docs: http://layout.jquery-dev.net/documentation.html
  * Tips: http://layout.jquery-dev.net/tips.html
@@ -62,7 +62,7 @@ var	min		= Math.min
  */
 $.layout = {
 
-	version:	"1.3.rc30.75"
+	version:	"1.3.rc30.76"
 ,	revision:	0.033007 // 1.3.0 final = 1.0300 - major(n+).minor(nn)+patch(nn+)
 
 	// can update code here if $.browser is phased out or logic changes
@@ -3349,6 +3349,7 @@ $.fn.layout = function (opts) {
 	* @param {string}	pane	The pane just closed, ie: north, south, east, or west
 	*/
 ,	setAsClosed = function (pane) {
+		if (!$Rs[pane]) return; // handles not initialized yet!
 		var
 			$P		= $Ps[pane]
 		,	$R		= $Rs[pane]
