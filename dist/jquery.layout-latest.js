@@ -1,7 +1,7 @@
 /**
  * @preserve
- * jquery.layout 1.3.0 - Release Candidate 30.71
- * $Date: 2012-20-13 08:00:00 (Sat, 20 Oct 2012) $
+ * jquery.layout 1.3.0 - Release Candidate 30.72
+ * $Date: 2012-24-13 08:00:00 (Wed, 24 Oct 2012) $
  * $Rev: 303007 $
  *
  * Copyright (c) 2012 
@@ -62,7 +62,7 @@ var	min		= Math.min
  */
 $.layout = {
 
-	version:	"1.3.rc30.71"
+	version:	"1.3.rc30.72"
 ,	revision:	0.033007 // 1.3.0 final = 1.0300 - major(n+).minor(nn)+patch(nn+)
 
 	// can update code here if $.browser is phased out or logic changes
@@ -1106,6 +1106,8 @@ $.fn.layout = function (opts) {
 			}
 			catch (ex) {
 				_log( options.errors.callbackError.replace(/EVENT/, $.trim((pane || "") +" "+ lng)), false );
+				if ($.type(ex) === 'string' && string.length)
+					_log('Exception:  '+ ex, false );
 			}
 		}
 
@@ -1436,7 +1438,7 @@ $.fn.layout = function (opts) {
 		if ($.fn.disableSelection)
 			$("body").disableSelection();
 		if (options.maskPanesEarly)
-			showMasks( pane );
+			showMasks( pane, { resizing: true });
 	}
 ,	onResizerLeave	= function (evt, el) {
 		var	e		= el || this // el is only passed when called by the timer
@@ -2634,7 +2636,7 @@ $.fn.layout = function (opts) {
 					$('body').disableSelection(); 
 
 					// MASK PANES CONTAINING IFRAMES, APPLETS OR OTHER TROUBLESOME ELEMENTS
-					showMasks( pane );
+					showMasks( pane, { resizing: true });
 				}
 
 			,	drag: function (e, ui) {
@@ -2729,7 +2731,7 @@ $.fn.layout = function (opts) {
 					manualSizePane(pane, newSize, false, true); // true = noAnimation
 				hideMasks(true); // true = force hiding all masks even if one is 'sliding'
 				if (s.isSliding) // RE-SHOW 'object-masks' so objects won't show through sliding pane
-					showMasks( pane );
+					showMasks( pane, { resizing: true });
 			}
 		};
 	}
@@ -2770,16 +2772,24 @@ $.fn.layout = function (opts) {
 		var	c		= _c[pane]
 		,	panes	=  ["center"]
 		,	z		= options.zIndexes
-		,	a		= $.extend({ objectsOnly: false, forSliding: state[pane].isSliding }, args )
+		,	a		= $.extend({
+						objectsOnly:	false
+					,	animation:		false
+					,	resizing:		true
+					,	sliding:		state[pane].isSliding
+					},	args )
 		,	o, s
 		;
-		if (a.forSliding)
+		if (a.resizing)
+			panes.push( pane );
+		if (a.sliding)
 			panes.push( _c.oppositeEdge[pane] ); // ADD the oppositeEdge-pane
 
 		if (c.dir === "horz") {
 			panes.push("west");
 			panes.push("east");
 		}
+
 		$.each(panes, function(i,p){
 			s = state[p];
 			o = options[p];
@@ -3662,7 +3672,7 @@ $.fn.layout = function (opts) {
 		,	z	= options.zIndexes
 		;
 		if (doLock) {
-			showMasks( pane, { objectsOnly: true });
+			showMasks( pane, { animation: true, objectsOnly: true });
 			$P.css({ zIndex: z.pane_animate }); // overlay all elements during animation
 			if (pane=="south")
 				$P.css({ top: sC.inset.top + sC.innerHeight - $P.outerHeight() });
@@ -4218,12 +4228,18 @@ $.fn.layout = function (opts) {
 			return; // no need to resize since we just initialized!
 		}
 
-		$.extend(sC, elDims( $N, options.inset )); // UPDATE container dimensions
+		if (evt_or_refresh === true && $.isPlainObject(options.outset)) {
+			// update container CSS in case outset option has changed
+			$N.css( options.outset );
+		}
+		// UPDATE container dimensions
+		$.extend(sC, elDims( $N, options.inset ));
 		if (!sC.outerHeight) return;
 
 		// if 'true' passed, refresh pane & handle positioning too
-		if (evt_or_refresh === true)
+		if (evt_or_refresh === true) {
 			setPanePosition();
+		}
 
 		// onresizeall_start will CANCEL resizing if returns false
 		// state.container has already been set, so user can access this info for calcuations
