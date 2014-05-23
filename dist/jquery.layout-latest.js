@@ -1,17 +1,18 @@
 /**
  * @preserve
- * jquery.layout 1.3.0 - Release Candidate 30.78
- * $Date: 2013-01-01 08:00:00 (Tue, 1 Jan 2013) $
+ * jquery.layout 1.3.0 - Release Candidate 30.79
+ * $Date: 2013-01-12 08:00:00 (Sat, 12 Jan 2013) $
  * $Rev: 303007 $
  *
- * Copyright (c) 2012 
- *   Fabrizio Balliano (http://www.fabrizioballiano.net)
- *   Kevin Dalman (http://allpro.net)
+ * Copyright (c) 2013 Kevin Dalman (http://allpro.net)
+ * Based on work by Fabrizio Balliano (http://www.fabrizioballiano.net)
  *
  * Dual licensed under the GPL (http://www.gnu.org/licenses/gpl.html)
  * and MIT (http://www.opensource.org/licenses/mit-license.php) licenses.
  *
- * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.78
+ * SEE: http://layout.jquery-dev.net/LICENSE.txt
+ *
+ * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.79
  *
  * Docs: http://layout.jquery-dev.net/documentation.html
  * Tips: http://layout.jquery-dev.net/tips.html
@@ -64,7 +65,7 @@ var	min		= Math.min
  */
 $.layout = {
 
-	version:	"1.3.rc30.78"
+	version:	"1.3.rc30.79"
 ,	revision:	0.033007 // 1.3.0 final = 1.0300 - major(n+).minor(nn)+patch(nn+)
 
 	// $.layout.browser REPLACES $.browser
@@ -364,9 +365,11 @@ $.layout = {
 		,	x	= d.css			// CSS hash
 		,	i	= { bottom: 0 }	// TEMP insets (bottom = complier hack)
 		,	N	= $.layout.cssNum
-		,	off = $E.offset()
-		,	b, p, ei			// TEMP border, padding
+		,	off, b, p, ei		// TEMP border, padding
 		;
+		if (!$E.is(":visible")) return d; // TODO: Testing?
+
+		off = $E.offset();
 		d.offsetLeft = off.left;
 		d.offsetTop  = off.top;
 
@@ -380,7 +383,7 @@ $.layout = {
 			i[ei] = d.inset[ei] + b; // total offset of content from outer side
 		});
 
-		x.width		= $E.css("width");
+		x.width		= $E.width();
 		x.height	= $E.height();
 		x.top		= N($E,"top",true);
 		x.bottom	= N($E,"bottom",true);
