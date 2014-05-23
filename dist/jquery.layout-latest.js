@@ -1,6 +1,6 @@
 /**
- * @preserve jquery.layout 1.3.0 - Release Candidate 30.61
- * $Date: 2012-08-04 08:00:00 (Sat, 04 Aug 2012) $
+ * @preserve jquery.layout 1.3.0 - Release Candidate 30.62
+ * $Date: 2012-08-04 08:00:00 (Thu, 23 Aug 2012) $
  * $Rev: 303006 $
  *
  * Copyright (c) 2012 
@@ -10,7 +10,7 @@
  * Dual licensed under the GPL (http://www.gnu.org/licenses/gpl.html)
  * and MIT (http://www.opensource.org/licenses/mit-license.php) licenses.
  *
- * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.61
+ * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.62
  * NOTE: This is a short-term release to patch a couple of bugs.
  * These bugs are listed as officially fixed in RC30.7, which will be released shortly.
  *
@@ -58,7 +58,7 @@ var	min		= Math.min
  */
 $.layout = {
 
-	version:	"1.3.rc30.6"
+	version:	"1.3.rc30.62"
 ,	revision:	0.033006 // 1.3.0 final = 1.0300 - major(n+).minor(nn)+patch(nn+)
 
 	// can update code here if $.browser is phased out
@@ -335,17 +335,15 @@ $.layout = {
 	* @see	$.swap() - swaps CSS, runs callback, resets CSS
 	*/
 ,	showInvisibly: function ($E, force) {
-		if (!$E) return {};
-		if (!$E.jquery) $E = $($E);
-		var CSS = {
-			display:	$E.css('display')
-		,	visibility:	$E.css('visibility')
-		};
-		if (force || CSS.display === "none") { // only if not *already hidden*
-			$E.css({ display: "block", visibility: "hidden" }); // show element 'invisibly' so can be measured
+		if ($E && $E.length && (force || $E.css('display') === "none")) { // only if not *already hidden*
+			var s = $E[0].style
+				// save ONLY the 'style' props because that is what we must restore
+			,	CSS = { display: s.display || '', visibility: s.visibility || '' };
+			// show element 'invisibly' so can be measured
+			$E.css({ display: "block", visibility: "hidden" });
 			return CSS;
 		}
-		else return {};
+		return {};
 	}
 
 	/**
@@ -3425,7 +3423,7 @@ $.fn.layout = function (opts) {
 		// make sure we have a valid event
 		if (evtName.match(/mouseover/))
 			evtName = o.slideTrigger_open = "mouseenter";
-		else if (!evtName.match(/click|dblclick|mouseenter/)) 
+		else if (!evtName.match(/(click|dblclick|mouseenter)/)) 
 			evtName = o.slideTrigger_open = "click";
 
 		$R
@@ -3468,7 +3466,7 @@ $.fn.layout = function (opts) {
 		$R.css("zIndex", enable ? z.pane_sliding+2 : z.resizer_normal); // NOTE: mask = pane_sliding+1
 
 		// make sure we have a valid event
-		if (!evtName.match(/click|mouseleave/))
+		if (!evtName.match(/(click|mouseleave)/))
 			evtName = o.slideTrigger_close = "mouseleave"; // also catches 'mouseout'
 
 		// add/remove slide triggers
@@ -3705,6 +3703,7 @@ $.fn.layout = function (opts) {
 						,	cssSize:	newSize
 						}]
 			,	lastTry = tries[0]
+			,	thisTry	= {}
 			,	msg		= 'Inaccurate size after resizing the '+ pane +'-pane.'
 			;
 			while ( !lastTry.correct ) {
@@ -3913,7 +3912,7 @@ $.fn.layout = function (opts) {
 		,	oldH	= sC.innerHeight
 		;
 		// cannot size layout when 'container' is hidden or collapsed
-		if (!$N.is(":visible:") ) return;
+		if (!$N.is(":visible") ) return;
 		$.extend(state.container, elDims( $N )); // UPDATE container dimensions
 		if (!sC.outerHeight) return;
 
@@ -5251,7 +5250,7 @@ $.layout.buttons = {
 	*/
 ,	addOpen: function (inst, selector, pane, slide) {
 		$.layout.buttons.get(inst, selector, pane, "open")
-			.attr("title", inst.options[pane].tips.Close)
+			.attr("title", inst.options[pane].tips.Open)
 			.click(function (evt) {
 				inst.open(pane, !!slide);
 				evt.stopPropagation();
@@ -5268,7 +5267,7 @@ $.layout.buttons = {
 	*/
 ,	addClose: function (inst, selector, pane) {
 		$.layout.buttons.get(inst, selector, pane, "close")
-			.attr("title", inst.options[pane].tips.Open)
+			.attr("title", inst.options[pane].tips.Close)
 			.click(function (evt) {
 				inst.close(pane);
 				evt.stopPropagation();
