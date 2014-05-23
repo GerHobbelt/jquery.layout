@@ -1,7 +1,7 @@
 /**
  * @preserve
- * jquery.layout 1.3.0 - Release Candidate 30.73
- * $Date: 2012-27-13 08:00:00 (Sat, 27 Oct 2012) $
+ * jquery.layout 1.3.0 - Release Candidate 30.74
+ * $Date: 2012-10-28 08:00:00 (Sun, 28 Oct 2012) $
  * $Rev: 303007 $
  *
  * Copyright (c) 2012 
@@ -11,7 +11,7 @@
  * Dual licensed under the GPL (http://www.gnu.org/licenses/gpl.html)
  * and MIT (http://www.opensource.org/licenses/mit-license.php) licenses.
  *
- * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.73
+ * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.74
  *
  * Docs: http://layout.jquery-dev.net/documentation.html
  * Tips: http://layout.jquery-dev.net/tips.html
@@ -62,7 +62,7 @@ var	min		= Math.min
  */
 $.layout = {
 
-	version:	"1.3.rc30.73"
+	version:	"1.3.rc30.74"
 ,	revision:	0.033007 // 1.3.0 final = 1.0300 - major(n+).minor(nn)+patch(nn+)
 
 	// can update code here if $.browser is phased out or logic changes
@@ -5210,6 +5210,7 @@ $.layout.defaults.stateManagement = {
 	enabled:		false	// true = enable state-management, even if not using cookies
 ,	autoSave:		true	// Save a state-cookie when page exits?
 ,	autoLoad:		true	// Load the state-cookie when Layout inits?
+,	animateLoad:	true	// animate panes when loading state into an active layout
 ,	includeChildren: true	// recurse into child layouts to include their state as well
 	// List state-data to save - must be pane-specific
 ,	stateKeys:	"north.size,south.size,east.size,west.size,"+
@@ -5293,121 +5294,84 @@ $.layout.state = {
 	 * @param {Object=}		stateData
 	 * @param {boolean=}	animate
 	 */
-,	loadState: function (inst, stateData, opts) {
-		stateData = $.layout.transformData( stateData ); // panes = default subkey
+,	loadState: function (inst, data, opts) {
+		if (!$.isPlainObject( data ) || $.isEmptyObject( data )) return;
 
-		if (!$.isPlainObject( stateData ) || $.isEmptyObject( stateData )) return;
-		// cache in the state object
-		inst.state.stateData = stateData;
+		// normalize data & cache in the state object
+		data = inst.state.stateData = $.layout.transformData( data ); // panes = default subkey
 
-		// MUST remove any pane.children keys before applying to options
-		var s = $.extend(true, {}, stateData);
-		$.each($.layout.config.allPanes, function (idx, pane) {
-			if (s[pane]) delete s[pane].children;		   
-		 });
-		// update CURRENT layout-options with saved state data
-		$.extend(true, inst.options, s);
-
-
-		if (1 === 1) return; // avoid compiler warning about unreachable code
-
-console.data( stateData, 'loadState - stateData' );
-
-
-
-		// add missing/default options
+		// add missing/default state-restore options
+		var smo = inst.options.stateManagement;
 		opts = $.extend({
-			animate:	true
-		,	children:	false
+			animateLoad:		false //smo.animateLoad
+		,	includeChildren:	smo.includeChildren
 		}, opts );
 
-		var vis, lo, co, sm, h, c, o, state // ,s
-		,	childState, childOpts
-		,	noAnimate = !opts.animate
-		,	s_sm = "stateManagement"
-		;
- 
-		/*	WAS WORKING - TEMPORARILY DISABLED
-		 *
-		 *	If layout has already been initialized, then UPDATE layout state
-		 */
-		if (inst.state.initialized) {
-			$.each($.layout.config.borderPanes, function (idx, pane) {
-				state = inst.state[pane];
-				o = stateData[ pane ];
-				if (typeof o != 'object') return; // no key, continue
-				s	= o.size;
-				c	= o.initClosed;
-				h	= o.initHidden;
-				vis	= state.isVisible;
-				// reset autoResize
-				state.autoResize = o.autoResize;
-				// resize BEFORE opening
-				if (!vis)
-					inst._sizePane(pane, s, false, false, false); // false=skipCallback/noAnimation/forceResize
-				if (h === true)			inst.hide(pane, noAnimate);
-				else if (c === false)	inst.open (pane, false, noAnimate);
-				else if (c === true)	inst.close(pane, false, noAnimate);
-				else if (h === false)	inst.show (pane, false, noAnimate);
-				// resize AFTER any other actions
-				if (vis)
-					inst._sizePane(pane, s, false, false, noAnimate); // animate resize if option passed
-			});
-		};
-		
-		// TODO: Add recursion for child-layouts
-		/*
-		// if layout has already been initialized, then UPDATE layout state
-		if (inst.state.initialized) {
-			$.each( $.layout.config.borderPanes, resetLayout );
-			// TODO: Add recursion for child-layouts
-			if (opts.includeChildren) //  || true
-				$.each($.layout.config.allPanes, function (idx, pane) {
-					if (children[pane])
-						resetLayout.call( children[pane] );
-				});
-		};
-		
-		function resetLayout (layout) {
-			var layout		= this
-			,	noAnimate	= !opts.animate
-			,	vis, state, o, s, h, c
+		if (!inst.state.initialized) {
+			/*
+			 *	layout NOT initialized, so just update its options
+			 */
+			// MUST remove pane.children keys before applying to options
+			// use a copy so we don't remove keys from original data
+			var o = $.extend(true, {}, data);
+			//delete o.center; // center has no state-data - only children
+			$.each($.layout.config.allPanes, function (idx, pane) {
+				if (o[pane]) delete o[pane].children;		   
+			 });
+			// update CURRENT layout-options with saved state data
+			$.extend(true, inst.options, o);
+		}
+		else {
+			/*
+			 *	layout already initialized, so modify layout's configuration
+			 */
+			var noAnimate = !opts.animateLoad
+			,	o, c, h, state, open
 			;
 			$.each($.layout.config.borderPanes, function (idx, pane) {
-				state = layout.state[pane];
-				o	= stateData[ pane ];
-				if (typeof o != 'object') return; // no key, continue
+				o = data[ pane ];
+				if (!$.isPlainObject( o )) return; // no key, skip pane
+
 				s	= o.size;
 				c	= o.initClosed;
 				h	= o.initHidden;
-				vis	= state.isVisible;
+				ar	= o.autoResize
+				state	= inst.state[pane];
+				open	= state.isVisible;
+
 				// reset autoResize
-				state.autoResize = o.autoResize;
+				if (ar)
+					state.autoResize = ar;
 				// resize BEFORE opening
-				if (!vis)
-					layout._sizePane(pane, s, false, false, false); // false=skipCallback/noAnimation/forceResize
-				if (h === true)			layout.hide(pane, noAnimate);
-				else if (c === false)	layout.open (pane, false, noAnimate);
-				else if (c === true)	layout.close(pane, false, noAnimate);
-				else if (h === false)	layout.show (pane, false, noAnimate);
+				if (!open)
+					inst._sizePane(pane, s, false, false, false); // false=skipCallback/noAnimation/forceResize
+				// open/close as necessary - DO NOT CHANGE THIS ORDER!
+				if (h === true)			inst.hide(pane, noAnimate);
+				else if (c === true)	inst.close(pane, false, noAnimate);
+				else if (c === false)	inst.open (pane, false, noAnimate);
+				else if (h === false)	inst.show (pane, false, noAnimate);
 				// resize AFTER any other actions
-				if (vis)
-					layout._sizePane(pane, s, false, false, noAnimate); // animate resize if option passed
+				if (open)
+					inst._sizePane(pane, s, false, false, noAnimate); // animate resize if option passed
 			});
-			// reset autoResize
-			state.autoResize = o.autoResize;
-			// resize BEFORE opening
-			if (!vis)
-				layout._sizePane(pane, s, false, false, false); // false=skipCallback/noAnimation/forceResize
-			if (h === true)			layout.hide(pane, noAnimate);
-			else if (c === false)	layout.open (pane, false, noAnimate);
-			else if (c === true)	layout.close(pane, false, noAnimate);
-			else if (h === false)	layout.show (pane, false, noAnimate);
-			// resize AFTER any other actions
-			if (vis)
-				layout._sizePane(pane, s, false, false, noAnimate); // animate resize if option passed
-		};
-		*/
+
+			/*
+			 *	RECURSE INTO CHILD-LAYOUTS
+			 */
+			if (opts.includeChildren) {
+				var paneStateChildren, childState;
+				$.each(inst.children, function (pane, paneChildren) {
+					paneStateChildren = data[pane] ? data[pane].children : 0;
+					if (paneStateChildren && paneChildren) {
+						$.each(paneChildren, function (stateKey, child) {
+							childState = paneStateChildren[stateKey];
+							if (child && childState)
+								child.loadState( childState );
+						});
+					}
+				});
+			}
+		}
 	}
 
 	/**
@@ -5520,7 +5484,7 @@ console.data( stateData, 'loadState - stateData' );
 		//	loadCookie - readCookie and use to loadState() - returns hash of cookie data
 		,	loadCookie:		function () { return _.loadCookie(inst); }
 		//	loadState - pass a hash of state to use to update options
-		,	loadState:		function (stateData, animate) { _.loadState(inst, stateData, animate); }
+		,	loadState:		function (stateData, opts) { _.loadState(inst, stateData, opts); }
 		//	readState - returns hash of current layout-state
 		,	readState:		function (keys) { return _.readState(inst, keys); }
 		//	add JSON utility methods too...
