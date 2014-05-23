@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<HTML>
+
+<!-- Mirrored from layout.jquery-dev.net/demos/nested_children.html by HTTrack Website Copier/3.x [XR&CO'2013], Fri, 23 May 2014 12:45:15 GMT -->
+<HEAD>
+<TITLE>Child Layout Create/Destroy Demo</TITLE>
+
+	<LINK type="text/css" rel="stylesheet" href="../lib/css/layout-default-latest.css">
+	<STYLE type="text/css">
+	/* apply container style _only_ when layout is initialized */
+	.container	{ overflow: hidden; position: relative; padding: 0; border: 0; }
+	.no-overflow{ overflow: hidden; }
+	.blue		{ background: #EEF; }
+	.green		{ background: #EFE; }
+
+	H3 { font-weight: bold; font-size: 1.1em; margin: 1ex 0 .5ex; }
+	.no-margins { margin: 0; }
+
+	/* indent nested-levels when layout is 'destroyed' */
+	DIV > DIV { margin-left: 30px; margin-top: 5px; }
+
+	/* format custom-wrapper-div inside outer-east, used for a child-layout */
+	#outer-east.ui-layout-pane > DIV {
+		width:		90%;
+		height:		80%;
+		top:		15%;
+		left:		5%;
+		position:	absolute;
+		margin:		0; /* neutralize div>div style above */
+		overflow:	hidden;"
+	}
+
+	</STYLE>
+
+	<SCRIPT type="text/javascript" src="../lib/js/jquery-latest.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="../lib/js/jquery-ui-latest.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="../lib/js/jquery.layout-latest.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="../lib/js/debug.js"></SCRIPT>
+	<SCRIPT type="text/javascript">
+
+	function clearCookies () {
+		var layout_names = 'outer,middle-west,middle-center,middle-east,inner-north,inner-center,inner-south'.split(',');
+		$(window).unload(function(){
+			$.each( layout_names, function(){
+				$.ui.cookie.clear( this );
+			});
+		});
+		self.location.reload();
+	};
+
+
+	// enable stateManagement by default for all layouts
+	if ($.layout.plugins.stateManagement)
+		$.layout.defaults.stateManagement.enabled = true;
+
+
+	// layout options for ALL layouts on the page - in one object
+	var layoutOptions = {
+		name:				'outer'	// to distinguish each layout for state-management
+	,	west__size:			.50
+	,	livePaneResizing:	true
+	//,	liveResizingTolerance: 20
+	,	showErrorMessages:	false
+
+	//	MIDDLE-WEST LAYOUT
+	,	west__childOptions: {
+			name:				'middle-west'
+		,	size:				.25
+		,	showErrorMessages:	false
+		//	INNER-NORTH LAYOUT
+		,	north__childOptions: {
+				name:				'inner-north'
+			,	size:				.25
+			,	showErrorMessages:	false
+			}
+		//	INNER-CENTER LAYOUT
+		,	center__childOptions: {
+				name:				'inner-center'
+			,	size:				.33
+			,	showErrorMessages:	false
+			}
+		//	INNER-SOUTH LAYOUT
+		,	south__childOptions: {
+				name:				'inner-south'
+			,	size:				.25
+			,	showErrorMessages:	false
+			}
+		}
+
+	//	MIDDLE-CENTER LAYOUT
+	//	this layout is inside the 'content-div' of the center-pane
+	,	center__childOptions: {
+			name:				'middle-center'
+		}
+
+	//	MIDDLE-EAST LAYOUT
+	//	this layout is inside a wrapper-div (NOT directly-nested)
+	,	east__childOptions: {
+			name:				'middle-east'
+		,	containerSelector:	'> div' // first child-div of pane
+		,	south__size: 		.25
+		,	showErrorMessages:	false
+		}
+
+	};
+
+	$(document).ready(function () {
+		//	OUTER LAYOUT
+		outerLayout = $('body').layout( layoutOptions );
+
+		//alert( 'middleEast parent = '+ $.layout.getParentLayoutInstance( outerLayout.east.child.panes.north ).options.name );
+
+		//alert( 'west.child = '+                               outerLayout.west.child.options.name );
+		//alert( 'west.child.north.child = '+                   outerLayout.west.child.north.child.options.name );
+
+		//alert( 'parent = '+ $.layout.getParentLayoutInstance( outerLayout.west.child.north.child.container ).options.name );
+		//alert( 'parent = '+ $.layout.getParentPaneInstance(   outerLayout.west.child.north.child.container ).name );
+	});
+
+	</SCRIPT>
+
+</HEAD>
+<BODY id="body">
+
+<DIV class="ui-layout-north">
+	<H3 style="margin: 0;" class="no-margins">
+		Outer North
+		&nbsp; &nbsp;
+		<BUTTON onClick="outerLayout = outerLayout.container.layout( outerLayout.options )">Create Outer</BUTTON>
+		<BUTTON onClick="if (outerLayout.panes) outerLayout.destroy()">Destroy Outer</BUTTON>
+		&nbsp; &nbsp;
+		<BUTTON onClick="if (outerLayout.panes) outerLayout.createChildLayout('west')">Create Middle</BUTTON>
+		<BUTTON onClick="if (outerLayout.panes && outerLayout.west.child.panes) outerLayout.west.child.destroy()">Destroy Middle</BUTTON>
+		&nbsp; &nbsp;
+		<BUTTON onClick="if (outerLayout.panes && outerLayout.west.child.panes) outerLayout.west.child.createChildLayout('center')">Create Inner</BUTTON>
+		<BUTTON onClick="if (outerLayout.panes && outerLayout.west.child.panes && outerLayout.west.child.center.child.panes) outerLayout.west.child.center.child.destroy()">Destroy Inner</BUTTON>
+	</H3>
+</DIV>
+
+<DIV id="outer-west" class="ui-layout-west blue">
+	<H3>Outer West</H3>
+	<DIV id="middle-north" class="ui-layout-north no-overflow green">
+		<H3>Middle North</H3>
+		<DIV class="ui-layout-west">Inner North West</DIV>
+		<DIV class="ui-layout-east">Inner North East</DIV>
+		<DIV class="ui-layout-center">Inner North Center</DIV>
+	</DIV>
+	<DIV id="middle-west" class="ui-layout-center container green">
+		<H3>Middle Center</H3>
+		<DIV class="ui-layout-west">Inner Center West</DIV>
+		<DIV class="ui-layout-east">Inner Center East</DIV>
+		<DIV class="ui-layout-center">Inner Center Center</DIV>
+	</DIV>
+	<DIV id="middle-south" class="ui-layout-south no-overflow green">
+		<H3>Middle South</H3>
+		<DIV class="ui-layout-west">Inner South West</DIV>
+		<DIV class="ui-layout-east">Inner South East</DIV>
+		<DIV class="ui-layout-center">Inner South Center</DIV>
+	</DIV>
+</DIV>
+
+<DIV id="outer-center" class="ui-layout-center container blue">
+	<H3 style="padding: 0 10px;">
+		Outer Center
+		&nbsp; &nbsp;
+		<BUTTON onClick="if (outerLayout.panes) outerLayout.createChildLayout('center')">Create</BUTTON>
+		<BUTTON onClick="if (outerLayout.panes && outerLayout.center.child.panes) outerLayout.center.child = outerLayout.center.child.destroy()">Destroy</BUTTON>
+	</H3> 
+	<P style="padding: 0 10px;"><A href="../demos-2.html">Go to Demos page</A></P>
+	<DIV id="outer-center-content" class="ui-layout-content no-margins">
+		<DIV class="ui-layout-north">Center North</DIV>
+		<DIV class="ui-layout-center">Center Center <P>This layout is inside a layout content-div</P></DIV>
+		<DIV class="ui-layout-south">Center South</DIV>
+	</DIV>
+</DIV>
+
+<DIV id="outer-east" class="ui-layout-east no-overflow blue">
+	<H3 style="padding: 0 10px;">
+		Outer East
+		&nbsp; &nbsp;
+		<BUTTON onClick="if (outerLayout.panes) outerLayout.createChildLayout('east')">Create</BUTTON>
+		<BUTTON onClick="if (outerLayout.panes && outerLayout.east.child.panes) outerLayout.east.child = outerLayout.east.child.destroy()">Destroy</BUTTON>
+	</H3>
+	<DIV>
+		<DIV class="ui-layout-north">East North</DIV>
+		<DIV id="east-center" class="ui-layout-center">East Center <P>This layout is inside a custom wrapper-div</P></DIV>
+		<DIV class="ui-layout-south">East South</DIV>
+	</DIV>
+</DIV>
+
+<DIV id="outer-south" class="ui-layout-south">
+	<H3 class="no-margins">
+		Outer South
+		&nbsp; &nbsp;
+		<BUTTON onClick="if (outerLayout.panes) outerLayout.removePane('west')">Remove Outer-West Pane</BUTTON>
+		<BUTTON onClick="if (outerLayout.panes) outerLayout.addPane('west')">Re-Add Outer-West Pane</BUTTON>
+		&nbsp; &nbsp;
+		<BUTTON onClick="$('#outer-west').remove()">Delete Outer-West DIV</BUTTON>
+		&nbsp; &nbsp;
+		<BUTTON onClick="clearCookies()">Clear All State Cookies</BUTTON>
+	</H3>
+</DIV>
+
+</BODY>
+
+<!-- Mirrored from layout.jquery-dev.net/demos/nested_children.html by HTTrack Website Copier/3.x [XR&CO'2013], Fri, 23 May 2014 12:45:15 GMT -->
+</HTML>

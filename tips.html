@@ -1,0 +1,785 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!-- Mirrored from layout.jquery-dev.net/tips.cfm by HTTrack Website Copier/3.x [XR&CO'2013], Fri, 23 May 2014 12:43:37 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<HEAD>
+	<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<TITLE>UI Layout - Tips & FAQ</TITLE>
+
+	<LINK rel="stylesheet" href="lib/css/global.css" type="text/css">
+	<LINK rel="stylesheet" href="lib/css/documentation.css" type="text/css">
+	<!--[if lte IE 7]>
+		<style type="text/css"> body { font-size: 85%; } </style>
+	<![endif]-->
+
+	<SCRIPT type="text/javascript" src="lib/js/jquery-latest.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="lib/js/jquery-ui-latest.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="lib/js/jquery.layout-latest.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="lib/js/global.js"></SCRIPT>
+
+	<SCRIPT type="text/javascript">
+	var pageLayout;
+
+	$(document).ready(function(){
+		// create page layout
+		pageLayout = $('body').layout({
+			scrollToBookmarkOnLoad:		false // handled by custom code so can 'unhide' section first
+		,	defaults: {
+			}
+		,	north: {
+				size:					"auto"
+			,	spacing_open:			0
+			,	closable:				false
+			,	resizable:				false
+			}
+		,	west: {
+				size:					250
+			,	spacing_closed:			22
+			,	togglerLength_closed:	140
+			,	togglerAlign_closed:	"top"
+			,	togglerContent_closed:	"C<BR>o<BR>n<BR>t<BR>e<BR>n<BR>t<BR>s"
+			,	togglerTip_closed:		"Open & Pin Contents"
+			,	sliderTip:				"Slide Open Contents"
+			,	slideTrigger_open:		"mouseover"
+			}
+		});
+
+		// goto bookmark after creating the layout
+		scrollToBookmark( self.location.hash );
+
+	});
+	</SCRIPT>
+
+</HEAD>
+<BODY>
+
+<DIV class="ui-layout-north">
+
+	<DIV id="logo">jQuery UI Layout Plug-in</DIV>
+	<DIV id="navigation">
+		<A href="index-2.html">HOME</A>
+		<A href="demos.html">DEMOS</A>
+		<A href="downloads.html">DOWNLOADS</A>
+		<A href="documentation.html">DOCUMENTATION</A>
+		<A href="tips.html" class="current">TIPS</A>
+		<A href="plugin.html">PLUGIN</A>
+		<A href="issues.html">ISSUES</A>
+		<A target="_blank" href="http://groups.google.com/group/jquery-ui-layout">DISCUSSION</A>
+
+	</DIV>
+</DIV>
+
+<DIV class="ui-layout-center content">
+
+<H1 id="top">UI Layout Tips &amp; FAQ</H1>
+
+	<P>This page is a collection of miscellaneous tips and tricks for UI Layout.
+		Many are based on questions asked by users.</P>
+
+
+<P class="bold">
+	<A href="#" onClick="return openAllSections()">Open All Sections</A> &nbsp;
+	<A href="#" onClick="return closeAllSections()">Close All Sections</A>
+</P>
+<HR>
+
+
+
+<H2 id="UI_Widgets">Integrating jQuery UI Widgets</H2>
+<DIV class="collapsible">
+
+<P>
+	Many users ask about using various UI widgets with Layout,
+	so this section brings together all information related to this.</P>
+<H5>UI Widgets Discussed Here</H5>
+<UL>
+	<LI><A href="#Widget_Tabs"		>UI Tabs</A></LI>
+	<LI><A href="#Widget_Accordion"	>UI Accordion</A></LI>
+	<LI><A href="#Widget_Draggable"	>UI Draggables, Droppables &amp; Sortables</A></LI>
+	<LI><A href="#Widget_DatePicker">UI Date-Picker</A></LI>
+	<LI><A href="#Widget_Dialog"	>UI Dialog</A></LI>
+	<LI><A href="#Widget_Menu"		>Menu Widgets</A></LI>
+	<LI><A href="#Widget_Toolbar"	>Toolbar Widgets</A></LI>
+	<LI><A href="#Widget_Other"		>Other/Future Widgets</A></LI>
+</UL>
+
+<P>
+	Two topics come up repeatedly in relation to using widgets with Layout:
+	elements that 'popup' and element that 'resize'. Here is an overview of why this is:</P>
+
+<H3>Popup Elements</H3>
+<P>
+	When you use UI Layout, it uses the DIVs in your markup to create 'panes', 
+	which become 'absolutely positioned containers' for the page content.
+	Usually these layout-panes will have their overflow set to either 'hidden' or 'auto' (scroll). 
+	This makes it impossible for an element to escape the boundaries of the DIV.
+	An element can only overlap the edges of its container if the container has: <CODE>overflow: visible</CODE>.</P>
+<P>
+	In addition, the originating pane must have a higher zIndex than the pane(s) being overlapped.
+	NOTE that it is the relative zIndex of the panes that matter - not the zIndex of the popup element itself.
+	<u>An element's zIndex is only relevant within its container</u>.
+	Once it extends beyond the container's boundary, it is the container's zIndex that determines stack-order
+	&ndash; ie, whether the element will be 'above' or 'beneath' the adjacent elements.</P>
+<P>
+	There are two ways to address the containment issue when using Layout:</P>
+<P>
+	The best way is for an element that needs to popup or move to be <u>a child of 'body'</u>,
+	instead of being a child of a 'pane'. This eliminates all containment issues since the element
+	is not 'inside' the pane, and therefore not bound within its borders.</P>
+<P>
+	For elements that <I>must</I> be inside a pane, Layout provides utilities that can automatically
+	or manually alter the pane's overflow setting and zIndex <I>temporarily</I> so that elements
+	inside the pane can extend beyond its boundaries and appear 'above' the adjacent panes.
+	The <A href="demos/simple.html"><B>Simple Demo</B></A> illustrates this with simple drop-down menus.</P>
+
+<H3>Resizable &amp; Scrolling Elements</H3>
+<P>
+	Some widgets use Javascript to adjust their size to their container - like the Accordion widget.
+	Since Layout creates dynamically resizable regions, the widget's container can be resized or hidden.
+	To keep the widget's size in sync with its container, a simple callback can be added to your layout:</P>
+<CODE><PRE>
+$('body').layout(){
+    center__onresize: function () {
+        $('#Accordion').accordion('resize')
+    }
+});
+</PRE></CODE>
+<P>
+	Layout has callbacks for every event - both pre and post - so there are unlimited options
+	for integrating widgets that require resizing, or that need to 'limit' what user are allowed to do.
+	Layout events can be modifed or cancelled on the fly using callbacks like <CODE>center__onresize_start</CODE>.</P>
+
+
+<H4 id="Widget_Tabs"><STRONG>UI Tabs</STRONG></H4>
+<P>
+	The tabs widget requires no special treatement if you only want its standard functionality.</P>
+<P>
+	However, Layout provides enhanced functionality for tabs simply by adding a single wrapper DIV.
+	Here is the 'before' markup:</P>
+<CODE><PRE>
+&lt;DIV class="ui-layout-center"&gt;
+    &lt;UL&gt;
+        &lt;LI&gt;&lt;A href="#tabs-1"&gt;Tab 1&lt;/A&gt;&lt;/LI&gt;
+        &lt;LI&gt;&lt;A href="#tabs-2"&gt;Tab 2&lt;/A&gt;&lt;/LI&gt;
+        &lt;LI&gt;&lt;A href="#tabs-3"&gt;Tab 3&lt;/A&gt;&lt;/LI&gt;
+    &lt;/UL&gt;
+	&lt;DIV id="tabs-1"&gt;&lt;/DIV&gt;
+	&lt;DIV id="tabs-2"&gt;&lt;/DIV&gt;
+	&lt;DIV id="tabs-3"&gt;&lt;/DIV&gt;
+&lt;/DIV&gt;
+</PRE></CODE>
+<P>
+	And here it is with the extra wrapper DIV (ui-layout-content):</P>
+<CODE><PRE>
+&lt;DIV class="ui-layout-center"&gt;
+    &lt;UL&gt;
+        &lt;LI&gt;&lt;A href="#tabs-1"&gt;Tab 1&lt;/A&gt;&lt;/LI&gt;
+        &lt;LI&gt;&lt;A href="#tabs-2"&gt;Tab 2&lt;/A&gt;&lt;/LI&gt;
+        &lt;LI&gt;&lt;A href="#tabs-3"&gt;Tab 3&lt;/A&gt;&lt;/LI&gt;
+    &lt;/UL&gt;
+    <I>&lt;!-- add wrapper that Layout will auto-size to 'fill space' --&gt;</I>
+    <STRONG>&lt;DIV class="ui-layout-content"&gt;</STRONG>
+        &lt;DIV id="tabs-1"&gt;&lt;/DIV&gt;
+        &lt;DIV id="tabs-2"&gt;&lt;/DIV&gt;
+        &lt;DIV id="tabs-3"&gt;&lt;/DIV&gt;
+    <STRONG>&lt;/DIV&gt;</STRONG>
+&lt;/DIV&gt;
+</PRE></CODE>
+<P>
+	The wrapper div makes the 'tabs' stay in place, so only the 'tab-panels' scroll.
+	This is exactly how tabs normally work in a desktop UI, and it is accomplished without
+	any extra Javascript or CSS &ndash; Layout handles it automatically.</P>
+<P>
+	See the <A href="demos/tabs.html"><B>Tabs Demo</B></A> for examples.</P>
+
+<H4>Tabs with Nested Layout(s)</H4>
+<P>
+	If you wish to put a layout or other complex widget <I>inside</I> one of the tabs,
+	then you <u>MUST</u> use an inner-layout around the tabs instead of just using a content-div, like:</P>
+<CODE><PRE>
+&lt;DIV class="ui-layout-center"&gt;
+    <I>&lt;!-- The tab-buttons becomes an inner-north pane --&gt;</I>
+    <STRONG>&lt;UL class="ui-layout-north"&gt;</STRONG>
+        &lt;LI&gt;&lt;A href="#tabs-1"&gt;Tab 1&lt;/A&gt;&lt;/LI&gt;
+        &lt;LI&gt;&lt;A href="#tabs-2"&gt;Tab 2&lt;/A&gt;&lt;/LI&gt;
+        &lt;LI&gt;&lt;A href="#tabs-3"&gt;Tab 3&lt;/A&gt;&lt;/LI&gt;
+    &lt;/UL&gt;
+    <I>&lt;!-- the tab-panel-wrapper becomes an inner-center pane --&gt;</I>
+    <STRONG>&lt;DIV class="ui-layout-center"&gt;</STRONG>
+        &lt;DIV id="tabs-1"&gt;&lt;/DIV&gt;
+        &lt;DIV id="tabs-2"&gt;&lt;/DIV&gt;
+        &lt;DIV id="tabs-3"&gt;&lt;/DIV&gt;
+    &lt;/DIV&gt;
+&lt;/DIV&gt;
+</PRE></CODE>
+<P>
+	This tab demo shows a <A href="demos/layout_inside_tab.html"><B>Layout <I>Inside</I> a Tab</B></A>.
+	It also how to use the <B><A href="http://groups.google.com/group/jquery-ui-layout/browse_thread/thread/0077c5d474dcdb7f#" target="callbacks">resizeTabLayout callback</A></B>,
+	a layout add-on that simplifies the integration of tabs with layouts.</P>
+
+
+<H4 id="Widget_Accordion"><STRONG>UI Accordion</STRONG></H4>
+<P>
+	The accodion widget requires no special treatement if you only want its standard functionality.
+	However the Accordion widget works best with Layout when you use the 'fillSpace' option,
+	which makes the accordion auto-size to fill its container.
+	This is how accordions normally appear in applications.</P>
+<P>
+	The Accordion widget uses Javascipt to set its height - not CSS. This means that if the
+	widget's container is resized, the accordion must be manually resized by calling its resize() method.
+	Layout triggers a callback method whenever a pane resizes, so this is easily integrated with an accordion...</P>
+<CODE><PRE>
+$('body').layout(){
+    west__onresize: function () {
+        $('#Accordion').accordion('resize')
+    }
+});
+</PRE></CODE>
+<P>
+	See the <A href="demos/accordion.html"><B>Accordion Demo</B></A>.</P>
+
+
+<H4 id="Widget_Draggable"><STRONG>UI Draggables</STRONG></H4>
+<P>
+	Draggable elements are contrained by their containers (unless overflow=visible).
+	However, an element that is a child of the 'body' can overlay all other elements on the page.</P>
+<P>
+	The draggables widget has a 'helper' option that allows you to clone the draggable element,
+	and append this clone to the page body. This avoids the containment/overflow issue completely, 
+	since the element being dragged is no longer <I>inside</I> any layout pane.</P>
+<P>
+	Here is sample code to accomplish this.
+	(slightly different than for the sortable widget)</P>
+<CODE><PRE>
+$(".myDraggables").draggable({ 
+   <I>// create a clone &amp; append it to 'body'</I> 
+   helper: function (e,ui) {
+      return $(this).clone().appendTo('body').css('zIndex',5).show();
+   } 
+}) 
+</PRE></CODE>
+<P>
+	SEE the <A href="demos/droppable.html"><B>Droppable Between Panes demo</B></A></P>
+<P>
+	If you simply want to 'drag' the original element anywhere on the page, the simplest solution
+	is to not put the element inside a pane - make it a child of the BODY instead, with a zIndex of 5.
+	This will make it float over top of the Layout - completely independant of it.
+	If you need more control over the draggable, I recommend using a droppable target.
+	You could make an entire 'pane' a droppable target, which would provide a 'drop' event you can use
+	to run your own custom code.</P>
+<P>
+	For general information on dragging elements between layout-panes,
+	see the <A href="#Draggables">Draggable Elements</A> tip below.</P>
+
+
+<H4 id="Widget_Droppable"><STRONG>UI Droppables</STRONG></H4>
+<P>
+	The droppables widget is always used with draggable elements.
+	As long your draggables use the helper noted above, the droppable does not require anything special</P>
+<CODE><PRE>
+$(".myDroppables").droppable({ 
+   accept: '.myDraggables'
+}) 
+</PRE></CODE>
+<P>
+	SEE the <A href="demos/droppable.html"><B>Droppable Between Panes demo</B></A></P>
+
+
+<H4 id="Widget_Sortable"><STRONG>UI Sortables</STRONG></H4>
+<P>
+	The sortables widget has a 'helper' option that allows you to clone the draggable element,
+	and append this clone to the page body. This avoids the containment/overflow issue completely, 
+	since the element being dragged is no longer <I>inside</I> any layout pane.</P>
+<P>
+	Here is sample code to accomplish this.
+	(slightly different than for the draggable widget)</P>
+<CODE><PRE>
+$(".mySortables").sortable({ 
+   <I>// create a clone &amp; append it to 'body'</I> 
+   helper: function (e,ui) {
+      return $(ui).clone().appendTo('body').show();
+   } 
+}) 
+</PRE></CODE>
+<P>
+	SEE the <A href="demos/droppable.html"><B>Droppable Between Panes demo</B></A></P>
+
+
+<H4 id="Widget_DatePicker"><STRONG>UI Date-Picker</STRONG></H4>
+<P>
+	The Date-Picker widgets auto-generates elements to create a popup calendar.
+	These elements are appended to the page body, as they should be.
+	However, by default no zIndex is applied, therefore the popup calendar appears
+	'under' the layout-panes instead of 'above' as a popup needs to be.</P>
+<P>
+	So when using the Date-Picker widget with Layout, add this CSS rule...</P>
+<CODE><PRE>
+#ui-datepicker-div {
+    <I>/* Minimum of '5' is required */</I>
+    z-index: 5;
+}
+</PRE></CODE>
+<P>
+	SEE the <A href="demos/datepicker.html"><B>Date-Picker demo</B></A>.</P>
+
+
+<H4 id="Widget_Dialog"><STRONG>UI Dialog</STRONG></H4>
+<P>
+	Dialogs require no special effort with Layout - they just work.
+	Plus, you can put a layout <I>inside</I> your dialog.</P>
+<P>
+	SEE the <A href="demos/layout_inside_dialog.html"><B>Dialog demo</B></A>.</P>
+
+<H4 id="Widget_Menu"><STRONG>Menu Widgets</STRONG></H4>
+<P>
+	There is no official UI Menu widget <I>yet</I>, but it is included here
+	because it is a common need, and will probably be part of the next UI release.</P>
+<P>
+	Dropdown Menus and Popup Menus often need to overlap adjacent panes.
+	The ideal solution is to append the menu elements to the 'body', in which case
+	no additional effort is needed to use the menus with Layout.
+	When this is not practical, you have two options for handling menus:</P>
+<OL>
+	<LI>
+		If the menu appear only in a single, non-scrolling layout-pane,
+		and you are not using resizer-bars in your layout,
+		then just give that pane: <CODE>overflow: visible</CODE> &ndash;
+		and ensure it is the <I>last pane</I> in the HTML markup.
+		By making it last, it has a naturally higher stack-order.	</LI>
+	<LI>
+		In all other cases, use Layout's built-in utility: <STRONG>allowOverflow()</STRONG>.
+		This can be triggered many different ways, including from the code 
+		that opens your menu.	</LI>
+</OL>
+<P>
+	SEE menu samples in the <A href="demos/datepicker.html"><B>Simple demo</B></A>.
+	Various methods of triggering allowOverflow are used - view the page source.</P>
+<P>
+	SEE the documentation for more information:
+	<A href="documentation.html#Drop-Downs" style="white-space: nowrap;"><B>Working with Drop-Downs and Pop-Ups</B></A>.</P>
+
+
+<H4 id="Widget_Toolbar"><STRONG>Toolbar Widgets</STRONG></H4>
+<P>
+	There is no official UI Toolbar widget <I>yet</I>, but it is included here
+	because it is a common need, and will probably be part of the next UI release.</P>
+<P>
+	Toolbars work exceptionally well with Layout, and do not require any special treatment.
+	Every aspect of a layout can be controlled with simple Javascript commands, so it is very easy
+	to use toolbar buttons to trigger layout events. For example, a "Help" button can toggle
+	a help-panel to slide open/closed.</P>
+<P>
+	To make it even easier, utilities are provided that automate the binding of Layout commands to
+	buttons, images or any clickable elements. These methods can also keep buttons in sync with the layout, 
+	and add special classes you can use with you CSS to customize buttons to show their 'state'.
+	For example, it is easy to create a 'pin-button' that displays 'pin-up' or 'pin-down' depending
+	on whether the bound pane is open or closed. This replicates the functionality of a standard desktop UI.</P>
+<P>
+	SEE the <A href="demos/complex.html" ><B>Complex Demo</B></A> for samples of Toolbar and Pin buttons.</P>
+<P>
+	SEE the documentation for more information:
+	<A href="documentation.html#Custom_Buttons" style="white-space: nowrap;"><B>Creating Custom Toggler Buttons</B></A>.</P>
+
+
+<H4 id="Widget_Other"><STRONG>Other/Future Widgets</STRONG></H4>
+<P>
+	Widgets that do not popup or move outside their container should work with Layout with any special treatment.
+	These include:</P>
+<UL>
+	<LI>Treelists</LI>
+	<LI>Buttons &amp; Spinners</LI>
+	<LI>Progress Bars &amp; Sliders</LI>
+	<LI>Tables &amp; Grids (that do not have 'popups')</LI>
+	<LI>Forms &amp; Rich Text Editor</LI>
+	<LI>Star Rating</LI>
+</UL>
+<P>
+	Widgets that 'popup' over-top of adjacent content may require handling similar to that for
+	menus, draggables or date-pickers. If the widget is well designed, a simple option or CSS rule
+	should handle it. But even if the widget does not provide a built-in solution, Layout's allowOverflow
+	utility can be used to make it work. Examples of 'popup widgets' coming in the future include:</P>
+<UL>
+	<LI>Date-Range or Time Picker</LI>
+	<LI>Color Picker</LI>
+	<LI>Tooltips</LI>
+	<LI>Auto-Complete</LI>
+	<LI>Image Magnifier</LI>
+</UL>
+<P>
+	If you have trouble integrating any UI widget with Layout, post your problem in the
+	<A href="discuss-2.html">Discussion Forum</A> &ndash; preferably with a sample page.
+	Layout is very versatile so a solution can usually be found fairly quickly.</P>
+</DIV>
+<!-- end collapsible -->
+
+
+
+<H2 id="Draggables">Draggable Elements</H2>
+<DIV class="collapsible">
+
+<H4><STRONG>Q:</STRONG> How can I drag &amp; drop elements between panes?</H4>
+
+<P>An element <I>inside</I> a layout-pane is 'contained' by that pane.
+	For the element to be visible beyond the pane's boundaries, two things must be true:</P>
+<UL>
+	<LI>The pane's 'overflow' must be 'visible'.</LI>
+	<LI>The pane must have a higher 'stack order' than neighboring panes.<BR>
+		(the zIndex of the dragged-element itself is irrelevant)</LI>
+</UL>
+<P></P>
+
+<P>There are two utility methods created for this purpose.</P>
+<UL>
+	<LI>allowOverflow()</LI>
+	<LI>resetOverflow()</LI>
+</UL>
+<P>See <A href="documentation.html#Drop-Downs">Working with Drop-Downs and Popups</A> for more information.</P>
+
+<P>There is a BETTER SOLUTION when using jQuery UI widgets...</P>
+<P>For information specific to the UI Draggable, Droppable &amp; Sortable widgets,
+	see the <A href="#Widget_Draggable">Draggables, Droppables &amp; Sortables</A> tip.</P>
+</DIV>
+<!-- end collapsible -->
+
+
+
+<H2 id="Pane_Scrolling">Control Pane Scrolling</H2>
+<DIV class="collapsible">
+
+<H4><STRONG>Q:</STRONG> Is there a way to disable scrolling in a pane?</H4>
+
+<P>Normally all 'pane' elements have no overflow specified, so they display as: '<TT>overflow: visible</TT>'</P>
+<P>To make a pane scroll, use '<TT>overflow: auto</TT>'</P>
+<P>To hide any overflow, use '<TT>overflow: hidden</TT>'</P>
+
+<P><u>If you have the <STRONG>applyDefaultStyles</STRONG> option enabled</u>, then all panes are set: '<TT>overflow: auto</TT>'.
+	In this case, to <I>disable</I> scrolling you must 'override' the default style using <SPAN style="color: Red;">!important</SPAN></P>
+<CODE><PRE>
+<I>// disable scrolling in ALL panes</I>
+.ui-layout-pane {
+    overflow: hidden <SPAN style="color: Red;">!important</SPAN>;
+}
+
+<I>// disable scrolling only in the North &amp; South panes</I>
+.ui-layout-pane-north ,
+.ui-layout-pane-south {
+    overflow: hidden <SPAN style="color: Red;">!important</SPAN>;
+}
+</PRE></CODE></DIV>
+<!-- end collapsible -->
+
+
+
+
+<H2 id="State_Management">State Management</H2>
+<DIV class="collapsible">
+
+<H4><STRONG>Q:</STRONG> Is it possible to save the current state in a cookie,
+	so that UI customization is kept across sessions?</H4>
+
+	<H5><STRONG>UPDATED May 25, 2012</STRONG></H5>
+	<P><B>State Management is now a Layout plug-in.</B> See this demo for a sample:</P>
+	<UL>
+		<LI><A href="demos/saved_state.html">saved_state.html</A></LI>
+	</UL>
+	<P>See the changelog for additional info:</P>
+	<UL>
+		<LI><A href="changelog.html#1.3.0.rc30.1-State-Management">Layout 1.3.0 Changelog</A></LI>
+	</UL>
+	<H5><STRONG>***** ALL STATE INFO BELOW IS OUT OF DATE *****</STRONG></H5>
+
+	<P>This state management implementation <B>NO LONGER</B> requires these supporting files:</P>
+	<UL>
+		<LI><A href="demos/js/jquery.layout.state.js">jquery.layout.state.js</A></LI>
+		<LI><A href="../json.org/json2.html">http://json.org/json2.js</A></LI>
+		<LI>(You do <u>not</u> require a cookie plug-in)</LI>
+	</UL>
+
+	<H5 id="State_Example"><STRONG>EXAMPLE</STRONG></H5>
+	<P>To activate state management, bind layoutState.save() to window.unload(),
+		and then load() the saved state when creating your layout. Here's an example:<CODE><PRE>
+&lt;SCRIPT&gt;
+
+<I>// bind save() to window.onunload</I>
+$(window).unload(function(){ layoutState.save('myLayout') }); 
+
+<I>// DEFAULT LAYOUT SETTINGS</I>
+var myDefaultSettings = {
+    initClosed: true
+,   west__size: 150
+,   east__size: 150
+}
+
+var myLayout; <I>// create global var for the layout-instance object</I>
+
+$(document).ready( function() {
+    <I>// load &amp; used 'saved-state' to override defaults</I>
+    myLayout = $("body").layout(
+        $.extend( myDefaultSettings, layoutState.load('myLayout') )
+    );
+});
+
+&lt;/SCRIPT&gt;
+</PRE></CODE>
+
+	<P>
+		By default, layoutState will save pane-size, and whether it is 'closed' or 'hidden'.
+		You can choose which panes and 'states' you want to manage two ways.
+		Either modify the 'keys' param so the cookie saves only what you want (recommended),
+		or utilize only the specific keys you want out of the hash returned by load().	</P>
+	<P>
+		You can modify the 'keys' option, and cookie options like 'expires',
+		either by setting your preferences as 'defaults',
+		or by passing custom options when you call the methods.
+		Here is an example of both:	</P>
+<CODE><PRE>
+&lt;SCRIPT&gt;
+
+<I>// set defaults so don't have to repeat them</I>
+layoutState.options.layoutName = "myLayoutName";
+layoutState.options.expires = 30; <I>// 30-day cookie</I>
+<I>// keys in sub-key-format</I>
+layoutState.options.keys = "west.size,west.isClosed";
+<I>// OR keys in flat-format</I>
+layoutState.options.keys = "west__size,west__isClosed";
+
+<I>// now you don't have to specify a layoutName...</I>
+$(window).unload( layoutState.save );
+$.extend( myDefaultSettings, layoutState.load() )
+
+<I>// OR you can pass different options each time</I>
+layoutState.save(
+    "myLayoutName" <I>// layout/cookie name</I>
+,   "west.size,west.isClosed" <I>// list of keys</I>
+,   { expires: 30 } <I>// hash of other options</I>
+);
+
+&lt;/SCRIPT&gt;
+</PRE></CODE>
+
+	<P><STRONG>IMPORTANT:</STRONG> Specify the 'keys' for state management in the same format as your default settings:</P>
+	<UL>
+		<LI>If you use '<STRONG>flat-format</STRONG>' for your settings (eg: 'west__size: 100'),
+			then set state-keys in the same format, eg: layoutState.options.keys="west__size,east__size"</LI>
+		<LI>If you use '<STRONG>sub-key-format</STRONG>' for your settings (eg: 'west: { size: 100 }'),
+			then set state-keys in 'dot' format, eg: layoutState.options.keys="west.size,east.size"</LI>
+	</UL>
+
+	<P>
+		Normally you should set the default options, unless there are <u>multiple layouts</u> on the page.
+		In this case, you must pass at least the layoutName for the 2nd and 3rd layouts.
+		But you could still set default/common options for values like 'keys', 'expires', 'domain', etc.	</P>
+	<P>
+		NOTE: layoutState creates a cookie with the name you provide for the layout (eg, "myLayout").
+		So you can save multiple layout configurations as long as each layout has a different name.
+		If desired, customize the cookie options (domain &amp; path) to control where the cookie it used.
+		For normal use though, the default options are fine.	</P>
+
+	<H5 id="State_Properties"><STRONG>layoutState Properties</STRONG></H5>
+	<P>
+		The layoutState function has two property keys:	</P>
+	<UL>
+		<LI>layoutState.<STRONG>options</STRONG> &ndash; default options</LI>
+		<LI>layoutState.<STRONG>data</STRONG> &ndash; state-data saved or loaded</LI>
+	</UL>
+
+	<H5 id="State_Methods"><STRONG>layoutState Methods</STRONG></H5>
+	<P>
+		The layoutState function is only temporary - until integrated into UI Layout -
+		so there is no documentation for it. But it is simple and only has 3 methods:	</P>
+	<UL>
+		<LI>layoutState.<STRONG>save</STRONG>( layoutName, keys, options )</LI>
+		<LI>layoutState.<STRONG>load</STRONG>( layoutName )</LI>
+		<LI>layoutState.<STRONG>clear</STRONG>( layoutName )</LI>
+	</UL>
+	<P>
+		Looking at the <A href="demos/saved_state.html">demo page</A>
+		and the <A href="demos/js/jquery.layout.state.js">layoutState function</A> should be all you need,
+		but if you have trouble, use the <A href="discussion.html">Discussion forum</A> for assistance.	</P>
+
+	<H5 id="State_Data"><STRONG>State Data Vars</STRONG></H5>
+
+	<P>
+		Normally you will care about only a few vars when saving the layout-state.
+		Here is how saved state-data correlates to the 'options' used to initialize a layout:	</P>
+	<UL>
+		<LI>mySettings.west__<STRONG>size</STRONG> = myLayout.state.west.<B>size</B></LI>
+		<LI>mySettings.west__<STRONG>initClosed</STRONG> = myLayout.state.west.<B>isClosed</B></LI>
+		<LI>mySettings.west__<STRONG>initHidden</STRONG> = myLayout.state.west.<B>isHidden</B></LI>
+	</UL>
+	<P>The layoutState function saves the state so that it is ready for use onLoad.
+		So if the west pane is 'closed' (state.west.isClosed), this is saved in the cookie as:
+		'west.initClosed=true' (OR&nbsp;west__initClosed=true).
+	<P>For reference, here are <u>all</u> the state-values each 'border-pane' has:</P>
+	<UL>
+		<LI>state.west.<STRONG>size</STRONG> = "auto" or an integer</LI>
+		<LI>state.west.<STRONG>minSize</STRONG> = integer (0 = auto)</LI>
+		<LI>state.west.<STRONG>maxSize</STRONG> = integer (9999 = auto)</LI>
+		<LI>state.west.<STRONG>isClosed</STRONG> = true or false</LI>
+		<LI>state.west.<STRONG>isSliding</STRONG> = true or false (<I>temporarily</I> 'open')</LI>
+		<LI>state.west.<STRONG>isHidden</STRONG> = true or false</LI>
+		<LI>state.west.<STRONG>noRoom</STRONG> = true or false (<I>automatically</I> 'hidden')</LI>
+		<LI>state.west.<STRONG>isResizing</STRONG> = true or false</LI>
+	</UL>
+
+	<P>Other data is saved in the state object, like 'minPosition', but this is for internal use only.</P>
+
+	<P>In the future, state will also store <u>a complete set of dimensions for ALL panes</u>.</P>
+
+	<P>
+		State-management for UI Layout has unlimited options - you can persist <I>anything</I> you want.
+		So plan which layouts/panes/states you want to persist and which should always return to defaults,
+		then customize the 'keys' option(s) accordingly.	</P>
+</DIV>
+<!-- end collapsible -->
+
+
+<!-- DEPRICATED - NOW AN OPTION
+
+<H2 id="Text_Togglers">Text Inside a Toggler</H2>
+<DIV class="collapsible">
+
+<H4><STRONG>Q:</STRONG> Is there any way to set the toggler HTML content?</H4>
+
+<P>Although toggler-content is not built-in (yet), it's easy to do...</P>
+
+<P>After initializing the layout, access the toggler element(s) and 'append' anything you want:</P>
+
+<CODE><PRE>
+<I>// add content to east and west panes</I>
+$(".ui-layout-toggler-west, .ui-layout-toggler-east")
+  .append("&amp;#8249&amp;#8250;") <I>// put '&#8249;&#8250;' symbols inside the toggler</I>
+;
+</PRE></CODE>
+
+	<P>If you want different content depending whether the pane/toggler is 'open' or 'closed', there are two options:</P>
+	<OL>
+		<LI>Use onopen and onclose callbacks to change the content, OR...</LI>
+		<LI>Add TWO inner SPANs - one with 'closed content' and one with 'open content' - 
+			with different classnames. (<STRONG>Recommended Method</STRONG>)</LI>
+	</OL>
+
+	<H4>Adding State-Dependant Toggler Content</H4>
+
+		<P>Here is sample code for implementing idea #2...</P>
+
+<CODE><PRE>
+<I>// add content to west toggler</I>
+$(".ui-layout-toggler-west")
+  .append("&lt;span class='content-open'&gt;&amp;#8249&lt;/span&gt;") <I>// '&#8249' symbol</I>
+  .append("&lt;span class='content-closed'&gt;&amp;#8250;&lt;/span&gt;") <I>// '&#8250' symbol</I>
+;
+</PRE></CODE>
+
+		<P>This is the result (showing the symbols for clarity):</P>
+
+<CODE><PRE>
+&lt;SPAN class="ui-layout-toggler-west ... "&gt;
+    &lt;SPAN class="content-open"&gt;<B> &#8249 </B>&lt;/SPAN&gt;
+    &lt;SPAN class="content-closed"&gt;<B> &#8250; </B>&lt;/SPAN&gt;
+&lt;/SPAN&gt;
+</PRE></CODE>
+
+		<P>Now you can use CSS to handle it - no callbacks required:</P>
+
+<CODE><PRE>
+<I>/* SHOW text for 'current state' */</I>
+.ui-layout-toggler-open   .content-open ,
+.ui-layout-toggler-closed .content-closed {
+    display: block;
+}
+
+<I>/* HIDE text for 'alternate state' */</I>
+.ui-layout-toggler-open   .content-closed ,
+.ui-layout-toggler-closed .content-open {
+    display: none;
+}
+
+<I>/* add styling for the text/symbols */</I>
+.ui-layout-toggler span {
+	font: 20px Verdana, sans-serif;
+	color: #333;
+}
+<I>/* add a hover-color */</I>
+.ui-layout-toggler:hover span {
+	color: #F00; <I>// Red</I>
+}
+</PRE></CODE>
+
+		<P>These classes works for ALL togglers.</P>
+
+		<P>We may add <TT>togglerContent_open</TT> and <TT>togglerContent_closed</TT> options.
+			If values are passed, the inner SPANs will be <I>automatically</I> created.
+			In the meantime, it's simple to append your own content.</P>
+
+</DIV>
+-->
+
+
+
+
+<P>&nbsp;</P>
+<HR>
+<P class="bold">
+	<A href="#" onClick="return openAllSections()">Open All Sections</A> &nbsp;
+	<A href="#" onClick="return closeAllSections()">Close All Sections</A>
+	<BR>&nbsp;
+</P>
+
+</DIV>
+
+<!--
+	=======================
+	*	TABLE OF CONTENTS  *
+	=======================
+-->
+<DIV class="ui-layout-west" style="display: none;">
+	<DIV class="header">Contents</DIV>
+	<DIV class="ui-layout-content">
+		<UL id="TOC">
+			<LI><A href="#top">Tips &amp; FAQ</A></LI>
+			<LI><SPAN class="tocBtn"></SPAN><A href="#UI_Widgets">Integrating UI Widgets</A>
+				<UL>
+					<LI><A href="#UI_Widgets"		>Overview</A></LI>
+					<LI><A href="#Widget_Tabs"		>UI Tabs</A></LI>
+					<LI><A href="#Widget_Accordion"	>UI Accordion</A></LI>
+					<LI><A href="#Widget_Draggable"	>UI Draggables</A></LI>
+					<LI><A href="#Widget_Droppable"	>UI Droppables</A></LI>
+					<LI><A href="#Widget_Sortable"	>UI Sortables</A></LI>
+					<LI><A href="#Widget_DatePicker">UI Date-Picker</A></LI>
+					<LI><A href="#Widget_Dialog"	>UI Dialog</A></LI>
+					<LI><A href="#Widget_Menu"		>Menu Widgets</A></LI>
+					<LI><A href="#Widget_Toolbar"	>Toolbar Widgets</A></LI>
+					<LI><A href="#Widget_Other"		>Other/Future Widgets</A></LI>
+				</UL>
+			</LI>
+			<LI><A href="#Draggables">Draggable Elements</A></LI>
+			<LI><A href="#Pane_Scrolling">Control Pane Scrolling</A></LI>
+			<LI><SPAN class="tocBtn"></SPAN><A href="#State_Management">State Management</A>
+				<UL>
+					<LI><A href="#State_Example">EXAMPLE</A></LI>
+					<LI><A href="#State_Properties">State Properties</A></LI>
+					<LI><A href="#State_Methods">State Methods</A></LI>
+					<LI><A href="#State_Data">State Data</A></LI>
+				</UL>
+			</LI>
+<!--
+			<LI><SPAN class="tocBtn"></SPAN><A href="#Terminology">Terminology</A>
+				<UL>
+					<LI><A href="#Toggler">Toggler / Toggler-button</A></LI>
+				</UL>
+			</LI>
+-->
+<!--	DEPRICATED TOPICS
+			<LI><A href="#Text_Togglers">Text Inside a Toggler</A></LI>
+-->
+		</UL>
+	</DIV>
+</DIV>
+
+</BODY>
+
+<!-- Mirrored from layout.jquery-dev.net/tips.cfm by HTTrack Website Copier/3.x [XR&CO'2013], Fri, 23 May 2014 12:43:40 GMT -->
+</HTML>

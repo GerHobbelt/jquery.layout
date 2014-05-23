@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!-- Mirrored from layout.jquery-dev.net/issues.cfm by HTTrack Website Copier/3.x [XR&CO'2013], Fri, 23 May 2014 12:43:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<HEAD>
+	<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<TITLE>UI Layout Plug-in - Issues</TITLE>
+
+	<LINK rel="stylesheet" href="lib/css/global.css" type="text/css">
+	<!--[if lte IE 7]>
+		<style type="text/css"> body { font-size: 85%; } </style>
+	<![endif]-->
+	<STYLE type="text/css">
+		body {
+			background-color: #A4C2C2;
+		}
+		TD#navigation {
+			border-bottom: 0;
+			margin-bottom: 1px;
+		}
+		
+		.ui-layout-pane-north {
+			border-bottom: none;
+			background-color: #677;
+		}
+	</STYLE>
+
+	<SCRIPT type="text/javascript" src="lib/js/jquery-latest.js"></SCRIPT>
+	<!--<SCRIPT type="text/javascript" src="lib/js/jquery-ui-latest.js"></SCRIPT>-->
+	<SCRIPT type="text/javascript" src="lib/js/jquery.layout-latest.js"></SCRIPT>
+
+	<SCRIPT type="text/javascript">
+
+	function goPage () {
+		// update 'current' navbar link
+		$("#nav2 A").removeClass("current");
+		$(this).addClass("current");
+		this.blur(); // remove selection rectangle
+		//$Iframe.attr('src', this.href); // change iframe source
+		//return false; // cancel default hyperlink action
+	}
+
+	$(document).ready(function(){
+		$('body').layout({
+			north: {
+				width:			"auto"
+			,	spacing_open:	0
+			,	closable:		false
+			,	resizable:		false
+			}
+		});
+	});
+
+	</SCRIPT>
+
+</HEAD>
+<BODY>
+
+<DIV class="ui-layout-north">
+
+	<DIV id="logo">jQuery UI Layout Plug-in</DIV>
+	<DIV id="navigation">
+		<A href="index-2.html">HOME</A>
+		<A href="demos.html">DEMOS</A>
+		<A href="downloads.html">DOWNLOADS</A>
+		<A href="documentation.html">DOCUMENTATION</A>
+		<A href="tips.html">TIPS</A>
+		<A href="plugin.html">PLUGIN</A>
+		<A href="issues.html" class="current">ISSUES</A>
+		<A target="_blank" href="http://groups.google.com/group/jquery-ui-layout">DISCUSSION</A>
+
+	</DIV>
+
+	<DIV id="nav2">
+		<A class="current" href="http://plugins.jquery.com/project/issues/Layout#jq-content" target="layout-issues">
+			All Active Issues</A>
+		<A href="http://plugins.jquery.com/project/issues/Layout?categories=bug#jq-content" target="layout-issues">
+			Bugs Reports</A>
+		<A href="http://plugins.jquery.com/project/issues/Layout?categories=support#jq-content" target="layout-issues">
+			Support Requests</A>
+		<A href="http://plugins.jquery.com/project/issues/Layout?categories=feature#jq-content" target="layout-issues">
+			Feature Requests</A>
+		<!--
+		<a href="http://plugins.jquery.com/project/issues/Layout?categories=support&states=all#jq-content" target="layout-issues">
+			All Support Requests</a>
+		-->
+	</DIV>
+	<SCRIPT type="text/javascript">$("#nav2 A").click( goPage );</SCRIPT>
+
+	<DIV id="iframeInstructions">
+		To ADD an issue:
+		<A href="http://plugins.jquery.com/project/issues/Layout" target="jquery-issues">
+		open this page in its own window</A> &ndash; <I>and then</I> login
+	</DIV>
+</DIV>
+
+<IFRAME id="layout-issues" name="layout-issues" class="ui-layout-center" style="margin: 0; padding: 0;"
+	width="100%" height="600" frameborder="0" scrolling="yes"
+	src="http://plugins.jquery.com/project/issues/Layout#jq-content"></IFRAME>
+
+</BODY>
+
+<!-- Mirrored from layout.jquery-dev.net/issues.cfm by HTTrack Website Copier/3.x [XR&CO'2013], Fri, 23 May 2014 12:43:40 GMT -->
+</HTML>

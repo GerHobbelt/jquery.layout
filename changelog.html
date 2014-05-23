@@ -1,0 +1,2364 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!-- Mirrored from layout.jquery-dev.net/changelog.cfm by HTTrack Website Copier/3.x [XR&CO'2013], Fri, 23 May 2014 12:44:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<HEAD>
+	<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<TITLE>UI Layout Plug-in - Demos</TITLE>
+
+	<LINK rel="stylesheet" href="lib/css/global.css" type="text/css">
+<!--[if lte IE 7]>
+	<STYLE type="text/css"> body { font-size: 85%; } </STYLE>
+<![endif]-->
+	<STYLE type="text/css">
+	UL, OL {
+		margin-top: 0;
+		margin-bottom: 1em;
+	}
+	UL UL {
+		margin-bottom: 0;
+	}
+	H5 {
+		font-size:	1em;
+		font-style:	italic;
+		margin:		1em 0 1ex;
+	}
+	CODE,
+	PRE {
+		font-family: Consolas, "Lucida Console", Courier, "Courier New", monospace;
+		}
+		PRE I {
+			background:		#F6F6F6; /* for when comments overflow the PRE */
+			padding-right:	2px;
+		}
+	LI CODE	{
+		font-size:		1.05em;
+		vertical-align:	baseline;
+		white-space:	nowrap;
+		padding:		2px;
+		display:		inline-block;
+	}
+	.red	{ color: #C00; }
+	.blue	{ color: #00C; }
+	</STYLE>
+</HEAD>
+<BODY>
+<TABLE style="table-layout: fixed;" width="100%" border="0" cellspacing="0" cellpadding="0">
+	<TR style="height: 0">
+		<TD style="width: 230px;"></TD>
+		<TD width="80%"></TD>
+		<TD width="1%"></TD>
+	</TR>
+
+	<TR><TD colspan="3">
+
+	<DIV id="logo">jQuery UI Layout Plug-in</DIV>
+	<DIV id="navigation">
+		<A href="index-2.html" class="current">HOME</A>
+		<A href="demos.html">DEMOS</A>
+		<A href="downloads.html">DOWNLOADS</A>
+		<A href="documentation.html">DOCUMENTATION</A>
+		<A href="tips.html">TIPS</A>
+		<A href="plugin.html">PLUGIN</A>
+		<A href="issues.html">ISSUES</A>
+		<A target="_blank" href="http://groups.google.com/group/jquery-ui-layout">DISCUSSION</A>
+
+	</DIV>
+	</TD></TR>
+
+	<TR class="main">
+
+		<TD class="sidebarLeft">
+<div style="background-color: #FFF; padding: 0 0 10px; margin: 5px;">
+	<p style="padding: 10px; margin: 0;">
+		If you find Layout useful and want to support its development...</p>
+	<div style="text-align: center;">
+		<form name="donate" action="https://www.paypal.com/cgi-bin/webscr" target="layout_donate" method="post" style="padding: 0; margin: 0;">
+		<input type="hidden" name="cmd" value="_s-xclick">
+		<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHTwYJKoZIhvcNAQcEoIIHQDCCBzwCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYBbgMeEetqQ42rifQwgNkyA7YryReSdJIzAUOQEUxGz2RixVfniEP4HBnaOlffFxbBHRVzleCuBnfTRLzlcDSX8GIpmXEfDzkePlznySDo3erPKVYK7gnIJxg8PqUygVBZX05zGBtYoP8HLYQ41grORBshsNSGYWyhac02fp3ILwjELMAkGBSsOAwIaBQAwgcwGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIAtQAlf4joXCAgajZ24K0ZKJtpg5LiN5/QqM73melIOT+H12kBNRLmbEEaGVApbt0PvUPjvPr/eXaxYxPy74c3AgavdZf5X3WCtblSCq3VljRVB6T9HOU5pIgNHlPT8RUHG+y4h00L0RzYVSqrX6qEHogBUeDHS17kUA7l4SdJr/5cFFZK45yPg0/8fE7dT/TrbTEIVRpxwr6UhR6sZqLZuikK8yyi9ohe0qMGJNZrKolVUSgggOHMIIDgzCCAuygAwIBAgIBADANBgkqhkiG9w0BAQUFADCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wHhcNMDQwMjEzMTAxMzE1WhcNMzUwMjEzMTAxMzE1WjCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMFHTt38RMxLXJyO2SmS+Ndl72T7oKJ4u4uw+6awntALWh03PewmIJuzbALScsTS4sZoS1fKciBGoh11gIfHzylvkdNe/hJl66/RGqrj5rFb08sAABNTzDTiqqNpJeBsYs/c2aiGozptX2RlnBktH+SUNpAajW724Nv2Wvhif6sFAgMBAAGjge4wgeswHQYDVR0OBBYEFJaffLvGbxe9WT9S1wob7BDWZJRrMIG7BgNVHSMEgbMwgbCAFJaffLvGbxe9WT9S1wob7BDWZJRroYGUpIGRMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbYIBADAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAIFfOlaagFrl71+jq6OKidbWFSE+Q4FqROvdgIONth+8kSK//Y/4ihuE4Ymvzn5ceE3S/iBSQQMjyvb+s2TWbQYDwcp129OPIbD9epdr4tJOUNiSojw7BHwYRiPh58S1xGlFgHFXwrEBb3dgNbMUa+u4qectsMAXpVHnD9wIyfmHMYIBmjCCAZYCAQEwgZQwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tAgEAMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xMDEyMDgxNzMyNTVaMCMGCSqGSIb3DQEJBDEWBBQXogCVHgy2tGWA8Uwi51usp9fU7DANBgkqhkiG9w0BAQEFAASBgCnrOR/d56Fh9gMG0/p4uy8DcNAyxva6mQa470w2Ch+1+xbP2aScOY/g1MSQBfNdMm8LbPAf7OSEDd4WycthD80YnZJ52lMiat5bw4yZ6ZjEw1kLzNIhskzuqtNqMQ8dx6Gq+/NYjWH87fTW/T7/2/F6zU7Qb+YjRDJ2aJ/+vjNN-----END PKCS7-----">
+		<input id="btnDonate" name="submit" type="image" alt="Donate to UI Layout using PayPal" src="../www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0">
+		<img src="../www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" alt="" border="0">
+		</form>
+	</div>
+</div>
+
+<div style="background-color: #FFF; padding: 7px 0; margin: 5px; text-align: center;">
+	<table cellpadding="4" cellspacing="0" align="center">
+		<tr>
+			<td><a class="google-logo" href="http://groups.google.com/group/jquery-ui-layout" 
+				title="Visit this group"></a></td>
+		</tr>
+		<tr>
+			<td style="font-size: 1.15em; font-weight: bold;">UI Layout Support</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="http://groups.google.com/group/jquery-ui-layout">Visit this group</a></td>
+		</tr>
+	</table>
+</div>
+<p>
+	Updated Oct 29, 2012
+</p></TD>
+
+		<TD class="content">
+
+<P>This is a temporary page to collect new features added in the Release Candidate versions for UI Layout 1.3.0.</P>
+
+<P>I will add all the new features I can remember here for each RC version. 
+	When 1.3.0 Final is released, this information will be merged into the website documentation.</P>
+<HR>
+<P>&nbsp;</P>
+<P><B>Latest Version: <SPAN style="font-size: 1.4em;">1.3.0 RC-30.79</SPAN></B></P>
+
+<P><A href="lib/js/jquery.layout-1.3.0.rc30.77.js">jquery.layout-1.3.0.rc30.79.js</A>
+	&nbsp;-or-&nbsp; <BR>
+	<A href="lib/js/jquery.layout-latest.js">jquery.layout-latest.js</A>
+</P>
+<P><A href="lib/js/jquery.layout-1.3.0.rc30.77.min.js">jquery.layout-1.3.0.rc30.79.min.js</A>
+	&nbsp;-or-&nbsp; <BR>
+	<A href="lib/js/jquery.layout-latest.min.js">jquery.layout-latest.min.js</A>
+</P>
+
+
+
+<P>If you're not already using a 1.3.0.RC version of Layout, also download the newest layout stylesheet. 
+	<u>This stylesheet is cosmetic and not required for Layout to work </u>, but does provides useful 
+	samples and tips for styling a layout to achieve what you want. 
+	There are some changes in this regard from Layout 1.2.0...</P>
+
+<P> * <A href="lib/css/layout-default-latest.css">layout-default-latest.css</A></P>
+
+<P>&nbsp;</P>
+
+
+
+<HR id="1.3.0.rc30.79">
+<H4>New in RC30.79</H4>
+<UL>
+	<LI>Changed [pane].state.css.width value from [pane].css("width") to [pane].width() 
+		for consistency with other CSS values provided to users. (not used internally)</LI>
+</UL>
+
+
+<HR id="1.3.0.rc30.78">
+<H4>New in RC30.78</H4>
+<UL>
+	<LI>Updated $.layout.browser so is no longer reliant on $.browser, which was removed in jQuery 1.9.</LI>
+	<LI>Adjusted layout errors so they do not add extra blank lines in the console-log.</LI>
+</UL>
+
+
+<HR id="1.3.0.rc30.77">
+<H4>New in RC30.77</H4>
+<UL>
+	<LI>Fixed bug in cookie 'expires' code that prevented cookies from saving<BR>
+		(This bug first appeared in RC30.75)</LI>
+	<LI>Fixed bug with onload_start/end and onunload_start/end not firing</LI>
+	<LI>Update cssWidth/cssHeight methods so Layout now handles all possible box-sizing types.<BR>
+		<BR>(Requires a version of jQuery that includes support.boxSizing data)</LI>
+</UL>
+
+
+<HR id="1.3.0.rc30.76">
+<H4>New in RC30.76</H4>
+<UL>
+	<LI>Fixed bug when a pane has initHidden: true<BR>
+		(This bug first appeared in RC30.75)</LI>
+</UL>
+
+
+<HR id="1.3.0.rc30.75">
+<H4>New in RC30.75</H4>
+<UL>
+	<LI>Fixed bug when a pane is automatically closed onLoad due to insufficient room.</LI>
+	<LI>Fixed bug when a child-layout is destroyed and then the parent-pane is resized.</LI>
+	<LI>Fixed but when cookie is passed expiry-days as a string, eg: "30".</LI>
+	<LI>Add a new error message (log) when invalid pane-names are passed to methods.</LI>
+</UL>
+
+
+<HR id="1.3.0.rc30.74">
+<H4>New in RC30.74</H4>
+<P>Restored the functionality to load-state into an already existing layout. 
+	This now works with the cascading-state functionality added in RC30.7. 
+	So by setting/restoring state in the outer-layout, it will also restore the state of all child-layouts, 
+	provided the state-data exists for them and providing the option is set for this.
+</P>
+<P>This demo has buttons at the bottom of the center-pane that will restore state to 
+	as it was when the page loaded, and can do so both with or without pane-animations...
+</P>
+<P><A href="demos/saved_state_nested.html">saved_state_nested.html</A></P>
+
+
+<HR id="1.3.0.rc30.73">
+<H4>New in RC30.73</H4>
+<UL>
+	<LI>Fixed effect syntax bug when using jQuery UI 1.8.23+.
+		Effects logic now properly handles both the old and new UI syntax.</LI>
+	<LI>Added newSize, newWidth &amp; newHeight state-values for use in onopen_start callbacks.
+		These temporarly values indicate the size a pane <I>will be</I> once it opens.</LI>
+</UL>
+
+
+
+<HR id="1.3.0.rc30.72">
+<H4>New in RC30.72</H4>
+<UL>
+	<LI>Fixed logic bug in pane-masking so that panes could be resized in all directions.</LI>
+	<LI>Updated resize all method to allow dynamically changing the layout 'outset' option.</LI>
+	<LI>Added console.log output of the exception errors generated by layout callbacks.</LI>
+</UL>
+
+
+
+<HR id="1.3.0.rc30.71">
+<H4>New in RC30.71</H4>
+<UL>
+	<LI>Fixed double firing of callbacks when a layout is inside the content-div of its parent-pane.</LI>
+</UL>
+
+
+
+<HR id="1.3.0.rc30.7">
+<H4>New in RC30.7</H4>
+
+<H5>Bug Fixes</H5>
+<UL>
+	<LI>Fixed bug that incorrectly enabled showDebugMessages when showErrorMessages was enable</LI>
+	<LI>Improved option parsing to allow unlimited mixing of sub-key &amp; flat-format options.</LI>
+	<LI>Added background-color to <I>transparent</I> pane-masks to help resolve masking issues in IE.</LI>
+	<LI>Fixed misc syntax for compatibility with jQuery 1.8.</LI>
+</UL>
+
+<H5>Misc. Changes</H5>
+<UL>
+	<LI>The options.[pane].<STRONG>autoResize</STRONG> option is now copied to state.[pane].autoResize.
+		The state key will reflect is autoResize is still enabled (it's disabled by a manual resize).</LI>
+	<LI>Improved option parsing to allow <B>unlimited mixing of sub-key &amp; flat-format options</B>.</LI>
+	<LI>Can now pass true to <STRONG>resizeAll()</STRONG> method to recalculate container insets.
+		This allows changing insets on the fly, based on padding or new insets option (below).
+		See buttons in demo: <A href="demos/body_padding.html">body_padding.html</A></LI>
+	<LI>Added 'forceResize' argument (optional) to <STRONG>sizePane()</STRONG> method:
+		<CODE><STRONG>layout.sizePane(</STRONG> pane, size, skipCallback, noAnimation, <STRONG>forceResize )</STRONG></CODE>
+		<BR>This is useful if you change the padding or border on a pane and need to force a box-model size recalculation.</LI>
+</UL>
+
+<H5>New Layout-Container Functionality</H5>
+<UL>
+	<LI>Layouts on BODY element now respect margins, borders and paddings (padding-only in IE6).
+		See demo: <A href="demos/body_padding.html">body_padding.html</A></LI>
+	<LI>New <STRONG>layout.insets</STRONG> option overrides container.padding CSS for specifying layout insets from container boundaries. (example below)</LI>
+	<LI>Scrolling (overflowX/Y) now set intelligently if container has minWidth and/or minHeight specified.</LI>
+</UL>
+
+<H5>Child-Layout Changes</H5>
+<P>A number of enhancements were added to expand integration between parent and child (nested) layouts.
+	This includes name changes to most child options and methods...</P>
+<UL>
+	<LI>The syntax of child layouts has changed. <B>The term "child" is no longer used in <I>any</I> options, instances, state or methods.</B> 
+		Everything now uses the term "<B>children</B>" because the options &amp; methods can always refer to one-or-more child-layouts.
+	</LI>
+	<LI>So the options key "childOptions" is now just "<STRONG>children</STRONG>". 
+		This can be a single hash of options (as before), OR an array of hashes to define multiple child-layouts,
+		like when using layouts inside tabs.
+		The layout inside each tab-panel would be 'children' of the pane containing the tabs-widget.
+	</LI>
+	<LI>NOTE: the backwards-compatibility module will automatically rename "childOptions" to "children", 
+		so your layouts should work without any changes. 
+		However if you are accessing methods, options or child-instances via code, 
+		then you must update it to the use the new names. Ask if you have any questions.
+	</LI>
+	<LI>Layout can now manage <B>multiple child-layouts per pane</B>.
+		For example, a set of 'tabs' inside a pane that each have a layout.</LI>
+	<LI>Options for child-layouts now include "<STRONG>containerSelector</STRONG>"
+		This option allows tells layout where to find the child layout when it is not directly-nested inside the parent-pane.
+	</LI>
+	<LI>Layout will initialize layouts in ALL child-containers that match containerSelector, using the same set of childOptions.
+		(Must create additional children separately if they need different layout options.)
+	</LI>
+	<LI>When setting child-options for a layout that is not directly nested, you must specify a 
+		'containerSelector' so the parent layout knows how to find the child-layout-container. 
+		This selector should be valid <B>relative to the outer-pane where you are specifying the child-options</B>.
+		Layout uses this syntax to find the child-container:
+		<CODE><STRONG>$Pane.find( containerSelector )</STRONG></CODE>
+	</LI>
+	<LI>By default, the creation, destruction and resizing of layouts cascades to all child-layouts. 
+		However you can disable cascading at any level by disabling any of these options in the parent-pane (all are true by default), eg:
+		<CODE><STRONG>
+		<UL>
+			<LI>initChildren:    false</LI>
+			<LI>destroyChildren: false</LI>
+			<LI>resizeChildren:  false</LI>
+		</UL>
+		</STRONG></CODE>
+	<LI>Layout will automatically detect child-layouts that are directly nested, 
+		even if the children are added after the parent -ayout is created. 
+		BUT, if you add a child-layout that is not directly-nested - like inside a tab-panel - 
+		then you can notify the parent-layout of the child, and pass a pointer to the child-instance 
+		so they can be linked...
+		<BR><BR><CODE>parentLayout.<STRONG>refreshChildren</STRONG>( "center", childLayoutInstance );</CODE>
+		<BR><BR>(When using the special resizeTabs callback, you don't need to link the layouts - the callback handles it.)
+	</LI>
+	</li>You can also use refreshChildren to create child-layouts specified in the 'children' options 
+		after the parent has been created, by calling refresh without passing a child-instance, like...
+		<BR><BR><CODE>parentLayout.<STRONG>refreshChildren</STRONG>( "center" );</CODE>
+		<BR><BR>This will cause layout to reprocess the 'children' options for the center-pane and try to create the layouts now.
+	</li>
+	<LI>The <STRONG>layout.refreshChildren</STRONG><B>( pane, newChild )</B> method is 
+		the RECOMMENDED METHOD to notify a parent layout about a <I>manually created</I> child-layout.
+		Pass the newly created instance ('newChild') to the parent to connect them together.
+	</LI>
+	<LI>The child-instance structure has also changed to accomodate multiple children per-pane.
+		You now access a child like this: <STRONG>myLayout.children.center.layoutName</STRONG> (aka: <B>layout.center.children.layoutName</B>).
+		EACH child-layout is a 'key' under children. Layout creates this key using this logic:
+		<OL>
+			<LI><STRONG>options.stateManagement.cookie.name</STRONG> (cookie-name) &ndash; if exists</LI>
+			<LI><STRONG>options.name</STRONG> (layout-name) &ndash; if exists</LI>
+			<LI><STRONG>layoutN (eg: "layout1")</STRONG> &ndash; auto-generated key using sequential numbering</LI>
+		</OL>
+		These instance-names are also be used for stateManagement, so the layout-state can be related
+		to the correct layout. See more info below.
+	</LI>
+</UL>
+
+<H5>New State Management Features</H5>
+<P>Layout's state-management can now handle <B>an unlimited number of layouts in a single sated-state object</B>.
+	This means a parent layout can save and restore the states of <I>all</I> its child/nested layouts, and all their children.
+	So if you have a page-layout with 12 nested layouts inside it, the page-layout can handle state-management for them all!
+	Any 'branch' of layouts can be handled as a unit, and be disconnected from the state of its parents.
+</P>
+<UL>
+	<LI>New <STRONG>layout.stateManagement.includeChildren</STRONG> option &ndash; default = true.
+		When enabled, layout's state-management will include child-layouts when saving &amp; restoring state.
+		This option cascades to all child-layout unless specifically disabled in child's options.
+	</LI>
+	<LI>When using cascading state-management, DO NOT enable stateManagement in the child-layouts.
+		Enabling state-management for a child tells Layout that child will handle its own state.
+	</LI>
+	<LI>So to <B>STOP</B> a child-layout from inheritting state, do either of these things:<BR>
+		<CODE><STRONG>childOptions.stateManagement__enabled:&nbsp; true</STRONG></CODE> &ndash; this layout will load &amp; save its state separately
+		<BR>&nbsp; <I>-or-</I>
+		<BR><CODE><STRONG>childOptions.stateManagement__autoLoad: false</STRONG></CODE> &ndash; <I>anything</I> other than 'true'
+	</LI>
+	<LI>The saved-state hash-structure has been extended to accomodate state for multiple children per-pane.
+		The state object stores child-state like this: <STRONG>state.center.children.layoutName</STRONG>.
+		EACH child-layout is a 'key' under children. Layout uses the same key as for the instance
+		structure, described above.
+	</LI>
+	<LI>If all layouts are created onLoad, then Layout will auto-generate layout names/keys and handle everything
+		automatically. The same applies if layouts are added after load, but always created in the same order.
+		Because keys are generated using sequential numbering, the keys in the saved-state will still match.
+	</LI>
+	<LI>If your page creates child layouts dynamically (eg: using Ajax), then you should specify a 'name' 
+		(layout-name or cookie-name) for each dynamic layout to ensure the correct saved-state will be
+		matched to that layout when it is created.
+	</LI>
+	<LI><STRONG>StateManagment.autoSave</STRONG> &amp; <STRONG>StateManagment.autoLoad</STRONG> options are now <u>multi-functional</u>.
+		Both options can now be callbacks for integrating custom state-management,
+		so you <I>no longer</I> need to use the layout.onload and layout.onunload callbacks for this.
+		<UL>
+			<LI><STRONG>autoSave</STRONG> can be '<B>true</B>' or a <B>custom function</B> that returns the state-data hash</LI>
+			<LI><STRONG>autoLoad</STRONG> can be '<B>true</B>', a <B>custom function</B> that returns a state-data hash,
+				or <I>BE</I> a <B>state-data hash</B> that loads automatically with the layout.<BR>
+				(Layout uses an autoLoad state-hash to pass state from parents to children.)
+			</LI>
+		</UL>
+	</LI>
+	<LI>If a functions is set for autoSave or autoLoad, it is passed the same arguments as other layout callbacks.
+	</LI>
+</UL>
+
+<H5>Misc Internal Changes</H5>
+<UL>
+	<LI>Utility <B>$.layout.getElementCSS</B> is now <STRONG>$.layout.getElementStyles</STRONG> (for clarity)</LI>
+	<LI><B>$.config.[pane].side</B> value is now lowercase (eg: "top" - <u>not</u> "Top")</LI>
+	<LI>layout.state.container now lists 'insets' in a hash like <B>state.container.<STRONG>inset.top</STRONG></B> 
+		instead of individually like <B>state.container.<STRONG>insetTop</STRONG></B></LI>
+	<LI>New state-key: <STRONG>layout.state.container.isBody</STRONG> = true/false</LI>
+	<LI><B>layout.state.container.offetWidth/Height</B> is now <STRONG>layout.state.container.layoutWidth/Height</STRONG>
+		to avoid confusion with DOM properties. (These are used <I>only</I> to handle quirks-mode in IE.)</LI>
+	<LI>Changed the order of arguments on internal <B>_sizePane()</B> method to match external <B>Instance.sizePane()</B></LI>
+	<LI>Added separate jQuery wrapper for plug-ins to ensure no sharing of internal vars.</LI>
+</UL>
+
+
+
+<HR id="1.3.0.rc30.62">
+<H4>New in RC30.62</H4>
+
+<H5>Bug Fixes</H5>
+<UL>
+	<LI>Fixed bug triggered by code typo: if(":visible:")</LI>
+	<LI>Fixed incorrect resizer-tips being applied in open and closed states</LI>
+	<LI>Fixed internal utility that incorrectly applied a "display" style-rule to elements</LI>
+	<LI>Fixed regExp syntax used when reading options for trigger-events</LI>
+	<LI>Fixed undeclared variable to avoid creating a global var</LI>
+</UL>
+
+
+
+<HR id="1.3.0.rc30.61">
+<H4>New in RC30.61</H4>
+
+<H5>Bug Fixes</H5>
+<UL>
+	<LI>Fixed box-model detection to work in both old and new versions of jQuery (IE bug)</LI>
+	<LI>Fixed/replaced old $.curCSS syntax that has been removed from jQuery</LI>
+	<LI>Fixed incorrect show-messages logic that caused debug messages to shown when option not enabled</LI>
+	<LI>Fixed incorrect pane-binding method name: "sizePane"</LI>
+	<LI>Fixed syntax error in enableSlidable method</LI>
+	<LI>Exposed showMasks() and hideMasks() methods on Layout instance object for use by custom code</LI>
+	<LI>Fixed syntax error in code that syncs pin-buttons with layout-state</LI>
+</UL>
+
+
+
+<HR id="1.3.0.rc30.6">
+<H4>New in RC30.6</H4>
+
+<H5>Bug Fixes</H5>
+<UL>
+	<LI>Fixed bug triggered by a minWidth or minHeight on the center-pane</LI>
+	<LI>Fixed issue detecting quirks-mode and box-model issues</LI>
+	<LI>Fixed triggering for layout-events bound to the container element</LI>
+	<LI>Fixed bug where layout-event triggering cascaded to parent layout as well</LI>
+	<LI>Fixed variable name ('short') in callback code that prevented minification</LI>
+	<LI>Restored error-capture for invalid callbacks</LI>
+</UL>
+
+<H5>New Language Options</H5>
+<P>Layout had multiple ways of changing the text used for tips and messages, which
+	A) was somewhat confusing, and B) had some bugs.
+	<B>So the old $.layout.language functionality is now gone.</B>
+	All language settings are now part of the standard options.
+	If you want to change the language settings globally, modify the global options.
+</P>
+<P>Language options are in 2 separate subkeys of the options:</P>
+
+<P><B>Developer Error Messages</B></P>
+<P>Error messages are 'layout options'.
+	There is no reason to customize these for each layout, so if you want to customize them for a language,
+	this is best done by modifying the global default options. Below are the defaults:
+<PRE>
+$.layout.defaults = {
+...
+, errors: {
+    pane:               "pane"      <I>// "layout pane element" - used only in error messages</I>
+  , selector:           "selector"  <I>// "jQuery-selector" - used only in error messages</I>
+  , addButtonError:     "Error Adding Button \n\nInvalid "
+  , containerMissing:   "UI Layout Initialization Error\n\nThe specified layout-container does not exist."
+  , centerPaneMissing:  "UI Layout Initialization Error\n\nThe center-pane element does not exist.\n\nThe center-pane is a required element."
+  , noContainerHeight:  "UI Layout Initialization Warning\n\nThe layout-container \"CONTAINER\" has no height.\n\nTherefore the layout is 0-height and hence 'invisible'!"
+  , callbackError:      "UI Layout Callback Error\n\nThe EVENT callback is not a valid function."
+  }
+...
+</PRE>
+
+<P><B>End-User Tips &amp; Messages</B></P>
+<P>The tooltips and alert for end-users are 'pane options', meaning they can be customized for each pane.
+	By default all panes use the same tips &ndash; set in the 'panes' subkey.
+	You can modify the global defaults, <I>and</I> the 'panes' default for each layout,
+	<I>and</I> the settings for a specific pane if desired. Like all other options,
+	the more specific settings will override the more general ones.
+<PRE>
+$.layout.defaults = {
+...
+, panes: {
+  ...
+  , tips: {
+      Open:           "Open"    <I>// eg: "Open Pane"</I>
+    , Close:          "Close"
+    , Resize:         "Resize"
+    , Slide:          "Slide Open"
+    , Pin:            "Pin"
+    , Unpin:          "Un-Pin"
+    , noRoomToOpen:   "Not enough room to show this panel." <I>// blank = no message</I>
+    , minSizeWarning: "Panel has reached its minimum size"  <I>// statusbar message</I>
+    , maxSizeWarning: "Panel has reached its maximum size"  <I>// ditto</I>
+    }
+  }
+}
+</PRE>
+<P>NOTE that the tip-options that start with a capital letter (eg: Open, Close) should
+	be specified with a capital letter (eg: Ouvrier, Fermier), unless you specifically want
+	your tooltips to be displayed in all-lowercase. 
+
+<P>The new language options replace <u>both</u> the $.layout.language object and the old 'tip' options.
+	All the options listed below no longer exist. However Layout's backwards-compatibility module
+	will automatically rename your old options to their new equivalents, which are also shown below:
+</P>
+<PRE>
+<B><I> OLD Options       =&gt; NEW Options</I></B>
+ noRoomToOpenTip   =&gt; tips.noRoomToOpen
+ togglerTip_open   =&gt; tips.Close
+ togglerTip_closed =&gt; tips.Open
+ resizerTip        =&gt; tips.Resize
+ sliderTip         =&gt; tips.Slide
+</PRE>
+<P>NOTE that the <B>togglerTip_closed</B> is equivalent to <B>tips.Open</B>.
+	This is because the new options are based on the 'word meaning', 
+	where the old options were based on the 'current pane state'.</P>
+
+<P>Here is a sample of how to customize the language <I>in the layout options</I>...
+</P>
+<PRE>
+<I>// flat-format option format</I>
+$("body").layout({
+    <B>panes</B>__tips__Open:   "Ouvrier" <I>// default for all panes in layout</I>
+,   <B>panes</B>__tips__Close:  "Fermier"
+,   <B>west</B>__tips__Open:    "Ourvrier la Menu" <I>// for west-pane only</I>
+,   <B>west</B>__tips__Close:   "Fermier la Menu"
+});
+
+<I>&ndash;or&ndash;</I>
+
+<I>// sub-key option format</I>
+$("body").layout({
+    panes: { <I>// defaults for all panes in layout</I>
+        tips: {
+            Open:   "Ouvrier"
+        ,   Close:  "Fermier"
+        }
+    }
+,   west: {  <I>// for west-pane only</I>
+        tips: {
+            Open:   "Ouvrier la Menu"
+        ,   Close:  "Fermier la Menu"
+        }
+    }
+});
+
+<I>&ndash;or&ndash;</I>
+
+<I>// flat-format and sub-key option formats combined</I>
+$("body").layout({
+    panes__tips: { <I>// defaults for all panes in layout</I>
+        Open:   "Ouvrier"
+    ,   Close:  "Fermier"
+    }
+,   west__tips: {  <I>// for west-pane only</I>
+        Open:    "Ourvrier la Menu"
+    ,   Close:   "Fermier la Menu"
+    }
+});
+</PRE>
+
+
+
+
+
+
+<P>&nbsp;</P>
+
+<HR id="1.3.0.rc30.5">
+<H4>New in RC30.5</H4>
+
+<H5>OVERVIEW</H5>
+<P>This release enhances Layout's <B>event model</B>. The goal is to provide the full range of 
+	event, method, and callback features available in jQuery and jQuery UI widgets. 
+	Layout now has many, many more ways for interacting with layouts
+</P>
+<P>This release also tweaks <B>parent-child layout integration</B>.
+	Numerous layouts can now be specified as a single set of hierarchical options. Layout will 
+	automatically initialize each sub-layout in sequence, and link them all together for resizing
+	and destruction (this can be overridden). The goal is to make a page full of nested layouts
+	act as if they are one big layout, yet allow any part to be individually loaded, removed or manipulated.
+</P>
+
+
+<H5>Fixed pane-resizing bug when using percentage or 'auto' size settings</H5>
+<P>This fixed a bug that occurred under specific (rare) conditions that caused panes
+	to not size to the correct size.
+</P>
+
+
+<H5>The "No center-pane found" message now obeys showErrorMessage option</H5>
+<P>Previously this error message would always appear when no center-pane was found,
+	regardless how the showErrorMessage option was set. Now no message will appear if
+	showErrorMessage=false, allowing for panes to be dynamically added without the user
+	seeing an error.
+</P>
+<P><B>NOTE</B>: Setting showErrorMessage=false will prevent Layout from telling you when something is wrong!
+	So do not set this option while creating and testing your layout.
+	Enable it only when you are ready to make your layout public.
+</P>
+
+
+<H5>Refined linking of parent/child layouts</H5>
+<P>The RC30 series closely integrates parent/child layouts. A few tweaks were added to this logic
+	to avoid circular references between parents and childs. So here are the basics:
+</P>
+<UL>
+	<LI>A layout has direct references to child-layouts inside EACH of its panes</LI>
+	<LI>The child value for a pane is NULL if it does not have a child-layout</LI>
+	<LI>The property Instance.<B>hasParentLayout</B> equals 'true' if there is a parent layout</LI>
+	<LI>There is NOT a pointer to the parent-layout instance because this would create a never-ending
+		circle of parent-child references. (stack-overflow bug fixed in RC30.3)</LI>
+	<LI>If an inner-layout is 'directly-nested' inside a parent layout, then you can get a pointer
+		to the parent layout from container of the inner-layout, which is also a 'pane' in the outer-layout,
+		eg: <SPAN style="white-space: nowrap;">parentLayout = childLayout.container.data("parentLayout")</SPAN></LI>
+	<LI>If an inner-layout is <I>not</I> 'directly-nested' you can find the parent-layout by searching for the
+		'containerClass' (default = "ui-layout-container"), eg:
+		parentLayout = childLayout.container.closest(".ui-layout-container").</LI>
+	<LI>If layouts are not directly-nested, you can <I>manually</I>
+		set a pointer to the child in the parent, and enable the hasParentLayout flag in the child.
+		This will <I>link</I> the layouts so resize and destroy events cascade from parent to child.</LI>
+</UL>
+<PRE>
+<I>// get the child layout nested inside the outer-center-pane</I>
+var childInstance = thisLayout.children.center;
+  OR
+var childInstance = thisLayout.center.child;
+
+<I>// get a layout nested 4 levels deep</I>
+var deepChild = outerLayout.west.child.north.child.center.child.north;
+deepChild.close("west"); <I>// close west-pane in nested layout</I>
+
+<I>// see if a layout is nested inside another layout</I>
+if ( thisLayout.hasParentLayout ) {
+    <I>// find the parent-layout...</I>
+
+	<I>// first get the 'container element' for this layout</I>
+    var $layoutContainer = thisLayout.container;
+    <I>// see if this layout is inside the 'pane' of a parent </I>
+    var parentLayout = $layoutContainer.data("parentLayout");
+
+    <I>// if not directly-nested, must search up the DOM</I>
+    if ( !parentLayout ) {
+        <I>// find the closest layout-container wrapped around this one</I>
+        var $parentContainer = $layoutContainer.closest(".ui-layout-container");
+        if ( $parentContainer.length )
+            parentLayout = $parentContainer.data("layout");
+    }
+
+    <I>// trigger a resizeAll command on the parent-layout</I>
+    if (parentLayout)
+        parentLayout.resizeAll();
+}
+</PRE>
+<P>This demo has options for 7 layouts specified inside a single set of options...
+</P>
+<P><A href="demos/nested_children.html" target="_blank"><B>Child-Layout Create/Destroy Demo</B> (nested_children.html)</A>
+</P>
+<P>It illustrates how parent/child layouts autotomatically link together for creation and destruction.
+	It includes sample for how to create child layouts inside any element, not just a 'pane', eg:
+</P>
+<PRE>
+<I>//  this layout is inside the 'content-div' of the center-pane</I>
+,   center__childOptions: {
+        name:  'middle-center'
+        <I>// no extras options required &ndash; handled automatically</I>
+    }
+<I>//  this layout is inside a wrapper-div (NOT directly-nested)</I>
+,   east__childOptions: {
+        name:  'middle-east'
+    ,   containerSelector:  '> div' <I>// first child-div of pane</I>
+	}
+</PRE>
+
+
+<H5>New event-binding options on layout-elements</H5>
+<P>Previously layout event callbacks could only be set in the layout options, which also meant
+	that each event could only have a single callback. This new binding option addresses both issues.
+</P>
+<PRE>
+<I>// bind an onopen callback to the west pane-element</I>
+$("body > .ui-layout-west").bind("layoutpaneonopen", function(){
+    alert("west.onopen callback #1");
+});
+<I>// bind ANOTHER onopen callback to the west pane-element</I>
+$("body > .ui-layout-west").bind("layoutpaneonopen", function(){
+    alert("west.onopen callback #2");
+});
+
+<I>// bind an onresizeall callback to the layout container-element</I>
+$("body").bind("layoutonresizeall", function(){
+    alert("layout.onresizeall callback");
+});
+</PRE>
+<P>When using element binding, all 'pane event names' are prefixed with "layoutpane", 
+	and all 'layout event names' are prefixed with "layout".
+	Callbacks bound this way work exactly like callbacks set in the options, including being passed the same
+	set of parameters.
+
+<H5>New method-triggering option on layout-container and layout-pane-elements.</H5>
+<P>Previously layout methods always had to be called using the layout-instance object.
+	Now methods can be activated using the standard jQuery event-triggering syntax.
+</P>
+<P>Method names use the same prefixes as the event-callbacks described above: 
+	Layout methods are prefixed with "layout" and pane methods are prefixed with "layoutpane".
+	Following jQuery UI guidelines, methods names are all referenced in lower-case,
+	even those that are normally in camel-case, eg:
+	<SPAN style="white-space: nowrap;">myLayout.resizeAll() =&gt; $pane.trigger("layoutresizeall")</SPAN>
+</P>
+<PRE>
+<I>Trigger the resizeAll method directly on the layout container element</I>
+$("body").trigger("layoutresizeall");
+
+<I>Open the west pane by triggering the command directly on the pane</I>
+$("body > .ui-layout-west").trigger("layoutpaneopen");
+</PRE>
+<P>Methods that contain the word "pane" have alternate versions without this redundancy, eg:
+</P>
+<PRE>
+<I>// normal/full method name</I>
+$("body > .ui-layout-west").trigger("layoutpaneremovepane");
+
+<I>// alternate/abbreviated method name</I>
+$("body > .ui-layout-west").trigger("layoutpaneremove");
+</PRE>
+<P>If you need to pass one or more parameters to a layout method, put them in an array,
+	per standard jQuery rules for trigger()...
+</P>
+<PRE>
+<I>// size pane to 200px</I>
+$("body > .ui-layout-west").trigger("layoutpaneremove", [ 200 ]);
+
+<I>// un-hide pane, and open it, with no animation</I>
+$("body > .ui-layout-west").trigger("layoutpaneshow", [ true, true ]);
+</PRE>
+<P>Events triggered on layout elements DO NOT propagate/bubble-up, 
+	so triggering 'layoutpaneopen' on a pane in a nested-layout
+	will not trigger an open event on the wrapping pane in the outer-layout.
+</P>
+
+
+<H5>When calling layout methods, a 'pane element' can be passed instead of a 'pane name'.</H5>
+<P>The new event model adds more flexibility in identifying panes to act on. You can now pass
+	either the pane-name, the pane DOM-element, the pane as a jQuery object, or an 'event'
+	triggered on the pane-element:
+</P>
+<PRE>
+<I>// these 5 'closePane' commands all work the same</I>
+
+<I>// pane-name as a string</I>
+myLayout.close("west");
+
+<I>// pane as a DOM element</I>
+$(".ui-layout-pane").click(function(){
+    myLayout.close( this );
+});
+
+<I>// pane as a jQuery object</I>
+$("button#close-pane").click(function(){
+    myLayout.close( $(this).closest(".ui-layout-pane") );
+});
+
+<I>// a 'click event' on a pane-element</I>
+$(".ui-layout-pane").click( myLayout.close );
+
+<I>// trigger method discussed in previous feature</I>
+$(".ui-layout-pane").trigger("layoutpaneclose");
+</PRE>
+
+
+<H5>Added new method to allow event callbacks to be manually triggered</H5>
+<P>A new layout.runCallbacks() method lets you trigger event callbacks for a specific event.
+	This includes the callback set in the options plus any callbacks bound to the layout-element.
+</P>
+<P>This is different from 'trigger events' as discussed above, because the runCallbacks method
+	only runs the callback for an event &ndash; it does NOT trigger the event to occur.
+	So calling myLayout.runCallbacks("onopen", "west") is NOT the same as myLayout.open("west").
+	The purpose of the runCallbacks method is to allow callbacks to be fired without an event
+	trigger, which means you could run "onopen" callbacks a second time, which would not happen
+	if you simply called open("west") a second time &mdash; that would do nothing since the pane is already open.
+</P>
+<PRE>
+<I>// trigger ALL west.onresize callbacks</I>
+myLayout.runCallbacks("onresize", "west");
+
+<I>// trigger ONLY the west.onresize callback set in 'options'
+// ie, skip any callbacks set on the pane-element</I>
+myLayout.runCallbacks("onresize", "west", <B>true</B>);
+</PRE>
+<P>This could be useful when manually manipulating content inside a pane, and then wanting
+	Layout callbacks to reprocess the contents.
+</P>
+
+
+<H5>New way to access layout-pane properties and methods</H5>
+<P>Layout RC30 added new 'pane' aliases to the layout-instance object.
+	These aliases provide access to the properties of a pane, eg:
+</P>
+<PRE>
+var paneObject = myLayout.west;
+<I>// paneObject now contains this data</I>
+{
+    name:     "west"
+,   pane:     myLayout.panes.west     <I>// pane element</I>
+,   content:  myLayout.content.west   <I>// content-div element</I>
+,   options:  myLayout.options.west   <I>// pane options</I>
+,   state:    myLayout.state.west     <I>// pane state</I>
+,   child:    myLayout.children.west  <I>// pane child-layout Instance</I>
+}
+
+<I>// can also get paneObect from the pane-element</I>
+var paneObject = $(".ui-layout-west").data("layoutPane");
+</PRE>
+<P>The ability to get these pointers directly from the pane-element, without knowing the 'name' of the pane, 
+	makes writing generic functions much easier. For example:
+</P>
+<PRE>
+// function to close a pane if current size is less than 200px
+function closeSmallPane () {
+    var layoutPane = $(this).data("layoutPane");
+    if (layoutPane.name === "center")
+        return; // skip center panes
+    if ( layoutPane.state.size < 200 )
+        layoutPane.pane.trigger("layoutpaneclose");
+}
+
+// bind generic function to event on ALL panes on page
+$(".ui-layout-pane").mouseenter( closeSmallPane );
+</PRE>
+
+
+
+
+
+
+<HR id="1.3.0.rc30.4">
+<H4>New in RC30.4</H4>
+
+<H5>Tweaked state-data so onclose_open callback gets more accurate info.</H5>
+<P>This very minor update was added to coordinate with the pseudoClose 1.1 callback update.
+	By returning more complete state-info about what the pane is doing, a pane's normal 
+	hide()/show() functionality can be used even when the pseudoClose callback is assigned.
+</P>
+
+
+
+
+<HR id="1.3.0.rc30.3">
+<H4>Fixed in RC30.3</H4>
+
+<H5>Fixed circular layout-pointer bug</H5>
+<P>Layout RC30 added pointers both from parent to children layouts and from child to parent layout.
+	However this creates an infinite circle of references from parent to child to parent to child...
+	To resolve this, the [layout-instance].parent pointer has been removed.
+</P>
+<P>A new hasParentLayout flag has been added to layouts instead of a pointer to the parent layout:</P>
+<PRE>
+// this sample assumes all layouts have already been created...
+
+// GET the layout-instance of an inner-layout
+var innerLayout = $("#innerContainer").data("layout");
+
+if ( innerLayout.hasParentLayout ) {
+    // we can get an instance of the parent-layout from the 
+    // 'container' element of this child-layout
+    var parentLayout = innerLayout.container.data("parentLayout");
+
+    // we could also check that layout for a parent...
+    if ( parentLayout.hasParentLayout ) {
+        var grandparentLayout = parentLayout.container.data("parentLayout");
+    }
+}
+</PRE>
+
+<H5>Fixed bug in disable-text-selection-while-resizing feature</H5>
+<P>Disabling text-selection relies on a jQuery UI utility, so this feature does not work without UI.
+	Previously was generating an error in the console every time a Resizer-bar was hovered.
+</P>
+
+<H5>Remove hack used to work around Webkit rendering issue</H5>
+<P>There are certain circumstances where Webkit (Chrome specfically) does not render the screen as fast
+	as the Javascript runs. One example is opening a popup window that has a layout.
+	Even though the layout is created after document.ready, the BODY elements is detected 'not visible'.
+	This causes Layout to abort because it cannot initialize within a hidden container.
+</P>
+<P>The previous hack <I>always</I> added a delay for Chrome, but this meant Layout loaded asynchronously in Chrome.
+	This can cause sequence-of-events issues in users' code. RC30.3 eliminates this and adds a delay <u>only</u>
+	when the container is BODY (an outer-layout), and <u>only</u> if it does not load correctly the first time.
+</P>
+<P>This issue can be seen in (some versions of) Chrome on this test-page: 
+	<A href="sample/test_popup_window.html">test_popup_window.html</A>.
+	You may have to try the popup a few times - the rendering bug is erratic!
+</P>
+
+
+
+<HR id="1.3.0.rc30.2">
+<H4>New in RC30.2</H4>
+
+<H5>Size-to-grid option</H5>
+<P>A new option was added that will cause manual resizing of panes to 'snap to a grid' of the size specified.
+	This option is passed to the Draggable widget, which handles the snap-to-grid functionality.
+	This is a pane-option, so can be set as a default or customized per-pane.</P>
+<PRE>
+<I>//  Enable snap-to-grid</I>
+,   west__resizingGrid: 20 // pixels - default = false (none)
+</PRE>
+
+<H5>Fix bug when sizing panes with a size-option of "100%" or -1</H5>
+<P>The sizing logic was not correctly handling 100% size options, causing the pane to be auto-sized rather
+	than sized to 100% of available space. This was fixed.
+</P>
+
+
+
+
+<HR id="1.3.0.rc30.1">
+<H4>New in RC30.1</H4>
+
+<H5 class="red"><B>WARNING</B>: Do not implement this version in a live website or application 
+	without testing it.</H5>
+<P>I have tested this version thoroughly, but there are SO MANY changes that it is impossible to test every
+	possible scenario. So for now this version should be treated as a "beta version".
+	The RC29.15 version should be considered the "last stable version" until RC30 has been tested for a couple of weeks.
+</P>
+<P><B>The RC30 series makes significant changes to Layout's internal structure.</B>
+	Most of these changes are backwards compatible, but a few minor tweaks to your options may be required
+	to get things exactly as you want because a few 'defaults' have been changed.
+</P>
+
+<H5>GLOBAL Layout Options</H5>
+<P>Many more things are now exposed globally, including the default layout options.
+	Here is how to set '<B>global default options</B>' that will apply to all your layouts:
+</P>
+<PRE>
+<I>// IMPORTANT &ndash; <u>always</u> 'extend' the defaults - <u>never</u> 'replace' them!</I>
+<B class="red">$.extend(</B> <B>$.layout.defaults</B>, {
+    showErrorMessages:  false
+    <I>// NOTE the new 'panes' key - replaces 'defaults'</I>
+,   <B class="red">panes</B>: {
+        spacing_open:   10
+    ,   togglerLength:  60
+    ,   liveResizing:   true
+    }
+,   north: {
+        closable:       false
+    ,   spacing_open:   0
+    }
+});
+
+OR by setting individual keys:
+<I>// change a 'layout option'</I>
+$.layout.defaults.showErrorMessages = false;
+<I>// change a 'default pane option'</I>
+$.layout.defaults.panes.liveResizing = true;
+</PRE>
+<P><B>NOTE that the key for 'default pane-options' was renamed from "defaults" to "<SPAN class="red">panes</SPAN>".</B>
+	This makes the key's purpose more clear and avoids confusing the pane-defaults key with 
+	$.layout.defaults, which is the top-level of the options.
+</P>
+
+<H5>Option Name Changes</H5>
+<P>A number of options have been renamed. Layout will still work with the old option names by automatically
+	converting them to the new names on initialization, but it would be good for you to learn the new syntax.
+	Here is a chart of all name recent changes:
+</P>
+<PRE>
+<I>OLD Option Name:             NEW Option Name</I>
+applyDefaultStyles:          applyDemoStyles
+resizeNestedLayout:          resizeChildLayout
+resizeWhileDragging:         livePaneResizing
+resizeContentWhileDragging:  liveContentResizing
+triggerEventsWhileDragging:  triggerEventsDuringLiveResize
+maskIframesOnResize:         maskContents
+useStateCookie:              stateManagement.enabled
+cookie.autoLoad:             stateManagement.autoLoad
+cookie.autoSave:             stateManagement.autoSave
+cookie.keys:                 stateManagement.stateKeys
+cookie.name:                 stateManagement.cookie.name
+cookie.domain:               stateManagement.cookie.domain
+cookie.path:                 stateManagement.cookie.path
+cookie.expires:              stateManagement.cookie.expires
+cookie.secure:               stateManagement.cookie.secure
+</PRE>
+<P>You can access this list at a hash at: $.layout.backwardCompatibility.map</P>
+
+
+<H5>New &amp; Updated Options</H5>
+<P>A number of new options were added, and the effect of some old options modified slightly.
+	Rather than list only the changes, here is a COMPLETE LIST of all Layout options in RC30,
+	with NEW options in <B class="red">red</B> and RENAMED options in <B class="blue">blue</B>.<BR>
+	(if comments below are chopped off, see $.layout.defaults in the JS file to read the full comments)
+</P>
+<PRE>
+<I>// set pointer to language-defaults key - used for default-tips on each pane</I>
+var <B>lang</B> = $.layout.language;
+
+<B>$.layout.defaults</B> = {
+<I><B>/*
+ *  LAYOUT &amp; LAYOUT-CONTAINER OPTIONS
+ *  - none of these options are applicable to individual panes
+ */</B></I>
+    name:                        ""          <I>// Not required, but useful for buttons and used for the state-cookie</I>
+,   containerClass:              "ui-layout-container" <I>// layout-container element</I>
+,   scrollToBookmarkOnLoad:      true        <I>// after creating a layout, scroll to bookmark in URL (.../page.htm#myBookmark)</I>
+,   resizeWithWindow:            true        <I>// bind thisLayout.resizeAll() to the window.resize event</I>
+,   resizeWithWindowDelay:       200         <I>// delay calling resizeAll because makes window resizing very jerky</I>
+,   resizeWithWindowMaxDelay:    0           <I>// 0 = none - force resize every XX ms while window is being resized</I>
+,   onresizeall_start:           null        <I>// CALLBACK when resizeAll() STARTS    - NOT pane-specific</I>
+,   onresizeall_end:             null        <I>// CALLBACK when resizeAll() ENDS    - NOT pane-specific</I>
+,   onload_start:                null        <I>// CALLBACK when Layout inits - after options initialized, but before elements</I>
+,   onload_end:                  null        <I>// CALLBACK when Layout inits - after EVERYTHING has been initialized</I>
+,   onunload_start:              null        <I>// CALLBACK when Layout is destroyed OR onWindowUnload</I>
+,   onunload_end:                null        <I>// CALLBACK when Layout is destroyed OR onWindowUnload</I>
+,   autoBindCustomButtons:       false       <I>// search for buttons with ui-layout-button class and auto-bind them</I>
+,   initPanes:                   true        <I>// false = DO NOT initialize the panes onLoad - will init later</I>
+,   showErrorMessages:           true        <I>// enables fatal error messages to warn developers of common errors</I>
+,   showDebugMessages:           false       <I>// display console-and-alert debug msgs - IF this Layout version _has_ debugging code!</I>
+<I>//  Changing this zIndex value will cause other zIndex values to automatically change</I>
+,   zIndex:                      null        <I>// the PANE zIndex - resizers and masks will be +1</I>
+<I>//  DO NOT CHANGE the zIndex values below unless you clearly understand their relationships</I>
+,   <SPAN class="red" ><B>zIndexes</B>: {                              <I>// set _default_ z-index values here...</I>
+        pane_normal:             0           <I>// normal z-index for panes</I>
+    ,   content_mask:            1           <I>// applied to overlays used to mask content INSIDE panes during resizing</I>
+    ,   resizer_normal:          2           <I>// normal z-index for resizer-bars</I>
+    ,   pane_sliding:            100         <I>// applied to *BOTH* the pane and its resizer when a pane is 'slid open'</I>
+    ,   pane_animate:            1000        <I>// applied to the pane when being animated - not applied to the resizer</I>
+    ,   resizer_drag:            10000       <I>// applied to the CLONED resizer-bar when being 'dragged'</I>
+    }</SPAN>
+<I><B>/*
+ *  PANE DEFAULT SETTINGS
+ *  - settings under the 'panes' key become the default settings for *all panes*
+ *  - ANY pane-option here can also be set for a specific pane, which will override the 'panes' value
+ */</B></I>
+,   panes: { <I>// default options for 'all panes' - will be overridden by 'per-pane settings'</I>
+        <B class="blue">applyDemoStyles</B>:         false       <I>// renamed from "applyDefaultStyles" for clarity</I>
+    ,   closable:                true        <I>// pane can open & close</I>
+    ,   resizable:               true        <I>// when open, pane can be resized </I>
+    ,   slidable:                true        <I>// when closed, pane can 'slide open' over other panes - closes on mouse-out</I>
+    ,   initClosed:              false       <I>// true = init pane as 'closed'</I>
+    ,   initHidden:              false       <I>// true = init pane as 'hidden' - no resizer-bar/spacing</I>
+    <I><B>//  SELECTORS</B></I>
+    <I>//, paneSelector:            ""</I>          <I>// MUST be pane-specific - jQuery selector for pane</I>
+    ,   findNestedContent:       false       <I>// true = $P.find(contentSelector), false = $P.children(contentSelector)</I>
+    ,   contentSelector:         ".ui-layout-content" <I>// INNER div/element to auto-size so only it scrolls, not the entire pane!</I>
+    ,   contentIgnoreSelector:   ".ui-layout-ignore"  <I>// element(s) to 'ignore' when measuring 'content'</I>
+    <I><B>//  GENERIC ROOT-CLASSES - for auto-generated classNames</B></I>
+    ,   paneClass:               "ui-layout-pane"     <I>// Layout Pane</I>
+    ,   resizerClass:            "ui-layout-resizer"  <I>// Resizer Bar</I>
+    ,   togglerClass:            "ui-layout-toggler"  <I>// Toggler Button</I>
+    ,   buttonClass:             "ui-layout-button"   <I>// CUSTOM Buttons    - eg: '[ui-layout-button]-toggle/-open/-close/-pin'</I>
+    <I><B>//  ELEMENT SIZE & SPACING</B></I>
+    <I>//, size:                    100</I>         <I>// initial size of pane - normally should be pane-specific -</I>
+    ,   minSize:                 0           <I>// limit when manually resizing a pane (height for N/S panes, width for E/W)</I>
+    ,   maxSize:                 0           <I>// ditto, 0 = no limit</I>
+    ,   spacing_open:            6           <I>// space between pane and adjacent panes - when pane is 'open'</I>
+    ,   spacing_closed:          6           <I>// ditto - when pane is 'closed'</I>
+    ,   togglerLength_open:      50          <I>// Length = WIDTH of toggler button on north/south sides - HEIGHT on east/west sides</I>
+    ,   togglerLength_closed:    50          <I>// 100% OR -1 means 'full height/width of resizer bar' - 0 means 'hidden'</I>
+    ,   togglerAlign_open:       "center"    <I>// top/left, bottom/right, center, OR...</I>
+    ,   togglerAlign_closed:     "center"    <I>// 1 => nn = offset from top/left, -1 => -nn == offset from bottom/right</I>
+    ,   togglerTip_open:         lang.Close  <I>// Toggler tool-tip (title)</I>
+    ,   togglerTip_closed:       lang.Open   <I>// ditto</I>
+    ,   togglerContent_open:     ""          <I>// text or HTML to put INSIDE the toggler</I>
+    ,   togglerContent_closed:   ""          <I>// ditto</I>
+    <I><B>//  RESIZING OPTIONS</B></I>
+    ,   resizerDblClickToggle:   true        <I>// true = double-clicking anywhere on the resizer-bar will toggle the pane open/closed</I>
+    ,   autoResize:              true        <I>// IF size is 'auto' or a percentage, then recalc 'pixel size' whenever the layout resizes</I>
+    ,   autoReopen:              true        <I>// IF a pane was auto-closed due to noRoom, reopen it when there is room? False = leave it closed</I>
+    ,   resizerDragOpacity:      1           <I>// option for ui.draggable</I>
+    <I>//, resizerCursor:           ""</I>          <I>// MUST be pane-specific - cursor when over resizer-bar</I>
+    ,   <B class="blue">maskContents</B>:            false       <I>// true = add DIV-mask over-or-inside this pane so can 'drag' over IFRAMES</I>
+    ,   <B class="red">maskObjects</B>:             false       <I>// true = add IFRAME-mask over-or-inside this pane to cover objects/applets - content-mask will overlay this mask</I>
+    ,   <B class="red">maskZindex</B>:              null        <I>// will override zIndexes.content_mask if specified - not applicable to iframe-panes</I>
+    ,   <B class="blue">livePaneResizing</B>:        false       <I>// true = LIVE Resizing as resizer is dragged</I>
+    ,   <B class="blue">liveContentResizing</B>:     false       <I>// true = re-measure header/footer heights as resizer is dragged</I>
+    ,   <B class="blue">liveResizingTolerance</B>:   1           <I>// how many px change before pane resizes, to control performance</I>
+    <I><B>//  TIPS & MESSAGES - global defaults from $.layout.language (lang)</B></I>
+    ,   noRoomToOpenTip:         lang.noRoomToOpenTip
+    ,   resizerTip:              lang.Resize <I>// Resizer tool-tip (title)</I>
+    ,   sliderTip:               lang.Slide  <I>// resizer-bar triggers 'sliding' when pane is closed</I>
+    ,   sliderCursor:            "pointer"   <I>// cursor when resizer-bar will trigger 'sliding'</I>
+    ,   slideTrigger_open:       "click"     <I>// click, dblclick, mouseenter</I>
+    ,   slideTrigger_close:      "mouseleave"<I>// click, mouseleave</I>
+    ,   slideDelay_open:         300         <I>// applies only for mouseenter event - 0 = instant open</I>
+    ,   slideDelay_close:        300         <I>// applies only for mouseleave event (300ms is the minimum!)</I>
+    ,   hideTogglerOnSlide:      false       <I>// when pane is slid-open, should the toggler show?</I>
+    ,   preventQuickSlideClose:  $.layout.browser.webkit <I>// handle problem when Chrome triggers slideClosed as it is opening</I>
+    ,   preventPrematureSlideClose: false    <I> // handle incorrect mouseleave trigger, like when over an open SELECT field in IE</I>
+    <I><B><B>//  HOT-KEYS & MISC</B></B></I>
+    ,   showOverflowOnHover:     false       <I>// will bind allowOverflow() utility to pane.onMouseOver</I>
+    ,   enableCursorHotkey:      true        <I>// enabled 'cursor' hotkeys</I>
+    <I>//, customHotkey:            ""</I>          <I>// MUST be pane-specific - EITHER a charCode OR a character</I>
+    ,   customHotkeyModifier:    "SHIFT"     <I>// either 'SHIFT', 'CTRL' or 'CTRL+SHIFT' - NOT 'ALT'</I>
+    <I><B>//  PANE ANIMATION</B></I>
+    ,   fxName:                  "slide"     <I>// ('none' or blank), slide, drop, scale -- only relevant to 'open' & 'close', NOT 'size'</I>
+    ,   fxSpeed:                 null        <I>// slow, normal, fast, 200, nnn - if passed, will OVERRIDE fxSettings.duration</I>
+    ,   fxSettings:              {}          <I>// can be passed, eg: { easing: "easeOutBounce", duration: 1500 }</I>
+    ,   fxOpacityFix:            true        <I>// tries to fix opacity in IE to restore anti-aliasing after animation</I>
+    ,   animatePaneSizing:       false       <I>// true = animate resizing when sizePane() is called - not applicable to drag-resizing</I>
+    <I>/*  NOTE: Action-specific FX options are auto-generated from the options above if not specifically set:
+    ,   fxName_open:             "slide"     // 'Open' pane animation
+    ,   fnName_close:            "slide"     // 'Close' pane animation
+    ,   fxName_size:             "slide"     // 'Size' pane animation - when animatePaneSizing = true
+    ,   fxSpeed_open:            null
+    ,   fxSpeed_close:           null
+    ,   fxSpeed_size:            null
+    ,   fxSettings_open:         {}
+    ,   fxSettings_close:        {}
+    ,   fxSettings_size:         {}
+    */</I>
+    <I><B><B>//  CHILD/NESTED LAYOUTS</B></B></I>
+    ,   <B class="red">childOptions</B>:            null        <I>// Layout-options for nested/child layout - even {} is valid as options</I>
+    ,   <B class="red">initChildLayout</B>:         true        <I>// true = child layout will be created as soon as _this_ layout completes initialization</I>
+    ,   <B class="red">destroyChildLayout</B>:      true        <I>// true = destroy child-layout if this layout is destroyed</I>
+    ,   <B class="blue">resizeChildLayout</B>:       true        <I>// true = trigger child-layout.resizeAll() when this pane is resized</I>
+    <I><B>//  PANE CALLBACKS</B></I>
+    ,   triggerEventsOnLoad:     false        <I>// true = trigger onopen OR onclose callbacks when layout initializes</I>
+    ,   triggerEventsDuringLiveResize: true    <I>// true = trigger onresize callback REPEATEDLY if livePaneResizing==true</I>
+    ,   onshow_start:            null        <I>// CALLBACK when pane STARTS to Show    - BEFORE onopen/onhide_start</I>
+    ,   onshow_end:              null        <I>// CALLBACK when pane ENDS being Shown    - AFTER  onopen/onhide_end</I>
+    ,   onhide_start:            null        <I>// CALLBACK when pane STARTS to Close    - BEFORE onclose_start</I>
+    ,   onhide_end:              null        <I>// CALLBACK when pane ENDS being Closed    - AFTER  onclose_end</I>
+    ,   onopen_start:            null        <I>// CALLBACK when pane STARTS to Open</I>
+    ,   onopen_end:              null        <I>// CALLBACK when pane ENDS being Opened</I>
+    ,   onclose_start:           null        <I>// CALLBACK when pane STARTS to Close</I>
+    ,   onclose_end:             null        <I>// CALLBACK when pane ENDS being Closed</I>
+    ,   onresize_start:          null        <I>// CALLBACK when pane STARTS being Resized ***FOR ANY REASON***</I>
+    ,   onresize_end:            null        <I>// CALLBACK when pane ENDS being Resized ***FOR ANY REASON***</I>
+    ,   onsizecontent_start:     null        <I>// CALLBACK when sizing of content-element STARTS</I>
+    ,   onsizecontent_end:       null        <I>// CALLBACK when sizing of content-element ENDS</I>
+    ,   onswap_start:            null        <I>// CALLBACK when pane STARTS to Swap</I>
+    ,   onswap_end:              null        <I>// CALLBACK when pane ENDS being Swapped</I>
+    ,   ondrag_start:            null        <I>// CALLBACK when pane STARTS being ***MANUALLY*** Resized</I>
+    ,   ondrag_end:              null        <I>// CALLBACK when pane ENDS being ***MANUALLY*** Resized</I>
+    }
+<I><B>/*
+ *  PANE-SPECIFIC SETTINGS
+ *  - options listed below MUST be specified per-pane - they CANNOT be set under 'panes'
+ *  - all options under the 'panes' key can also be set specifically for any pane
+ *  - most options under the 'panes' key apply only to 'border-panes' - NOT the the center-pane
+ */</B></I>
+,   north: {
+        paneSelector:            ".ui-layout-north"
+    ,   size:                    "auto"      <I>// eg: "auto", "30%", .30, 200</I>
+    ,   resizerCursor:           "n-resize"  <I>// custom = url(myCursor.cur)</I>
+    ,   customHotkey:            ""          <I>// EITHER a charCode (43) OR a character ("o")</I>
+    }
+,   south: {
+        paneSelector:            ".ui-layout-south"
+    ,   size:                    "auto"
+    ,   resizerCursor:           "s-resize"
+    ,   customHotkey:            ""
+    }
+,   east: {
+        paneSelector:            ".ui-layout-east"
+    ,   size:                    200
+    ,   resizerCursor:           "e-resize"
+    ,   customHotkey:            ""
+    }
+,   west: {
+        paneSelector:            ".ui-layout-west"
+    ,   size:                    200
+    ,   resizerCursor:           "w-resize"
+    ,   customHotkey:            ""
+    }
+,   center: {
+        paneSelector:            ".ui-layout-center"
+    ,   minWidth:                0
+    ,   minHeight:               0
+    }
+};
+</PRE>
+<P><B class="red">NOTE that the options above do not include state-management, cookie or button options.</B>
+	These features are now layout plug-ins, so their options exist only if related plug-ins is loaded.
+	For example, the layout.state plug-in will add a 'stateManagment' key to the defaults, which contains
+	all the options specific to state-management, including cookie options.
+	You can set all plug-in defaults globally within $layout.defaults, and specifically using your normal layout options.
+	<B>See the info on each plug-in below for a list of the options each will add.</B>
+</P>
+
+<H5 id="1.3.0.rc30.1-Child-Layouts">New Child Layout Features</H5>
+<P>Layout 1.3 has new options that make it more seamless to integrate multi-level layouts:</P>
+<PRE>
+<I><B><B>//  CHILD/NESTED LAYOUTS</B></B></I>
+,   <B>childOptions</B>:       null <I>// Layout-options for nested/child layout - even {} is valid as options</I>
+,   <B>initChildLayout</B>:    true <I>// true = child layout will be created as soon as _this_ layout completes initialization</I>
+,   <B>destroyChildLayout</B>: true <I>// true = destroy child-layout if this layout is destroyed</I>
+,   <B>resizeChildLayout</B>:  true <I>// true = trigger child-layout.resizeAll() when this pane is resized</I>
+</PRE>
+<P>All these options are new except resizeChildLayout, which was previously named "resizeNestedLayout".
+Below is a summary of the new functionality and versatility these options provide:</P>
+<P>Can now include the 'options' for ALL child-layouts within the options of the pane in the outer-layout 
+	that contains the innerLayout. In other words, all the options for both the outer-most layout and all
+	child/nested layouts it contains can now be specified in a single options hash - if desired.
+	Here's a sample showing the options for a page layout that contains child-layouts:
+</P>
+<PRE>
+<I><B>// page layout options PLUS options for 5 nested layout - 2-levels deep</B></I>
+$("body").layout({ <I>// page layout - outer-most layout</I>
+    name:            "page"
+
+    panes: {                       <I>// page layout -&gt; pane-defaults</I>
+        spacing_open:    0
+    }
+
+,   center: {                      <I>// page layout -&gt; center-pane</I>
+        minWidth:    400
+    ,   minHeight:   300
+        <I><B>// 2nd level layout inside this center-pane</B></I>
+    ,   childOptions: {
+            name:        "page_center"
+        ,   resizable:   false
+        ,   center: {              <I>// page_center layout -&gt; center-pane</I>
+                <I><B>// 3rd level layout inside this center-pane</B></I>
+                childOptions: {
+                    name:    "page_center_center"
+                ,   west: {        <I>//  layout -&gt; center-pane</I>
+                        closable:  false
+                    }
+                }
+            }
+        ,   west: {                <I>// page_center layout -&gt; west-pane</I>
+                <I><B>// 3rd level layout inside this west-pane</B></I>
+                childOptions: {
+                    name:    "page_center_west"
+                ,   panes: {       <I>// page_center_west layout -&gt; pane-defaults</I>
+                        closable:  false
+                    }
+                }
+            }
+        }
+	}
+
+,   east: {                        <I>// page layout -&gt; east-pane</I>
+        <I><B>// 2nd level layout inside this east-pane</B></I>
+        childOptions: {
+            name:      "page_east"
+        ,   panes: {               <I>// page_east layout -&gt; pane-defaults</I>
+                closable:  false
+            }
+	    ,   center: {
+                <I><B>// 3rd level layout inside this center-pane</B></I>
+                childOptions: {
+                    name:    "page_east_center"
+                ,   panes: {       <I>// page_east_center layout -&gt; pane-defaults</I>
+                        spacing_open:  0
+                    }
+                }
+            }
+        }
+	}
+
+});
+</PRE>
+
+<P>Child Layouts can also be created by assigning various option hashes:
+<PRE>
+<I><B>// layout options common to both east &amp; west sidebars</B></I>
+var sidebarLayoutOptions = {
+    resizable:     false
+,   closable:      false
+,   spacing_open:  0
+};
+
+<I><B>// layout options for 3rd level layout (page -&gt; center -&gt; center)</B></I>
+var pageCenterCenterLayoutOptions = {
+    spacing_open:  0
+};
+
+<I><B>// layout options for 2nd level layout (page -&gt; center)</B></I>
+var pageCenterLayoutOptions = {
+    spacing_open:         0
+,   center__childOptions: pageCenterCenterLayoutOptions
+};
+
+<I><B>// page layout options PLUS options for 5 nested layout - 2-levels deep</B></I>
+$("body").layout({ <I>// page layout - outer-most layout</I>
+    name:         "page"
+    panes: {                       <I>// page layout -&gt; pane-defaults</I>
+        spacing_open:  0
+    }
+,   center: {                      <I>// page layout -&gt; east-pane</I>
+        minWidth:      400
+    ,   minHeight:     300
+        <I><B>// 2nd AND 3rd level layouts inside this center-pane</B></I>
+        childOptions:  pageCenterLayoutOptions
+    }
+,   west: {                        <I>// page layout -&gt; center-pane</I>
+        minSize:       150
+        <I><B>// 2nd level layout inside this west-pane</B></I>
+    ,   childOptions:  sidebarLayoutOptions
+    }
+,   east: {                        <I>// page layout -&gt; center-pane</I>
+        minSize:       150
+        <I><B>// 2nd level layout inside this east-pane</B></I>
+    ,   childOptions:  sidebarLayoutOptions
+    }
+});
+</PRE>
+
+<H5>How Child Layouts Work</H5>
+<P>Layout has always had child layouts, and the functionality of this does not change.
+	The only change is tighter and easier integration between parent &amp; child layouts.
+</P>
+<P>If you use the methods above to assign child layouts, an 'Instance pointer' is automatically created
+	in the parent layout to the child layout. For example, if there is a child-layout inside the
+	center-pane of the outer-layout, you can access the child layout like so:
+</P>
+<PRE>
+<I><B>// create the outer-layout with a child-layout inside the center-pane</B></I>
+var outerLayout = $("body").layout({
+    name:            "page"
+,   center: {
+        <I>// 2nd level layout inside this center-pane</I>
+    ,   childOptions: {
+            name:        "page_center"
+        ,   resizable:   false
+        }
+    }
+});
+
+<I><B>METHOD #1</B></I>
+<I>access the child-layout through the 'children' hash in the outer-layout</I>
+var innerLayout = outerLayout.children.center;
+innerLayout.resizeAll();
+
+<I><B>METHOD #2</B></I>
+<I>access the child-layout through the 'center' hash in the outer-layout</I>
+var innerLayout = outerLayout.center.child;
+innerLayout.resizeAll();
+</PRE>
+
+<P>Even if you do not use the child-options feature and create child layouts individually,
+	Layout will still create an instance-pointer to the child layout
+	- if the child-layout has the outer-pane as its 'container' element.
+</P>
+<P>You can also specifically assign one layout as the child of another, like so:</P>
+<PRE>
+<I><B>// create the outer-layout</B></I>
+var outerLayout = $("body").layout();
+
+<I><B>// create a layout inside a descendant element - and set it as a 'child' of outLayout-&gt;center</B></I>
+outerLayout.children.center = $("#wrapper").layout();
+ -or-
+outerLayout.center.child = $("#wrapper").layout();
+</PRE>
+
+<P>Initialization of child layouts is automatic - unless you set the option initChildLayout=false
+	(this can be set for each pane).
+	Destruction of child layouts is also automatic, unless you set the option destroyChildLayout=false.
+	This means that an entire page of layouts can be created or destroyed with a single command,
+	as long as the child-layouts are associated with their parent pane.
+</P>
+<PRE>
+<I><B>// Child-Access Method #1</B></I>
+<I>// access the child-layout through the 'children' hash in the outer-layout</I>
+var innerLayout = outerLayout.children.center;
+innerLayout.resizeAll();
+
+<I><B>// Child-Access Method #2</B></I>
+<I>// access the child-layout through the 'center' alias in the outer-layout</I>
+var innerLayout = outerLayout.center.child;
+innerLayout.resizeAll();
+
+<I><B>// Access layouts multiple-levels deep</B></I>
+var pageLayout = $("body").layout(); <I>// get layout-instance</I>
+<I>// find a layout <u>nested 3-levels deep</u> inside the page-layout</I>
+var deepLayout = pageLayout.center.child.west.child.north.child;
+deepLayout.resizeAll();
+</PRE>
+
+<H5>New Layout 'parent' key</H5>
+<P>Along with the new 'children' key, layouts also have a new 'parent' key. If the layout can determine that it is
+	a child of another layout, a pointer to the parent-layout is set in the [Instance].parent key. For example:
+</P>
+<PRE>
+<I>// assuming all layouts have already been initialized...</I>
+var innerLayout  = $("#innerContainer).layout(); <I>// get inner-layout 'instance'</I>
+var parentLayout = innerLayout.parent; <I>// get parent-layout 'instance'</I>
+</PRE>
+<P>It is rare that you should ever need to access a parent-layout, but this key is provided as a compliment to the
+	'children' key. Note that this doesn't tell you which 'pane' of the parent-layout the innerLayout is inside.
+</P>
+
+
+<H5>New Pane-Alias Keys in Layout Instance</H5>
+<P>As indicated above, the layout instance-object now includes a key for each pane in the layout.
+	These keys provide an <u>alternate</u> method for acessing pane-specific data: 'children', 'options' &amp; 'state':
+</P>
+<PRE>
+<I>// get the layout instance</I>
+var myLayout = $("body").layout();
+
+<I>// standard method for accessing pane-specific data</I>
+var options  = myLayout.options.west;
+var state    = myLayout.state.west;
+var children = myLayout.children.west;
+
+<I>// alternate method for accessing pane-specific data</I>
+var options  = myLayout.west.options;
+var state    = myLayout.west.state;
+var children = myLayout.west.children;
+
+<I>// or using more compact syntax</I>
+var west     = myLayout.west;
+var options  = west.options;
+var state    = west.state;
+var children = west.children;
+</PRE>
+<P>These new aliases can be useful for writing clearer code, especially in generic functions.</P>
+
+
+<H5>New Pane Masking Options</H5>
+<P>Layout has long had a masking option intended to mask iframes so that it's possible to drag the resizers 
+	over top of them. However the masking DIV used does not work for 'objects', like video players, Google maps,
+	applets, etc. So this version add an updated masking system that can also mask these objects.
+</P>
+<PRE>
+,   <B>maskContents</B>: false  <I>// true = add DIV-mask over-or-inside this pane so can 'drag' over IFRAMES</I>
+,   <B>maskObjects</B>:  false  <I>// true = add IFRAME-mask over-or-inside this pane to cover objects/applets - content-mask will overlay this mask</I>
+,   <B>maskZindex</B>:   null   <I>// will override zIndexes.content_mask if specified - not applicable to iframe-panes</I>
+</PRE>
+<P>The old "maskIframesOnResize" option is now "maskContents". Enabling this option is sufficient to handle
+	iframes and anything else other the applets/objects. If you have an object that needs masking, also enable
+	the maskObjects option. The object mask works by covering the pane with a transparent iframe. In some browsers
+	this makes the object 'disappear', and in others it doesn't. But the objects is effectively masked for
+	Layout's needs regardless whether it is still visible or not. When the object mask is used, the content mask
+	(a transparent DIV) is <I>also</I> used, because the transparent iframe must also be masked!
+</P>
+<P>The only time the maskZindex option needs to be changed is if you have elements inside the pane that have
+	a high zIndex applied. In this case, the maskZindex should be set so it is 'higher' than any other element
+	inside the pane it is masking.
+</P>
+
+
+<H5>New Plug-in Architecture</H5>
+<P>Layout now has a flexible plug-in system. Plug-ins can be integrated with important layout events,
+	and can extend the default options (not all plug-ins have options).
+</P>
+<P>Using this new capability, all 'extra features' have been removed from the Layout core and moved into
+	plug-ins. These plug-ins include:
+</P>
+<UL>
+	<LI><B>State Management</B> &mdash; Same features as state-management in RC29, but with some option name-changes.</LI>
+	<LI><B>Custom Button Binding</B> &mdash; Same features as state-management in RC29, but with some option name-changes.</LI>
+	<LI><B>State Management</B> &mdash; Same features as state-management in RC29, but with some option name-changes.</LI>
+</UL>
+<P><B>For now, ALL plug-ins are bundles in the same JS file as the core Layout plug-in.</B>
+	This provides full backwards compatibility and simplifies downloading.
+	Eventually I'll add a 'builder' to the website so you can choose which plug-ins (and callbacks) you want,
+	and only those will be bundled into the download file &ndash; similar to how jQuery UI downloads work.
+	(Custom callbacks are NOT currently included inside the core Layout file.)
+</P>
+
+<H5>New Layout Plugin Architecture</H5>
+<P>Layout now has a plugins systems. Layout options and other data is now easy to extend, 
+	and a number of event-arrays have been provides so plugins can hook into events easily.
+	When a plugin is loaded, it extends Layout's functionality. The plugin is automatically
+	available to _all_ layouts on the page, though many plugins have options to enable or disable
+	their features.
+</P>
+<P><B>Plugins JS files be loaded AFTER the layout file is loaded.</B>
+	However in RC301.1, I have included all plugins <I>inside</I> the main Layout file
+	, so there is not need to load extra files.</P>
+<P>You can test whether a plugin is loaded by checking the $.layout.plugins hash. Each plugin will add
+	a key here to indicate that it has loaded. So you can do check like this:
+</P>
+<PRE>
+    if ( $.layout.plugins.stateManagement ) {
+        doSomething(); 
+    }
+</PRE>
+
+
+<H5 id="1.3.0.rc30.1-State-Management">State Management Plugin</H5>
+<P>This plug-in has the same functionality as state-management in previous version,
+	however the options have been reorganized so that all related options now fall under the key added by the plugin:
+</P>
+<PRE>
+$.layout.defaults.stateManagement = {
+    enabled:      false // true = enable state-management, even if not using cookies
+,   autoSave:     true  // Save a state-cookie when page exits?
+,   autoLoad:     true  // Load the state-cookie when Layout inits?
+    // List state-data to save - must be pane-specific
+,   stateKeys:    "north.size,south.size,east.size,west.size,"+
+                  "north.isClosed,south.isClosed,east.isClosed,west.isClosed,"+
+                  "north.isHidden,south.isHidden,east.isHidden,west.isHidden"
+,   cookie: {
+        name:     ""    // If not specified, will use Layout.name if set, else just "Layout"
+    ,   domain:   ""    // blank = current domain
+    ,   path:     ""    // blank = current page, '/' = entire website
+    ,   expires:  ""    // blank = session, Date = expiry date, n&gt;0 = days, null/0/n&lt;0 = delete
+    ,   secure:   false // true = use cookie only for HTTPS pages - always encrypted
+    }
+};
+</PRE>
+<P>
+</P>
+
+
+
+<H5>Button Binding Plugin</H5>
+<P>foo
+</P>
+<P>bar
+</P>
+
+
+<H5>Change in how '-hover' Classes Added</H5>
+<P>The extra "hover classes* are now <I>always</I> added to resizers and togglers - 
+	<u>regardless whether the resizable or closable options are enabled</u>. 
+</P>
+<P>Previously the hover-classes were added only if resizable/closable 
+	were enabled, but that is not ideal since the purpose of 
+	the hover-classes is simply to standardize CSS for old browsers like IE6, 
+	which do not understand the :hover pseudo-class on anything other than hyperlinks.
+</P>
+<P>If you want to control the hover styles for elements, this should be 
+	done purely with CSS. So the -hover layout-classes are now consistent 
+	with the :hover pseudo-class, regardless of JavaScript functionality. 
+<P>So IF you want to accommodate IE6, use "-hover" on classNames, like this: 
+</P>
+<PRE>
+    .ui-layout-resizer-hover { background: #FCC; } 
+    .ui-layout-resizer-west-hover { background: #FCC; } 
+</PRE>
+<P>...INSTEAD OF using the CSS ":hover" pseudo-class...</P>
+<PRE>
+    .ui-layout-resizer:hover { background: #FCC; } 
+    .ui-layout-resizer-west:hover { background: #FCC; } 
+</PRE>
+
+
+
+
+
+<P>&nbsp;</P>
+<HR id="1.3.0.rc29.15">
+<H4>New in RC29.15</H4>
+
+<H5>New Initialization Functionality</H5>
+<P><I>Previously</I> you could not initialize a layout when the container-element was 'hidden'.
+	So when using layouts inside tabs or any other time the layout was not initially visible,
+	custom logic was required so the layout was created only <I>after</I> it became visible.
+</P>
+<P><B>Now ALL layouts can be initialized on-page-load &ndash; whether visbible or hidden.</B>
+	If the layout is hidden &mdash; <I>or</I> if the center-pane element does not exist &mdash;
+	then the layout will &quot;partially initialize&quot;. 
+	The loads the options and creates the layout instance, but does not initialize the layout-panes.
+</P>
+<P>Each time a layout method is called &mdash; like resizeAll() &mdash;
+	the layout will check its status and complete initialization if it can.
+	The same goes for automatic events triggered by window.resize or outer-layouts.
+	If the layout still can't complete initialization, it will ignore the command given and continue waiting.
+</P>
+<P>Or, to specifically tell the layout to complete initialization, call: <B>myLayout.initPanes()</B>.
+	If possible, initialization will complete; If not, the command is ignored,
+	as it is if initialization has already completed.
+	Calling <I>any</I> method will do the same thing, so resizeAll() is just as good as initPanes().</P> 
+</P>
+<P>The most common situation where partial initialization is useful is a <I>layout-inside-a-tab</I>
+	&ndash; inner-layouts are often hidden inside an inactive tab.
+	Instead of a special function, all you need now is a simple callback on tabs.show...
+</P>
+<PRE>
+$(document).ready(function(){
+    <I>// create the tabs</I>
+    pageLayout.panes.center.tabs({
+        show: function(){ tabLayout.resizeAll(); }
+    });
+    <I>// create the page layout</I>
+    pageLayout = $("body").layout( pageLayoutOptions );
+    <I>// create inner-layout (currently hidden)</I>
+    tabLayout  = $("#tab2").layout( tabLayoutOptions );
+}
+</PRE>
+<P>OR if the inner layout is created first...</P>
+<PRE>
+$(document).ready(function(){
+    <I>// create the page layout</I>
+    pageLayout = $("body").layout( pageLayoutOptions );
+    <I>// create inner-layout (currently hidden)</I>
+    tabLayout  = $("#tab2").layout( tabLayoutOptions );
+    <I>// create the tabs</I>
+    pageLayout.panes.center.tabs({
+        show: tabLayout.resizeAll
+    });
+    <I>// adjust page-layout after creating the tabs</I>
+    pageLayout.resizeAll();
+}
+</PRE>
+<P>This code also works for Ajax-tabs where the pane-elements do not even exist yet!
+	The layout will <I>wait</I> until it can find the 'center-pane' element before completing initialization.
+</P>
+<P>Two of the Tabs demos have been updated to use the new features and syntax:</P>
+<UL>
+	<LI><A href="demos/layout_inside_tabshtml.html">layout_inside_tab.html</A>
+		&mdash; just 1-line of code integrates the tabs and layouts</LI>
+	<LI><A href="demos/layouts_inside_tabs.html">layouts_inside_tabs.html</A>
+		&mdash; removed over 95% of the previous Javascript!</LI>
+</UL>
+
+<H5>New Layout Options</H5>
+<UL>
+	<LI>New option to disable layout error messages, for rare cases where necessary:<BR>
+		<PRE>
+$("body").layout({
+    <B>showErrorMessages</B>: true  <I>// (default)</I>
+});
+</PRE>
+		<P><B>NOTE</B>: When using delayed initialization (described above), set showErrorMessages=false 
+			to avoid warnings about a 'hidden container' or 'missing center-pane'.
+			But if your layout is not working right, <I>re-enable</I> the messages for testing.</P>
+	</LI>
+	<LI>Layout's language data was moved so that it can now be fully customized.
+		Most tips could already be customized in the options, but not all of them.
+		Plus changes can now be done globally (once) instead of repeated in each layout.
+		(except when you want to customize tips per-pane)
+	<PRE>
+<I>// Global Language Customization</I>
+$.extend( $.layout.language, {
+<I>//  Tips and messages for resizers, togglers, custom buttons, etc.</I>
+    Open:            "Open"  <I>// eg: "Open Pane"</I>
+,   Close:           "Close"
+,   Resize:          "Resize"
+,   Slide:           "Slide Open"
+,   Pin:             "Pin"
+,   Unpin:           "Un-Pin"
+,   noRoomToOpenTip: "Not enough room to show this pane."
+
+<I>//  Developer error messages</I>
+,   pane:                 "pane"     <I>// description of "layout pane-element"</I>
+,   selector:             "selector" <I>// description of "jQuery-selector"</I>
+,   errButton:            "Error Adding Button\n\n"
+                        + "Invalid " <I>// error-data is appended to this</I>
+,   errContainerMissing:  "UI Layout Initialization Error\n\n"
+                        + "The specified layout-container does not exist."
+,   errContainerHeight:   "UI Layout Initialization Warning\n\n"
+                        + "The layout-container \"CONTAINER\" has no height.\n\n"
+                        + "Therefore the layout is 0-height and hence 'invisible'!"
+,   errCenterPaneMissing: "UI Layout Initialization Error\n\n"
+                        + "The center-pane element does not exist.\n\n"
+                        + "The center-pane is a required element."
+});
+
+<I>// ALL layouts will use the language defaults above, but can still be customized...</I>
+$("body").layout({
+    west__togglerTip_open:   "Hide Main Menu"
+,   west__togglerTip_closed: "Show Main Menu"
+,   west__sliderTip:         "Show Main Menu"
+,   west__noRoomToOpenTip:   "Not enough room to open the Main Menu"
+});
+$("#inner1").layout();
+$("#inner2").layout();
+etc.
+</PRE>
+	</LI>
+</UL>
+
+<H5>New Layout Methods</H5>
+<UL>
+	<LI>Moved more helper methods into $.layout namespace</LI>
+	<LI>Renamed 2 user-accessible helper methods:
+	<PRE>
+getElemDims() is now: getElementDimensions()
+getElemCSS()  is now: getElementCSS()
+
+<I>// Example</I>
+var json_dimensions = getElementDimensions( $Element );
+
+<I>// Example</I>
+var json_css = getElementCSS( $Element, "width,height,border,padding" );
+<I>// NOTE: border, padding &amp; margin return ALL relatedstyles, like...</I>
+{
+    width:              "500px"
+,   height:             "350px"
+,   padding-left:       "10px"
+,   padding-right:      "10px"
+,   padding-bottom:     "10px"
+,   padding-top:        "10px"
+,   border-left-color:  "#000"
+,   border-left-style:  "solid"
+,   border-left-width:  "1px"
+,   border-right-color: "#000"
+,   border-right-style: "solid"
+,   border-right-width: "1px"
+,   [ etc. ]
+}
+</PRE>
+	</LI>
+</UL>
+
+<H5>Other Updates</H5>
+<UL>
+	<LI>Changed syntax for getting 'tagName' for forward compatibility (.attr("tagName") syntax is deprecated)</LI>
+	<LI>Misc small bug-fixes.</LI>
+</UL>
+
+<H5>New Add-ons &mdash; &quot;Callbacks&quot;</H5>
+<P>I now package custom code snippets into reusable callback functions that can be loaded
+	into the $.layout namespace. This makes code for special situations easy to reuse.
+	I have created 2 callbacks so far, including one that leverages the new integration functionality.
+	All callbacks can be downloaded in a single file, or as individual files:
+</P>
+<P><B>Callbacks Library</B> &mdash; contains all callbacks in one file:</P>
+<UL>
+	<LI><A href="lib/js/jquery.layout.callbacks-latest.js">jquery.layout.callbacks-latest.js</A></LI>
+	<LI><A href="demos/jquery.layout.callbacks.min-latest.html">jquery.layout.callbacks.min-latest.js</A> (minified)</LI>
+</UL>
+
+<P><B>resizeTabLayout Callback</B> &mdash; automatically finds a layout nested inside a tab and initializes or resized it:</P>
+<UL>
+	<LI><A href="lib/js/jquery.layout.resizeTabLayout-1.0.js">jquery.layout.resizeTabLayout-1.0.js</A></LI>
+	<LI><A href="demos/jquery.layout.resizeTabLayout.min-1.0.html">jquery.layout.resizeTabLayout.min-1.0.js</A> (minified)</LI>
+</UL>
+<P><B>resizeTabLayout Example</B></P>
+<PRE>
+$(document).ready(function(){
+    <I>// mouseleave event - 300 is the minimum</I>
+    $("#myTabs").tabs({
+        show: $.layout.callbacks.<B>resizeTabLayout</B>
+    });
+    <I>// OR mixed with custom code</I>
+    $("#myTabs").tabs({
+        show: function (evt, ui) {
+            $.layout.callbacks.<B>resizeTabLayout()</B>
+            [ other code ]
+        }
+    });
+
+    <I>// OR <u>without</u> the callback method</I>
+    $("#myTabs").tabs({
+    show: function (evt, ui) {
+        var tabLayout = $(ui.panel).data("layout");
+        if ( tabLayout ) tabLayout.resizeAll();
+        [ other code ]
+        }
+    });
+});
+</PRE>
+
+<P><B>pseudoClose Callback</B> &mdash; prevents iframes, flash and other objects from reloading when the pane closes.</P>
+<UL>
+	<LI><A href="lib/js/jquery.layout.pseudoClose-1.0.js">jquery.layout.pseudoClose-1.0.js</A></LI>
+	<LI><A href="demos/jquery.layout.pseudoClose.min-1.0.html">jquery.layout.pseudoClose.min-1.0.js</A> (minified)</LI>
+</UL>
+<P><B>pseudoClose Example</B></P>
+<PRE>
+$(document).ready(function(){
+    <I>// mouseenter event - 0 = instant open</I>
+    south__onclose_start: $.layout.callbacks.<B>pseudoClose</B>
+    <I>// or</I>
+    $("#myTabs").tabs({
+        show: function () {
+        $.layout.callbacks.<B>pseudoClose()</B>
+        [ other code ]
+        return false;<I> // CANCEL normal close</I>
+        }
+});
+</PRE>
+
+&nbsp; <!-- spacer -->
+
+<HR id="1.3.0.rc29.14">
+<H4>New in RC29.14</H4>
+
+<H5>New Options</H5>
+<P>New options for setting a 'delay' when triggering slide-open (mouseEnter) and slide-closed (mouseLeave).
+	Options have no effect when slide-trigger is click or dblClick.
+</P>
+<PRE>
+   slideTrigger_open:  "mouseenter"
+,  slideTrigger_close: "mouseleave" <I>// default</I>
+,  <B>slideDelay_open</B>:    300 <I>// mouseenter event - 0 = instant open</I>
+,  <B>slideDelay_close</B>:   300 <I>// mouseleave event - 300 is the minimum</I>
+</PRE>
+
+
+<HR id="1.3.0.rc29.13">
+<H4>New in RC29.13</H4>
+
+<H5>New &amp; Removed Classnames</H5>
+<UL>
+	<LI>options.<B>containerClass</B> &mdash; (optional) className(s) will be added to the layout-container 
+		- for styling or identification</LI>
+	<LI>Resizing-limit is now customizable <I>per-pane</I>, eg:
+		<PRE>.ui-layout-resizer-west-dragging-limit { background: red; }</PRE></LI>
+	<LI>Toggler content-open/-closed spans no longer have 'hover' classes added.
+		Instead use syntax like:
+		<PRE>.ui-layout-toggler-west-hover .content-open { background: yellow; }</PRE></LI>
+</UL>
+
+<H5>New &amp; Renamed Events</H5>
+<P>The onload and onunload events have been extended with _start &amp; _end versions.
+	The new onload_end event is useful for modifying the layout <I>after</I> it is created.</P>
+<UL>
+	<LI>onload_start &mdash; when Layout inits - after options initialized, but before elements initialized</LI>
+	<LI>onload_end &mdash; when Layout inits - after EVERYTHING has been initialized (alias: onload)</LI>
+	<LI>onunload_start &mdash; when Layout is destroyed - before saving state</LI>
+	<LI>onunload_end &mdash; when Layout is destroyed - after saving state (alias: onunload)
+		<P>NOTE: The <B>onload</B> event in previous versions is now <B>onload_start</B>. Modify your code accordingly.</P>
+	</LI>
+</UL>
+
+<H5>New Layout Methods</H5>
+<UL>
+	<LI>myLayout.<B>addPane</B>( pane ) &mdash; add a pane to an existing layout</LI>
+	<LI>myLayout.<B>removePane</B>( pane [, true] ) &mdash; remove pane from layout &ndash; true = also delete the element
+		<P>These methods allow pane-elements to be added and removed after initialization.
+			If necessary, modify the applicable pane-options <u>before</u> calling addPane, eg:</P>
+<PRE>
+myLayout.options.east.paneSelector = "#myNewPane";
+myLayout.options.east.initClosed = true;
+myLayout.<B>addPane</B>("east");
+</PRE>
+		<P>If the specified pane already exists, it will be removed before the new one is added.
+			This is a way to <I>re-initialize</I> a pane with new options that cannot otherwise be changed, like 'resizable'.</P>
+	</LI>
+</UL>
+
+<H5>Bug Fixes</H5>
+<P></P>
+<UL>
+	<LI>Slider-bar 'onmouseover' event no longer triggered when over the toggler button</LI>
+	<LI>CSS on pane content-element now correctly reset if layout is destroy()ed</LI>
+	<LI>Added patch to fix bug in UI Draggable when page used dir="rtl"</LI>
+	<LI>Fixed bugs in nested-layout auto-resizing - wasn't triggered in some cases</LI>
+	<LI>Fixed param definitions for compiling in Google Closure
+		<BR></LI>
+</UL>
+
+
+<HR id="1.3.0.rc29.12">
+<H4>Added in RC29.12</H4>
+
+<UL>
+	<LI>Some performance improvements when resizing layouts that have 'closed panes'.</LI>
+
+	<LI>Modified how layout "Instance" is handled. Can still retrieve an instance by calling $ContainerElem.layout(), 
+		but now can also use standard UI widget syntax:
+		<PRE>$ContainerElem.data("layout")</PRE>
+		In addition, all layout child-elements (panes, resizers & togglers) can return the layout instance they are part of, like:
+<PRE>
+$Pane.data("parentLayout")
+$Resizer.data("parentLayout")
+$Toggler.data("parentLayout")
+</PRE>
+		These child elements use 'parentLayout' instead of just 'layout' because they are not the container-element. 
+		A 'pane-element' that contains a nested layout could return have BOTH data("p
+		arentLayout") and data("layout") instances. 
+		The former is the layout where the element is a 'layout-pane' (aka 'child'), 
+		the latter is the sub-layout where the element is the 'layout-container' (aka 'parent').<BR>
+		<BR>
+		SEE <A href="demos/layout_methods.html">demos/layout_methods.html</A> for samples
+	</LI>
+
+	<LI>Added 6 new methods that allow primary pane-functionality to be enabled/disabled AFTER the layout is created.
+		<P>However the [pane_]closable and [pane_]resizable options must be enabled at the time of Initialization 
+		or else they cannot be enabled later. 
+		So if you want the ability to enable a feature like west__resizable, but have it disabled onLoad, 
+		enable it in the options and then call disableResizable("west") immediately after creating the layout.
+		This will enable you to enableResizable("west") later.</P>
+		<P><B>UPDATE</B>: removePane() &amp; addPane() methods in RC29.13 allow a pane to be 
+			're-initialized' with different options</P>
+<PRE>
+disableClosable( pane [, hideToggler ] );
+enableClosable( pane ); <I>// always un-hides Toggler</I>
+
+disableResizable( pane );
+enableResizable( pane );
+
+disableSlidable( pane );
+enableSlideable( pane );
+</PRE>
+		SEE <A href="demos/layout_methods.html">demos/layout_methods.html</A> for samples
+	</LI>
+</UL>
+
+
+<HR id="1.3.0.rc29.11">
+<H4>Added in RC29.11</H4>
+
+<UL>
+	<LI>The loadState() method can now be called after initialization of the layout. 
+	The layout will be updated to match the state passed. By default the changes are made 
+	without open/close animations. If animation is desired, pass 'true' as a 2nd param, eg:<BR>
+	<PRE>myLayout.loadState( stateJSON, true )</PRE>
+	</LI>
+</UL>
+
+
+<HR id="1.3.0.rc29.10">
+<H4>Fixed in RC29.10</H4>
+<UL>
+	<LI>Fixed onload callback - 'Instance' (1st param) was undefined	</LI>
+</UL>
+
+
+<HR id="1.3.0.rc29.9">
+<H4>Added in RC29.9</H4>
+<UL>
+	<LI>NEW preventPrematureSlideClose option (default=false).
+	When enabled, this addresses situations where a mouseout event is incorrectly triggered, 
+	causing a pane to 'slide closed' while the mouse if really still over it. 
+	This happens in IE when using a SELECT picklist.	</LI>
+</UL>
+
+
+<HR id="1.3.0.rc29.8">
+<H4>Fixed in RC-29.8</H4>
+<UL>
+	<LI>Second fix for compatibility with jQuery UI 1.8.5	</LI>
+</UL>
+
+
+<HR id="1.3.0.rc29.7">
+<H4>Fixed in RC-29.7</H4>
+
+<UL>
+	<LI>Fixed initialization bug for compatibility with jQuery UI 1.8.5	</LI>
+</UL>
+
+
+<HR id="1.3.0.rc29.6">
+<H4>Fixed in RC-29.6</H4>
+<UL>
+	<LI>Fixed zIndex bug where pane given zIndex=100 when closed	</LI>
+</UL>
+
+
+<HR id="1.3.0.rc29.5">
+<H4>Fixed in RC-29.5</H4>
+
+<UL>
+	<LI>Fixed potential bug where pane zIndex didn't reset after animation </LI>
+	<LI>Fixed bug where close callback not called after pane was 'sliding' </LI>
+	<LI>Refined automatic resizing of nested layouts. </LI>
+</UL>
+
+
+<HR id="1.3.0.rc29.4">
+<H4>Fixed in RC-29.4</H4>
+
+<UL>
+	<LI>Fixed innerHeight() attribute for compatibility with UI 1.8.4 </LI>
+	<LI>Minor refactoring of code </LI>
+	<LI>Made JavaDoc syntax compatible with Google Closure Compiler </LI>
+	<LI>Restored some utility methods that were temporarily removed in RC-29 </LI>
+</UL>
+
+
+<HR id="1.3.0.rc29.3">
+<H4>Fixed in RC-29.3</H4>
+<UL>
+	<LI>Fixed bug in destroy() method.	</LI>
+</UL>
+
+
+<HR id="1.3.0.rc29.2">
+<H4>Fixed in RC-29.2</H4>
+
+<UL>
+	<LI>Fixed implementation of the onsizecontent callbacks added in RC-29	</LI>
+</UL>
+
+
+<HR id="1.3.0.rc29.1">
+<H4>Fixed in RC-29.1</H4>
+<UL>
+	<LI>Fixed bug in content-sizing that miscalculated padding/margin at bottom of pane </LI>
+	<LI>Margins on all content-elements are now accounted for when sizing content. </LI>
+</UL>
+
+
+<HR id="1.3.0.rc29">
+<H4>Added in RC-29</H4>
+
+<P>NOTE: This is only some of the refinements planned for RC-29. 
+	It was taking too long to get them all completed and tested, so I broke the updates into 2 releases: 
+	RC-29 is the first half - RC-30 will add the remainder. RC-30 will include some fundamental changes 
+	to some option-names and utility methods in preparation for finalizing version 1.3.0.</P>
+<P>Fixed numerous small bugs, like no longer adding 'hover' classes to disabled resizers, 
+	making sure required resizing is always triggered, etc.</P>
+<P>Updated header/content sizing (ie, .ui-layout-content). Now faster and more accurate.
+	Added callbacks for content-sizing:</P>
+<UL>
+	<LI>onsizecontent_start
+	<LI>onsizecontent_end / onsizecontent
+</UL>
+ 
+<P>Fixed the "text selection while resizing" issue, even in Google Chrome. 
+	The "noSelectionWhileDragging" option no longer exists because now text-selection is always disabled 
+	when resizing because the new method has no negative effects.</P>
+<P>Added callbacks for manual resizing:
+<UL>
+	<LI>ondrag_start
+	<LI>ondrag_end / ondrag
+</UL>
+ 
+<P>Fixed pane-swapping functionality, and...
+<P>Added callback for pane-swapping:
+<UL>
+	<LI>onswap_start
+	<LI>onswap_end / onswap
+</UL>
+ 
+<P>Added action methods for 'sliding'.. (Previously required passing extra params to the open() and close() methods):
+<UL>
+	<LI>myLayout.slideOpen("west");
+	<LI>myLayout.slideClose("west");
+	<LI>myLayout.slideToggle("west");
+</UL>
+ 
+<P>Added option to prevent Chrome from immediately closing a pane after it has 'slid open'. 
+	This is automatically enabled for Webkit browsers, but not for others. 
+	You can override the default if necessary:
+<UL>
+	<LI>preventQuickSlideClose: !!($.browser.webkit || $.browser.safari) // default</P>
+</UL>
+
+<P>The old option for handling this issue has been removed:
+<UL>
+	<LI>trackMouseWhenSliding: false // NO LONGER EXISTS</LI>
+</UL>
+
+<P>Added automatic nested-layout resizing. This change affects the options you set. 
+When you have a 'directly nested' layout (definition below), you no longer need to set a 
+callback to resize the nested layout. If you use RC-29 and still have old onresize callbacks set, 
+the nested-layout will be resized twice. This doesn't hurt anything, 
+but is an unnecessary drag on performance, so old callbacks should be removed.</P>
+<P>This functionality is controlled by a new option and enabled by default for all panes:</P>
+<UL>
+	<LI>resizeNestedLayout: true // default</LI>
+</UL>
+
+<P>There is little need to ever disable it, but it could be if necessary, eg:</P>
+<UL>
+	<LI>west__resizeNestedLayout: false</LI>
+</UL>
+
+<P class="bold">What is a "Directly Nested Layout"?</P>
+<P>A "directly-nested-layout" is one where the same element that is a 'pane' in an outer-layout is 
+	also the 'container' for an inner/nested layout. In this case, Layout will recognize the nested 
+	layout when the outer-pane resizes, and so automatically trigger resizeAll() on the nested-layout 
+	after it finishes resizing the outer-pane.</P>
+
+<P>Example: Directly-Nested Inner-Layout -- WILL Auto-Resize</P>
+<PRE>
+&lt;div class="ui-layout-center"&gt; <I>&lt;!-- outer pane / inner container --&gt;</I>
+   &lt;div class="ui-layout-north"&gt;  North  &lt;/div&gt;
+   &lt;div class="ui-layout-center"&gt; Center &lt;/div&gt;
+   &lt;div class="ui-layout-couth"&gt;  South  &lt;/div&gt;
+&lt;/div&gt;
+</PRE>
+
+<P>HOWEVER, if the inner-layout in inside any kind of 'extra wrapper-div' as a container - 
+	ie, not the outer 'pane' itself - then it is not 'directly nested'. 
+	In this case Layout will not know it exists, so an onresize callback will still be needed 
+	on the outer-pane, as it is now.</P>
+
+<P>Example: Inner-Layout with 'Extra Wrapper' -- Will NOT Auto-Resize</P>
+<PRE>
+&lt;div class="ui-layout-center"&gt; <I>&lt;!-- outer pane --&gt;</I>
+   &lt;div id="innerLayoutWrapper"&gt; <I>&lt;!-- wrapper / inner container --&gt;</I>
+       &lt;div class="ui-layout-north"&gt;  North  &lt;/div&gt;
+       &lt;div class="ui-layout-center"&gt; Center &lt;/div&gt;
+       &lt;div class="ui-layout-couth"&gt;  South  &lt;/div&gt;
+   &lt;/div&gt;
+&lt;/div&gt;
+</PRE>
+
+<P>There are A LOT of changes in this release, so please report any errors you find to help debug it. 
+There will be more big changes coming in RC-30, which will become Layout 1.3.0 Final after it is 
+tested for a few weeks.</P>
+
+
+<HR id="1.3.0.rc28">
+<H4>Added in RC-28</H4>
+
+<OL>
+	<LI>New pane-option: findNestedContent: false  (default)<BR>
+			<BR>
+				This option can be set per-pane, eg: west__findNestedContent: true<BR>
+		<BR>
+		Normally a content-element must be a child of the pane-element, but when this option is enabled, 
+		Layout will 'find' the [pane].contentSelector element anywhere inside the pane. 
+		This allows content elements to be nested inside wrappers.<BR>
+		<BR>
+		CAUTION: Do not enable this option unless you have a content-element for Layout to find. 
+		If the layout does not have a content-element, but does have an inner-layout with a content-element, 
+		this might be found, causing the inner content-element to be bound to both the inner- and outer-layouts, 
+		creating resize-sequencing issues.
+	</LI>
+	<LI>New pane-method: initContent( pane )<BR>
+		<BR>
+		This method requires a pane, eg: myLayout.initContent("west");<BR>
+		<BR>
+		This method allows you to re-initialize a content-element after the layout is created. 
+		This is necessary if a content element is added or removed. 
+		Even removing and re-adding a content-div with the same ID will require re-initialization 
+		because the 'pointer' to that object is broken.<BR>
+		<BR>
+		This method should also be called if you remove a content element. 
+		In this case calling initContent will let Layout know that this element no longer exists.
+	</LI>
+</OL>
+
+
+<HR id="1.3.0.rc27">
+<H4>Added in RC-27</H4>
+<OL>
+	<LI>Fix bug in callback queuing </LI>
+	<LI>Internal updates to handle string-objects</LI>
+</OL>
+
+
+<HR id="1.3.0.rc26">
+<H4>Added in RC-26</H4>
+<OL>
+	<LI>Now validates to prevent a layout being created without a center-pane</LI>
+</OL>
+
+
+<HR id="1.3.0.rc25">
+<H4>Added in RC-25</H4>
+<OL>
+	<LI>Can now get a Layout Instance after initialization from the DOM object...	</LI>
+	<LI>$("#containerRef").layout({ options... }); // init
+		var Instance = $("#containerRef").layout(); // get Instance</LI>
+	<LI>New error message to warn of 0-height layouts - most common mistake</LI>
+</OL>
+
+
+<HR id="1.3.0.rc24">
+<H4>Added in RC-24</H4>
+<OL>
+	<LI>New auto-bind button class: ui-layout-button-open-slide-[west] </LI>
+	<LI>New auto-bind button class: ui-layout-button-toggle-slide-[west] </LI>
+	<LI>Fixed bug in mouse detection code </LI>
+	<LI>Fixed bug in sliding formatting logic</LI>
+</OL>
+
+
+<HR id="1.3.0.rc23">
+<H4>Added in RC-23</H4>
+<OL>
+	<LI>New option: resizeContentWhileDragging: false (default). 
+		When false, Layout does not check the height of headers and footers inside panes while doing live-resizing. 
+		This is deferred until resizing is 'done' to increase performance. 
+		If you have headers and footers that change size (eg, wrap text) and you want perfect content sizing 
+		while live-resizing, then change this option to true.</LI>
+	<LI>Content elements - with the 'ui-layout-content' class - can now be 'nested' within the pane. 
+		It no longer needs to be a direct child of the pane element.</LI>
+</OL>
+
+
+<HR id="1.3.0.rc22">
+<H4>Fixed in RC-22</H4>
+<OL>
+	<LI>Fixed bug in callback logic when using live-resizing and triggerEventsWhileDragging option.	</LI>
+</OL>
+
+
+<HR id="1.3.0.rc21">
+<H4>Fixed in RC-21</H4>
+<OL>
+	<LI>Fixed bug to remove 'close' trigger on resizer when a pane is 'pinned'. Actually a jQuery bug 
+		- only unbinding one mouseout event instead of all.</LI>
+</OL>
+
+
+<HR id="1.3.0.rc20">
+<H4>Fixed in RC-20</H4>
+<OL>
+	<LI>Fixed bug when slideOpen and slideClosed trigger events are both 'click' 
+		The click event was cascading to cause pane to immediately close after opening.</LI>
+</OL>
+
+
+<HR id="1.3.0.rc19">
+<H4>Fixed in RC-19</H4>
+<OL>
+	<LI>Fixed ui-layout-content resizing to work perfectly in all browsers and all doctypes. 
+		Content sizing will not faithfully account for padding on the pane-element and margins 
+		on all the header, footer and content divs.
+		</P>
+	</LI>
+	<LI>Added automatic minSize for all panes. Panes can no longer be manually resized so small 
+		that they must be 'hidden'.</LI>
+</OL>
+
+
+<HR id="1.3.0.rc18">
+<H4>Added in RC-18</H4>
+
+<P>New option: <B>resizeWithWindowMaxDelay</B></P>
+
+<P>This option works in concert with resizeWithWindowDelay to control layout resizing during 
+	browser-window resizing. The 'MaxDelay', if set, will cause the layout to resize every XX 
+	milliseconds even if the window is still being resized. For example...</P>
+
+<PRE>$("body").layout({
+    resizeWithWindowDelay:    300 		
+,&nbsp;&nbsp; resizeWithWindowMaxDelay: 1000 
+});</PRE>
+<P>If no window-resize event is triggered for 300ms, the layout will be resized. 
+	This timer is reset each time a window-resize event is detected. 
+	So as long as the user keeps resizing the window, it will keep resetting the 300ms timer 
+	- waiting for the user to finish.</P>
+
+<P>However, even if the user keeps resizing the window, the layout will resize every 1000ms anyway 
+because of the resizeWithWindowMaxDelay option. If you do not want your layout to resize until the 
+user is 'done' resizing the window, then leave resizeWithWindowMaxDelay as 0 (default), which 
+disables this extra functionality.</P>
+
+
+
+<HR id="1.3.0.rc17">
+<H4>Fixed in RC-17</H4>
+<OL>
+	<LI>Fixed multiple callback firing onLoad and onResize</LI>
+	<LI>Added option for mouse detection to avoid sliding-pane closing prematurely: </LI>
+</OL>
+<BLOCKQUOTE>
+	<PRE>[pane].trackMouseWhenSliding: false <I>// default</I></PRE>
+	<P>NOTE that trackMouseWhenSliding applies only when a pane is 'sliding' (temporarily open). 
+	However enabling mouse-position detection sometimes causes the mouseOut event to be missed 
+	(pane does not close), so enable only when/where needed. Only known issue is SELECT field in IE, 
+	which causes mouseOut event. But Google Chrome may also cause premature slide-closed?</P>
+</BLOCKQUOTE>
+
+
+<HR id="1.3.0.rc16">
+<H4>Fixed in RC-16</H4>
+<OL>
+	<LI>Bug-fix for window.resize callbacks
+		Re-enabled mouse detection to avoid sliding-panes closing prematurely</LI>
+</OL>
+
+
+<HR id="1.3.0.rc15">
+<H4>Added in RC-15</H4>
+
+<OL>
+	<LI>Set the zIndex of 'panes' (resize-bars will be 1-higher). This is GLOBAL - <u>cannot</u> 
+	be set 'per pane'</LI>
+</OL>
+<BLOCKQUOTE>
+	<PRE>zIndex: null <I>// default - same as: 1</I></PRE>
+</BLOCKQUOTE>
+<OL>
+	<LI>Disable 'close' when resizer-bar is double-clicked. This is a per-pane option</LI>
+</OL>
+<BLOCKQUOTE>
+	<PRE>resizerDblClickToggle: true <I>// default</I><BR>west__resizerDblClickToggle: false <I>// sample</I></PRE>
+</BLOCKQUOTE>
+<OL>
+	<LI>Ensure 'text' is not selected during when dragging the resizer-bar	</LI>
+</OL>
+<BLOCKQUOTE>
+	<PRE>noSelectionWhileDragging: true <I>// default</I><BR>west__noSelectionWhileDragging: false <I>// sample</I></PRE>
+</BLOCKQUOTE>
+<OL>
+	<LI>When using live-resizing, callback events are normally triggered repeatedly. 
+	Disable this option to to avoid this and trigger callbacks only when resizing is complete.</LI>
+</OL>
+<BLOCKQUOTE>
+	<PRE>triggerEventsWhileDragging: true <I>// default</I></PRE>
+	<PRE>west__triggerEventsWhileDragging: false <I>// sample</I></PRE>
+</BLOCKQUOTE>
+<OL>
+	<LI>Also added 2 new properties to provide access to the generated elements...</LI>
+</OL>
+<BLOCKQUOTE>
+	Instance.resizers	
+	<PRE><I>Example:</I> var westResizerBar = myLayout.resizers.west</PRE>
+	Instance.togglers 
+	<PRE><I>Example:</I> var westToggleBtn = myLayout.togglers.west</PRE>
+	</BLOCKQUOTE>
+<OL>
+	<LI>Lastly, I removed the default hotkeys for SHIFT+Cursor keys. 
+		Cursor-hotkeys now only works with CTRL+ - like CTRL+Left-Cursor to toggle the west/left pane. 
+		This eliminates conflicts with text-selection hotkeys.</LI>
+</OL>
+
+
+<HR id="1.3.0.rc14">
+<H4>Fixed in RC-5 to RC-14</H4>
+
+<P>These releases were mostly bug fixes. Some new features were probably added, but I do not have a 
+	list available right now.</P>
+
+
+<HR id="1.3.0.rc4.2">
+<H4>Updated in RC-4.2</H4>
+<OL>
+	<LI>Update State Management (<u>no longer requires json2.js </u>)<BR>
+		<BR>
+	This update REMOVES the dependancy for State Management. 
+You no longer need json2.js to use the new feature.</LI>
+</OL>
+
+
+<HR id="1.3.0.rc4.1">
+<H4>Added in RC-4.1</H4>
+
+<OL>
+	<LI>Add State Management (requires json2.js - <u>SEE RC-4.2 </u>)<BR>
+		<BR>
+		For details, see: 
+		<A href="http://groups.google.com/group/jquery-ui-layout/browse_thread/thread/b6d7b9446bde4b54/6610e869a7908689?q="
+		>http://groups.google.com/group/jquery-ui-layout/browse_thread/thread/b6d7b9446bde4b54/6610e869a7908689?q=</A></LI>
+</OL>
+
+
+<HR id="1.3.0.rc4">
+<H4>Added in RC-4</H4>
+
+<P>Here is the 1.3.RC4 version (I skipped RC3). I fixed all known bugs and completed all the remaining features 
+	I was working on.</P>
+
+<P>Layout will now autoClose (if pane is 'closable') or autoHide panes when there is not enough room for them 
+	to fit. This is determined based on the border-pane's minSize and center minWidth/minHeight. 
+	If you want the pane will re-open when there is enough room again, enable the autoReopen option.</P>
+<PRE>autoReopen: false <I>// default</I></PRE>
+<P>NOTE that autoOpen does not work well with live-resizing because the pane will re-open as soon as there is 
+	even 1px of space available, making the pane very small.</P>
+<P> There is an new option for the 'auto' and percentage-sizing capabilities. If you enable this, 
+	layout will recalculate percentages every time the layout is resized to try and maintain the same ratios...	</P>
+<PRE>autoResize: false <I>// default</I></PRE>
+<P>If you enable this for a pane that has 'auto' size, the pane will resize to fit wrapped content.</P>
+<P>If a pane is 'manually resized', autoResize is automatically turned off for that pane.</P>
+
+<P>If minSize rules prevent layout from achieving the percentage-size specified, the panes will be smaller. 
+	However, Layout will continue trying to achieve the full size every time the layout resizes.</P>
+
+<P>The option previously named "setWindowResizeTrigger" has been renamed to "resizeWithWindow". 
+	Normally you do not have to worry about this, but it can be useful with a nested layout that is inside 
+	a 'non-layout container'.</P>
+<PRE>resizeWithWindow: true <I>// default, UNLESS container is a 'pane' of an outer-layout</I></PRE>
+	<P>A new companion options sets a 'delay' before resizing the layout when the window is resizing. 
+	The default is 250ms, which makes window resizing smoother because the layout is not trying to resize 50-times/second</P>
+	<PRE>resizeWithWindowDelay: 250 <I>// default</I> </PRE>
+<P>Layout has 2 new methods: swapPanes() and destroy()</P>
+<PRE>myLayout.destroy()</PRE>
+<P>...will REMOVE the layout, putting everything back as it was originally. You can see a demo here: 
+	<A href="demos/destroy.html">/demos/destroy.html</A></P>
+<PRE>myLayout.swapPanes("west", "east")</PRE>
+	...will MOVE a pane(s) from one edge to another. You can move any pane to any side. 
+	If only one side has a pane, then the pane is 'moved'. If both the source and target sides have panes, 
+	then the 2 panes 'swap sides'. Layout will try to intelligently resize the panes as needed. 
+	You can see a demo here: <A href="demos/swap_panes.html">/demos/swap_panes.html</A> 
+<P>Here are some additional pages I used to test RC4 features...</P>
+<UL>
+	<LI>Nested Percentage-Width Columns: 
+		<A href="demos/nested_percent_columns.html">/demos/nested_percent_columns.html</A></LI>
+	<LI>Complex Layout Test-page: <A href="demos/complex_tester.html">/demos/complex_tester.html</A></LI>
+	<LI>IFRAME Test-page: <A href="demos/iframes_many.html">/demos/iframes_many.html</A></LI>
+</UL>
+</TD>
+
+		<TD class="sidebarRight"></TD>
+	</TR>
+
+	<TR bgcolor="#ffffff">
+		<TD colspan="3"><IMG src="lib/img/x.gif" alt="" width="1" height="1" border="0"></TD>
+	</TR>
+
+	<TR class="footer">
+		<TD colspan="3">&nbsp;</TD>
+	</TR>
+</TABLE>
+</BODY>
+
+<!-- Mirrored from layout.jquery-dev.net/changelog.cfm by HTTrack Website Copier/3.x [XR&CO'2013], Fri, 23 May 2014 12:44:12 GMT -->
+</HTML>
