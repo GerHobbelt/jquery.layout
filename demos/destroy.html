@@ -109,7 +109,7 @@
 			$C = $( selector );
 			if ($C.data("layoutContainer")) {
 				Instance = $C.layout();
-				Instance.clearCookie();
+				Instance.deleteCookie();
 				Instance.options.cookie.autoSave = false;
 			}
 		});
@@ -135,6 +135,7 @@
 
 
 	$(document).ready(function () {
+		// create layout(s) on-page-load...
 		//createLayout('body');
 		//createLayout('body > .ui-layout-center');
  	});

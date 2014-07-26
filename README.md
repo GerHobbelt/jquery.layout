@@ -1,5 +1,4 @@
-# Jquery.Ui.Layout
+layout
+======
 
-It's just a github/bower repository, I'm not the maintainer.
-
-Oficial page: http://layout.jquery-dev.net/downloads.cfm.
+jQuery Layout v1.x plug-in

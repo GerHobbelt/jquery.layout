@@ -49,6 +49,9 @@
 	<script type="text/javascript"> 
 
 	$(document).ready(function () {
+		// alias callback for convenience
+		var resizePaneAccordions	= $.layout.callbacks.resizePaneAccordions;
+		var resizeTabLayout			= $.layout.callbacks.resizeTabLayout;
 
 		// OUTER/PAGE LAYOUT
 		pageLayout = $("body").layout({ // DO NOT use "var pageLayout" here
@@ -56,14 +59,14 @@
 		,	east__size:			.30 
 		,	south__initClosed:	true
 		,	north__initClosed:	true
-		,	west__onresize:		$.layout.callbacks.resizePaneAccordions // west accordion a child of pane
-		,	east__onresize:		$.layout.callbacks.resizePaneAccordions // east accordion nested inside a tab-panel
+		,	west__onresize:		resizePaneAccordions // west accordion a child of pane
+		,	east__onresize:		resizePaneAccordions // east accordion nested inside a tab-panel
 		}); 
 
 		// TABS IN CENTER-PANE
 		// create tabs before wrapper-layout so elems are correct size before creating layout
 		pageLayout.panes.center.tabs({
-			activate:			$.layout.callbacks.resizeTabLayout // tab2-accordion is wrapped in a layout
+			activate:			resizeTabLayout // tab2-accordion is wrapped in a layout
 		});
 
 		// WRAPPER-LAYOUT FOR TABS/TAB-PANELS, INSIDE OUTER-CENTER PANE
@@ -71,19 +74,19 @@
 			closable:			false
 		,	resizable:			false
 		,	spacing_open:		0
-		,	center__onresize:	$.layout.callbacks.resizeTabLayout // tabs/panels are wrapped with an inner-layout
+		,	center__onresize:	resizeTabLayout // tabs/panels are wrapped with an inner-layout
 		});
 
 		// LAYOUT TO CONTAIN HEADER+ACCORDION, INSIDE A TAB, INSIDE OUTER-CENTER PANE
 		$("#tab-panel-center-2").layout({
-			center__onresize:	$.layout.callbacks.resizePaneAccordions // accordion is inside center-pane
+			center__onresize:	resizePaneAccordions // accordion is inside center-pane
 		,	resizeWithWindow:	false	// resizing is handled by callbacks to ensure the correct resizing sequence
 		,	triggerEventsOnLoad: true	// force resize of accordion when layout inits - ie, becomes visible 1st time
 		});
 
 		// TABS INSIDE EAST-PANE
 		pageLayout.panes.east.tabs({
-			activate:			$.layout.callbacks.resizePaneAccordions // resize tab2-accordion when tab is activated
+			activate:			resizePaneAccordions // resize tab2-accordion when tab is activated
 		});
 		pageLayout.sizeContent("east"); // resize pane-content-elements after creating east-tabs
 
