@@ -1,21 +1,20 @@
 /**
  * @preserve
- * jquery.layout 1.3.0 - Release Candidate 30.79
- * $Date: 2013-01-12 08:00:00 (Sat, 12 Jan 2013) $
+ * jquery.layout 1.3.0 - Release Candidate 30.80
+ * $Date: 2013-02-03 08:00:00 (Sat, 3 Feb 2013) $
  * $Rev: 303007 $
  *
- * Copyright (c) 2013 Kevin Dalman (http://allpro.net)
- * Based on work by Fabrizio Balliano (http://www.fabrizioballiano.net)
+ * Copyright (c) 2013 
+ *   Fabrizio Balliano (http://www.fabrizioballiano.net)
+ *   Kevin Dalman (http://allpro.net)
  *
  * Dual licensed under the GPL (http://www.gnu.org/licenses/gpl.html)
  * and MIT (http://www.opensource.org/licenses/mit-license.php) licenses.
  *
- * SEE: http://layout.jquery-dev.net/LICENSE.txt
+ * Changelog: http://layout.jquery-dev.com/changelog.cfm#1.3.0.rc30.80
  *
- * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.79
- *
- * Docs: http://layout.jquery-dev.net/documentation.html
- * Tips: http://layout.jquery-dev.net/tips.html
+ * Docs: http://layout.jquery-dev.com/documentation.html
+ * Tips: http://layout.jquery-dev.com/tips.html
  * Help: http://groups.google.com/group/jquery-ui-layout
  */
 
@@ -65,7 +64,7 @@ var	min		= Math.min
  */
 $.layout = {
 
-	version:	"1.3.rc30.79"
+	version:	"1.3.rc30.80"
 ,	revision:	0.033007 // 1.3.0 final = 1.0300 - major(n+).minor(nn)+patch(nn+)
 
 	// $.layout.browser REPLACES $.browser
@@ -1566,7 +1565,7 @@ $.fn.layout = function (opts) {
 		if (!$N.is(":visible")) {
 			// handle Chrome bug where popup window 'has no height'
 			// if layout is BODY element, try again in 50ms
-			// SEE: http://layout.jquery-dev.net/samples/test_popup_window.html
+			// SEE: http://layout.jquery-dev.com/samples/test_popup_window.html
 			if ( !retry && browser.webkit && $N[0].tagName === "BODY" )
 				setTimeout(function(){ _initLayoutElements(true); }, 50);
 			return false;
@@ -1752,10 +1751,12 @@ $.fn.layout = function (opts) {
 		timer.set("winResize", function(){
 			timer.clear("winResize");
 			timer.clear("winResizeRepeater");
-			var dims = elDims( $N, o.inset );
-			// only trigger resizeAll() if container has changed size
-			if (dims.innerWidth !== sC.innerWidth || dims.innerHeight !== sC.innerHeight)
-				resizeAll();
+			if ($N.is(":visible")) {
+				var dims = elDims( $N, o.inset );
+				// only trigger resizeAll() if container has changed size
+				if (dims.innerWidth !== sC.innerWidth || dims.innerHeight !== sC.innerHeight)
+					resizeAll();
+			}
 		}, delay);
 		// ALSO set fixed-delay timer, if not already running
 		if (!timer.data["winResizeRepeater"]) setWindowResizeRepeater();
@@ -3559,8 +3560,7 @@ $.fn.layout = function (opts) {
 		,	_closed	= "-closed"
 		,	_sliding= "-sliding"
 		;
-		$R
-			.css(side, sC.inset[side] + getPaneSize(pane)) // move the resizer
+		$R	.css(side, sC.inset[side] + getPaneSize(pane)) // move the resizer
 			.removeClass( rClass+_closed +" "+ rClass+_pane+_closed )
 			.addClass( rClass+_open +" "+ rClass+_pane+_open )
 		;
@@ -3956,10 +3956,11 @@ $.fn.layout = function (opts) {
 		,	dimName	= _c[pane].sizeType.toLowerCase()
 		,	skipResizeWhileDragging = s.isResizing && !o.triggerEventsDuringLiveResize
 		,	doFX	= noAnimation !== true && o.animatePaneSizing
-		,	oldSize, newSize
+		,	oldSize, newSize, vis
 		;
 		// QUEUE in case another action/animation is in progress
 		$N.queue(function( queueNext ){
+			vis = s.isVisible;
 			// calculate 'current' min/max sizes
 			setSizeLimits(pane); // update pane-state
 			oldSize = s.size;
@@ -3979,13 +3980,13 @@ $.fn.layout = function (opts) {
 			s.newSize = size;
 
 			// onresize_start callback CANNOT cancel resizing because this would break the layout!
-			if (!skipCallback && state.initialized && s.isVisible)
+			if (!skipCallback && state.initialized && vis)
 				_runCallbacks("onresize_start", pane);
 
 			// resize the pane, and make sure its visible
 			newSize = cssSize(pane, size);
 
-			if (doFX && $P.is(":visible")) { // ANIMATE
+			if (doFX && vis) { // ANIMATE
 				var fx		= $.layout.effects.size[pane] || $.layout.effects.size.all
 				,	easing	= o.fxSettings_size.easing || fx.easing
 				,	z		= options.zIndexes
@@ -4007,13 +4008,13 @@ $.fn.layout = function (opts) {
 				$P.css( dimName, newSize );	// resize pane
 				delete s.newSize;
 				// if pane is visible, then 
-				if ($P.is(":visible"))
+				if (vis)
 					sizePane_2(); // continue
 				else {
-					// pane is NOT VISIBLE, so just update state data...
+					// pane is NOT VISIBLE, so just update state & CSS...
 					// when pane is *next opened*, it will have the new size
 					s.size = size;				// update state.size
-					$.extend(s, elDims($P));	// update state dimensions
+					//$.extend(s, elDims($P));	// update state dimensions - CANNOT do this when not visible!
 				}
 				queueNext();
 			};
@@ -5047,7 +5048,7 @@ $.fn.layout = function (opts) {
 	,	slideToggle:		slideToggle		// method - ditto
 	//	pane actions
 	,	setSizeLimits:		setSizeLimits	// method - pass a 'pane' - update state min/max data
-	,	_sizePane:			sizePane		// method -intended for user by plugins only!
+	,	_sizePane:			sizePane		// method -intended for use by plugins only!
 	,	sizePane:			manualSizePane	// method - pass a 'pane' AND an 'outer-size' in pixels or percent, or 'auto'
 	,	sizeContent:		sizeContent		// method - pass a 'pane'
 	,	swapPanes:			swapPanes		// method - pass TWO 'panes' - will swap them
@@ -5325,7 +5326,7 @@ $.layout.state = {
 		// add missing/default state-restore options
 		var smo = inst.options.stateManagement;
 		opts = $.extend({
-			animateLoad:		false //smo.animateLoad
+			animateLoad:		false // smo.animateLoad - TODO:  animated loading feature is incomplete
 		,	includeChildren:	smo.includeChildren
 		}, opts );
 
@@ -5343,7 +5344,8 @@ $.layout.state = {
 			// update CURRENT layout-options with saved state data
 			$.extend(true, inst.options, o);
 		}
-		else {
+		//else {
+		if (inst.state.initialized) {
 			/*
 			 *	layout already initialized, so modify layout's configuration
 			 */
@@ -5351,7 +5353,7 @@ $.layout.state = {
 			,	o, c, h, state, open
 			;
 			$.each($.layout.config.borderPanes, function (idx, pane) {
-				o = data[ pane ];
+				o	= data[ pane ];
 				if (!$.isPlainObject( o )) return; // no key, skip pane
 
 				s	= o.size;
@@ -5362,19 +5364,22 @@ $.layout.state = {
 				open	= state.isVisible;
 
 				// reset autoResize
-				if (ar)
-					state.autoResize = ar;
-				// resize BEFORE opening
-				if (!open)
-					inst._sizePane(pane, s, false, false, false); // false=skipCallback/noAnimation/forceResize
+				if (ar !== undefined)
+					state.autoResize = !!ar;
+				// if auto-resize enabled, then MUST update 'size' option or will try to revert to old size!
+				if (s && state.autoResize)
+					inst.options[pane].size = s;
+				// resize BEFORE opening if not _already_ open
+				if (s && !open)
+					inst._sizePane(pane, s);
 				// open/close as necessary - DO NOT CHANGE THIS ORDER!
-				if (h === true)			inst.hide(pane, noAnimate);
+				if		(h === true)	inst.hide (pane, noAnimate);
 				else if (c === true)	inst.close(pane, false, noAnimate);
 				else if (c === false)	inst.open (pane, false, noAnimate);
 				else if (h === false)	inst.show (pane, false, noAnimate);
 				// resize AFTER any other actions
-				if (open)
-					inst._sizePane(pane, s, false, false, noAnimate); // animate resize if option passed
+				if (s && open)
+					inst._sizePane(pane, s, false, noAnimate); // skipCallback=false, noAnimation=noAnimate - animate resize if option passed
 			});
 
 			/*
