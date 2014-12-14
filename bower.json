@@ -7,8 +7,8 @@
   ],
   "description": "The Ultimate Page Layout Manager",
   "main": [
-    "source/stable/jquery.layout_and_plugins.min.js",
-    "source/stable/layout-default.css"
+    "./source/stable/jquery.layout_and_plugins.min.js",
+    "./source/stable/layout-default.css"
   ],
   "license": "MIT + GPL",
   "ignore": [
