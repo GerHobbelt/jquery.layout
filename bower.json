@@ -10,6 +10,9 @@
     "./source/stable/jquery.layout_and_plugins.min.js",
     "./source/stable/layout-default.css"
   ],
+  "dependencies": {
+
+  },
   "license": "MIT + GPL",
   "ignore": [
     "**/.*",
