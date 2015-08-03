@@ -107,10 +107,10 @@
 
 	<script type="text/javascript" src="../lib/js/jquery-latest.js"></script>
 	<script type="text/javascript" src="../lib/js/jquery-ui-latest.js"></script>
-	<script type="text/javascript" src="../lib/js/jquery.layout-latest.js"></script>
-	<script type="text/javascript" src="../lib/js/jquery.layout.resizeTabLayout.min-1.2.js"></script>
-
 	<script type="text/javascript" src="../lib/js/debug.js"></script>
+	<script type="text/javascript" src="../lib/js/jquery.layout-latest.js"></script>
+	<script type="text/javascript" src="../lib/js/plugins/jquery.layout.state.js"></script>
+	<script type="text/javascript" src="../lib/js/callbacks/jquery.layout.resizeTabLayout.js"></script>
 
 	<script type="text/javascript">
 
@@ -155,7 +155,13 @@
 
 		// create the tabs before the page layout because tabs will change the height of the north-pane
 		$("#tabs").tabs({
+			// ensure layouts are created/updated when it's tab/container is activated
 			activate: $.layout.callbacks.resizeTabLayout
+
+		//	set current tab-id on URL to save-state for that too!
+		,	beforeActivate: function (event, ui) {
+				window.location.hash = ui.newPanel.selector;
+			}
 		});
 
 
@@ -170,7 +176,7 @@
 		,	animatePaneSizing:			true	// changes in pane-sizes when resetting state will be animated
 
 		,	stateManagement__enabled:	true	// enable stateManagement - automatic cookie load & save enabled by default
-		,	stateManagement__includeChildren: true	// DEFAULT - include all child-layouts in state data & cookie (true = default)
+		,	stateManagement__includeChildren: true	// DEFAULT = true - include all child-layouts in state data & cookie (true = default)
 
 		//	these are NOT needed- just here to show how to add custom state-saving methods
 		//,	stateManagement__autoLoad:	customLoadState // run custom state-code when Layout loads
@@ -195,6 +201,7 @@
 					,	contentSelector:	".ui-widget-content"
 					,	west__size:			.25
 					,	east__size:			.25
+					,	stateManagement__enabled:	true	// enable stateManagement - automatic cookie load & save enabled by default
 					}
 					// Only ONE of the two tabs has an inner-child layout.
 					// So add children as separate keys to prevent Layout from 
