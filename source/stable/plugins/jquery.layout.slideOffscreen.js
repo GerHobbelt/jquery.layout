@@ -1,60 +1,61 @@
 /**
- *	UI Layout Plugin: Slide-Offscreen Animation
+ *  UI Layout Plugin: Slide-Offscreen Animation
  *
- *	Prevent panes from being 'hidden' so that an iframes/objects 
- *	does not reload/refresh when pane 'opens' again.
- *	This plug-in adds a new animation called "slideOffscreen".
- *	It is identical to the normal "slide" effect, but avoids hiding the element
+ *  Prevent panes from being 'hidden' so that an iframes/objects 
+ *  does not reload/refresh when pane 'opens' again.
+ *  This plug-in adds a new animation called "slideOffscreen".
+ *  It is identical to the normal "slide" effect, but avoids hiding the element
  *
- *	Requires Layout 1.3.0.RC30.1 or later for Close offscreen
- *	Requires Layout 1.3.0.RC30.5 or later for Hide, initClosed & initHidden offscreen
+ *  Requires Layout 1.3.0.RC30.1 or later for Close offscreen
+ *  Requires Layout 1.3.0.RC30.5 or later for Hide, initClosed & initHidden offscreen
  *
- *	Version:	1.1 - 2012-11-18
- *	Author:		Kevin Dalman (kevin@jquery-dev.com)
- *	@preserve	jquery.layout.slideOffscreen-1.1.js
+ *  Version:    1.1 - 2012-11-18
+ *  Author:     Kevin Dalman (kevin@jquery-dev.com)
+ *  @preserve   jquery.layout.slideOffscreen-1.1.js
  */
 ;(function ($) {
+var _ = $.layout;
 
 // Add a new "slideOffscreen" effect
 if ($.effects) {
 
 	// add an option so initClosed and initHidden will work
-	$.layout.defaults.panes.useOffscreenClose = false; // user must enable when needed
+	_.defaults.panes.useOffscreenClose = false; // user must enable when needed
 	/* set the new animation as the default for all panes
-	$.layout.defaults.panes.fxName = "slideOffscreen";
+	_.defaults.panes.fxName = "slideOffscreen";
 	*/
 
-	if ($.layout.plugins)
-		$.layout.plugins.effects.slideOffscreen = true;
+	if (_.plugins)
+		_.plugins.effects.slideOffscreen = true;
 
 	// dupe 'slide' effect defaults as new effect defaults
-	$.layout.effects.slideOffscreen = $.extend(true, {}, $.layout.effects.slide);
+	_.effects.slideOffscreen = $.extend(true, {}, _.effects.slide);
 
 	// add new effect to jQuery UI
 	$.effects.slideOffscreen = function(o) {
 		return this.queue(function(){
 
-			var fx		= $.effects
-			,	opt		= o.options
-			,	$el		= $(this)
-			,	pane	= $el.data('layoutEdge')
-			,	state	= $el.data('parentLayout').state
-			,	dist	= state[pane].size
-			,	s		= this.style
-			,	props	= ['top','bottom','left','right']
+			var fx      = $.effects
+			,   opt     = o.options
+			,   $el     = $(this)
+			,   pane    = $el.data('layoutEdge')
+			,   state   = $el.data('parentLayout').state
+			,   dist    = state[pane].size
+			,   s       = this.style
+			,   props   = ['top','bottom','left','right']
 				// Set options
-			,	mode	= fx.setMode($el, opt.mode || 'show') // Set Mode
-			,	show	= (mode == 'show')
-			,	dir		= opt.direction || 'left' // Default Direction
-			,	ref	 	= (dir == 'up' || dir == 'down') ? 'top' : 'left'
-			,	pos		= (dir == 'up' || dir == 'left')
-			,	offscrn	= $.layout.config.offscreenCSS || {}
-			,	keyLR	= $.layout.config.offscreenReset
-			,	keyTB	= 'offscreenResetTop' // only used internally
-			,	animation = {}
+			,   mode    = fx.setMode($el, opt.mode || 'show') // Set Mode
+			,   show    = (mode == 'show')
+			,   dir     = opt.direction || 'left' // Default Direction
+			,   ref     = (dir == 'up' || dir == 'down') ? 'top' : 'left'
+			,   pos     = (dir == 'up' || dir == 'left')
+			,	offscrn	= _.config.offscreenCSS || {}
+			,	keyLR	= _.config.offscreenReset
+			,   keyTB   = 'offscreenResetTop' // only used internally
+			,   animation = {}
 			;
 			// Animation settings
-			animation[ref]	= (show ? (pos ? '+=' : '-=') : (pos ? '-=' : '+=')) + dist;
+			animation[ref]  = (show ? (pos ? '+=' : '-=') : (pos ? '-=' : '+=')) + dist;
 
 			if (show) { // show() animation, so save top/bottom but retain left/right set when 'hidden'
 				$el.data(keyTB, { top: s.top, bottom: s.bottom });

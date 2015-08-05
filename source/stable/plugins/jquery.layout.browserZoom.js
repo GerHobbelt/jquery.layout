@@ -16,56 +16,60 @@
  * @todo: Add hotkey/mousewheel bindings to _instantly_ respond to these zoom event
  */
 ;(function ($) {
-			
-var _ = $.layout;
 
 // tell Layout that the plugin is available
-_.plugins.browserZoom = true;
+$.layout.plugins.browserZoom = true;
 
-_.defaults.browserZoomCheckInterval = 1000;
-_.optionsMap.layout.push("browserZoomCheckInterval");
+$.layout.defaults.browserZoomCheckInterval = 1000;
+$.layout.optionsMap.layout.push("browserZoomCheckInterval");
 
 /*
- *	browserZoom methods
+ *  browserZoom methods
  */
-_.browserZoom = {
+$.layout.browserZoom = {
 
 	_init: function (inst) {
-		$.layout.browserZoom._setTimer(inst);
+		// abort if browser does not need this check
+		if ($.layout.browserZoom.ratio() !== false)
+			$.layout.browserZoom._setTimer(inst);
 	}
 
-,	_setTimer: function (inst) {
+,   _setTimer: function (inst) {
+		// abort if layout destroyed or browser does not need this check
 		if (inst.destroyed) return;
-		var o = inst.options
-		,	s = inst.state
-		,	z = s.browserZoom = $.layout.browserZoom.ratio()
+		var o   = inst.options
+		,   s   = inst.state
+		//  don't need check if inst has parentLayout, but check occassionally in case parent destroyed!
+		//  MINIMUM 100ms interval, for performance
+		,   ms  = inst.hasParentLayout ?  5000 : Math.max( o.browserZoomCheckInterval, 100 )
 		;
-		if (o.resizeWithWindow && z !== false) {
-			setTimeout(function(){
-				if (inst.destroyed) return;
-				var d = $.layout.browserZoom.ratio();
-				if (d !== s.browserZoom) {
-					s.browserZoom = d;
-					inst.resizeAll();
-				}
-				$.layout.browserZoom._setTimer(inst); // set a NEW timeout
-			},	Math.max( o.browserZoomCheckInterval, 100 )); // MINIMUM 100ms interval, for performance
+		// set the timer
+		setTimeout(function(){
+			if (inst.destroyed || !o.resizeWithWindow) return;
+			var d = $.layout.browserZoom.ratio();
+			if (d !== s.browserZoom) {
+				s.browserZoom = d;
+				inst.resizeAll();
+			}
+			// set a NEW timeout
+			$.layout.browserZoom._setTimer(inst);
 		}
+		,   ms );
 	}
 
-,	ratio: function () {
-		var w	= window
-		,	s	= screen
-		,	d	= document
-		,	dE	= d.documentElement || d.body
-		,	b	= $.layout.browser
-		,	v	= b.version
-		,	r, sW, cW
+,   ratio: function () {
+		var w   = window
+		,   s   = screen
+		,   d   = document
+		,   dE  = d.documentElement || d.body
+		,   b   = $.layout.browser
+		,   v   = b.version
+		,   r, sW, cW
 		;
 		// we can ignore all browsers that fire window.resize event onZoom
 		if (!b.msie || v > 8)
 			return false; // don't need to track zoom
-		if (s.deviceXDPI)
+		if (s.deviceXDPI && s.systemXDPI) // syntax compiler hack
 			return calc(s.deviceXDPI, s.systemXDPI);
 		// everything below is just for future reference!
 		if (b.webkit && (r = d.body.getBoundingClientRect))
@@ -81,6 +85,6 @@ _.browserZoom = {
 
 };
 // add initialization method to Layout's onLoad array of functions
-_.onReady.push( $.layout.browserZoom._init );
+$.layout.onReady.push( $.layout.browserZoom._init );
 
 })( jQuery );

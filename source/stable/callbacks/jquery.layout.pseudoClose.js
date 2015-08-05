@@ -13,23 +13,23 @@
  *	Author:		Kevin Dalman (kevin@jquery-dev.com)
  */
 ;(function ($) {
+var _ = $.layout;
 
 // make sure the callbacks branch exists
-$.layout.callbacks = $.layout.callbacks || {};
+if (!_.callbacks) _.callbacks = {};
 
-// make sure $.layout.defaults exists (backward compatibility)
-$.layout.defaults = $.layout.defaults || { north:{}, south:{}, east:{}, west:{}, center:{} };
-
+// make sure $.layout.defaults exists (backward compatibility
+if (!_.defaults) _.defaults = { north:{}, south:{}, east:{}, west:{}, center:{} };
 
 // init default pseudoClose-options when library loads
 for (var i=0; i<4; i++) {
-	$.layout.defaults[ ["north","south","east","west"][i] ].pseudoClose = {
+	_.defaults[ ["north","south","east","west"][i] ].pseudoClose = {
 		hideObject:	"iframe" // find and hide this when 'closed' - usually: "", "pane", "iframe" or "object"
 	,	skipIE:		false	// can skip IE for iframes that do not contain media objects
 	}
 };
 
-$.layout.callbacks.pseudoClose = function (pane, $Pane, paneState, paneOptions) {
+_.callbacks.pseudoClose = function (pane, $Pane, paneState, paneOptions) {
 	// if pane is 'hiding', then allow that to happen normally
 	if (paneState.isHiding) return true;
 

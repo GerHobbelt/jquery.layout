@@ -26,20 +26,18 @@ if (!$.layout) return;
 // tell Layout that the state plugin is available
 $.layout.plugins.buttons = true;
 
-//	Add State-Management options to layout.defaults
+//  Add State-Management options to layout.defaults
 $.layout.defaults.autoBindCustomButtons = false;
 // Set stateManagement as a layout-option, NOT a pane-option
 $.layout.optionsMap.layout.push("autoBindCustomButtons");
 
-var lang = $.layout.language;
-
 /*
- *	Button methods
+ *  Button methods
  */
 $.layout.buttons = {
 	// set data used by multiple methods below
 	config: {
-		borderPanes:	"north,south,west,east"
+		borderPanes:    "north,south,west,east"
 	}
 
 	/**
@@ -47,10 +45,10 @@ $.layout.buttons = {
 	*
 	* @see  _create()
 	*/
-,	init: function (inst) {
-		var pre		= "ui-layout-button-"
-		,	layout	= inst.options.name || ""
-		,	name;
+,   init: function (inst) {
+		var pre     = "ui-layout-button-"
+		,   layout  = inst.options.name || ""
+		,   name;
 		$.each("toggle,open,close,pin,toggle-slide,open-slide".split(","), function (i, action) {
 			$.each($.layout.buttons.config.borderPanes.split(","), function (ii, pane) {
 				$("."+pre+action+"-"+pane).each(function(){
@@ -73,25 +71,18 @@ $.layout.buttons = {
 	*  - ui-layout-pane-button-open
 	*  - ui-layout-pane-button-close
 	*
-	* @param  {(string|!Object)}	selector	jQuery selector (or element) for button, eg: ".ui-layout-north .toggle-button"
-	* @param  {string}   			pane 		Name of the pane the button is for: 'north', 'south', etc.
-	* @return {Array.<Object>}		If both params valid, the element matching 'selector' in a jQuery wrapper - otherwise returns null
+	* @param  {(string|!Object)}    selector    jQuery selector (or element) for button, eg: ".ui-layout-north .toggle-button"
+	* @param  {string}              pane        Name of the pane the button is for: 'north', 'south', etc.
+	* @return {Array.<Object>}      If both params valid, the element matching 'selector' in a jQuery wrapper - otherwise returns null
 	*/
-,	get: function (inst, selector, pane, action) {
-		var $E	= $(selector)
-		,	o	= inst.options
-		,	err	= o.showErrorMessages
+,   get: function (inst, selector, pane, action) {
+		var $E  = $(selector)
+		,   o   = inst.options
+		//, err = o.showErrorMessages
 		;
-		if (!$E.length) { // element not found
-			if (err) alert(lang.errButton + lang.selector +": "+ selector);
-		}
-		else if ($.layout.buttons.config.borderPanes.indexOf(pane) === -1) { // invalid 'pane' sepecified
-			if (err) alert(lang.errButton + lang.pane +": "+ pane);
-			$E = $("");  // NO BUTTON
-		}
-		else { // VALID
+		if ($E.length && $.layout.buttons.config.borderPanes.indexOf(pane) >= 0) {
 			var btn = o[pane].buttonClass +"-"+ action;
-			$E	.addClass( btn +" "+ btn +"-"+ pane )
+			$E  .addClass( btn +" "+ btn +"-"+ pane )
 				.data("layoutName", o.name); // add layout identifier - even if blank!
 		}
 		return $E;
@@ -101,19 +92,19 @@ $.layout.buttons = {
 	/**
 	* NEW syntax for binding layout-buttons - will eventually replace addToggle, addOpen, etc.
 	*
-	* @param {(string|!Object)}	sel		jQuery selector (or element) for button, eg: ".ui-layout-north .toggle-button"
-	* @param {string}			action
-	* @param {string}			pane
+	* @param {(string|!Object)} sel     jQuery selector (or element) for button, eg: ".ui-layout-north .toggle-button"
+	* @param {string}           action
+	* @param {string}           pane
 	*/
-,	bind: function (inst, sel, action, pane) {
+,   bind: function (inst, sel, action, pane) {
 		var _ = $.layout.buttons;
 		switch (action.toLowerCase()) {
-			case "toggle":			_.addToggle	(inst, sel, pane); break;	
-			case "open":			_.addOpen	(inst, sel, pane); break;
-			case "close":			_.addClose	(inst, sel, pane); break;
-			case "pin":				_.addPin	(inst, sel, pane); break;
-			case "toggle-slide":	_.addToggle	(inst, sel, pane, true); break;	
-			case "open-slide":		_.addOpen	(inst, sel, pane, true); break;
+			case "toggle":          _.addToggle (inst, sel, pane); break;   
+			case "open":            _.addOpen   (inst, sel, pane); break;
+			case "close":           _.addClose  (inst, sel, pane); break;
+			case "pin":             _.addPin    (inst, sel, pane); break;
+			case "toggle-slide":    _.addToggle (inst, sel, pane, true); break; 
+			case "open-slide":      _.addOpen   (inst, sel, pane, true); break;
 		}
 		return inst;
 	}
@@ -121,11 +112,11 @@ $.layout.buttons = {
 	/**
 	* Add a custom Toggler button for a pane
 	*
-	* @param {(string|!Object)}	selector	jQuery selector (or element) for button, eg: ".ui-layout-north .toggle-button"
-	* @param {string}  			pane 		Name of the pane the button is for: 'north', 'south', etc.
-	* @param {boolean=}			slide 		true = slide-open, false = pin-open
+	* @param {(string|!Object)} selector    jQuery selector (or element) for button, eg: ".ui-layout-north .toggle-button"
+	* @param {string}           pane        Name of the pane the button is for: 'north', 'south', etc.
+	* @param {boolean=}         slide       true = slide-open, false = pin-open
 	*/
-,	addToggle: function (inst, selector, pane, slide) {
+,   addToggle: function (inst, selector, pane, slide) {
 		$.layout.buttons.get(inst, selector, pane, "toggle")
 			.click(function(evt){
 				inst.toggle(pane, !!slide);
@@ -137,13 +128,13 @@ $.layout.buttons = {
 	/**
 	* Add a custom Open button for a pane
 	*
-	* @param {(string|!Object)}	selector	jQuery selector (or element) for button, eg: ".ui-layout-north .toggle-button"
-	* @param {string}			pane 		Name of the pane the button is for: 'north', 'south', etc.
-	* @param {boolean=}			slide 		true = slide-open, false = pin-open
+	* @param {(string|!Object)} selector    jQuery selector (or element) for button, eg: ".ui-layout-north .toggle-button"
+	* @param {string}           pane        Name of the pane the button is for: 'north', 'south', etc.
+	* @param {boolean=}         slide       true = slide-open, false = pin-open
 	*/
-,	addOpen: function (inst, selector, pane, slide) {
+,   addOpen: function (inst, selector, pane, slide) {
 		$.layout.buttons.get(inst, selector, pane, "open")
-			.attr("title", lang.Open)
+			.attr("title", inst.options[pane].tips.Open)
 			.click(function (evt) {
 				inst.open(pane, !!slide);
 				evt.stopPropagation();
@@ -154,12 +145,12 @@ $.layout.buttons = {
 	/**
 	* Add a custom Close button for a pane
 	*
-	* @param {(string|!Object)}	selector	jQuery selector (or element) for button, eg: ".ui-layout-north .toggle-button"
-	* @param {string}   		pane 		Name of the pane the button is for: 'north', 'south', etc.
+	* @param {(string|!Object)} selector    jQuery selector (or element) for button, eg: ".ui-layout-north .toggle-button"
+	* @param {string}           pane        Name of the pane the button is for: 'north', 'south', etc.
 	*/
-,	addClose: function (inst, selector, pane) {
+,   addClose: function (inst, selector, pane) {
 		$.layout.buttons.get(inst, selector, pane, "close")
-			.attr("title", lang.Close)
+			.attr("title", inst.options[pane].tips.Close)
 			.click(function (evt) {
 				inst.close(pane);
 				evt.stopPropagation();
@@ -177,10 +168,10 @@ $.layout.buttons = {
 	*  - ui-layout-pane-pin-up
 	*  - ui-layout-pane-west-pin-up
 	*
-	* @param {(string|!Object)}	selector	jQuery selector (or element) for button, eg: ".ui-layout-north .toggle-button"
-	* @param {string}   		pane 		Name of the pane the pin is for: 'north', 'south', etc.
+	* @param {(string|!Object)} selector    jQuery selector (or element) for button, eg: ".ui-layout-north .toggle-button"
+	* @param {string}           pane        Name of the pane the pin is for: 'north', 'south', etc.
 	*/
-,	addPin: function (inst, selector, pane) {
+,   addPin: function (inst, selector, pane) {
 		var $E = $.layout.buttons.get(inst, selector, pane, "pin");
 		if ($E.length) {
 			var s = inst.state[pane];
@@ -203,18 +194,20 @@ $.layout.buttons = {
 	* Change the class of the pin button to make it look 'up' or 'down'
 	*
 	* @see  addPin(), syncPins()
-	* @param {Array.<Object>}	$Pin	The pin-span element in a jQuery wrapper
-	* @param {string}	pane	These are the params returned to callbacks by layout()
-	* @param {boolean}	doPin	true = set the pin 'down', false = set it 'up'
+	* @param {Array.<Object>}   $Pin    The pin-span element in a jQuery wrapper
+	* @param {string}   pane    These are the params returned to callbacks by layout()
+	* @param {boolean}  doPin   true = set the pin 'down', false = set it 'up'
 	*/
-,	setPinState: function (inst, $Pin, pane, doPin) {
+,   setPinState: function (inst, $Pin, pane, doPin) {
 		var updown = $Pin.attr("pin");
 		if (updown && doPin === (updown=="down")) return; // already in correct state
 		var
-			pin		= inst.options[pane].buttonClass +"-pin"
-		,	side	= pin +"-"+ pane
-		,	UP		= pin +"-up "+	side +"-up"
-		,	DN		= pin +"-down "+side +"-down"
+			po      = inst.options[pane]
+		,   lang    = po.tips
+		,   pin     = po.buttonClass +"-pin"
+		,   side    = pin +"-"+ pane
+		,   UP      = pin +"-up "+  side +"-up"
+		,   DN      = pin +"-down "+side +"-down"
 		;
 		$Pin
 			.attr("pin", doPin ? "down" : "up") // logic
@@ -229,10 +222,10 @@ $.layout.buttons = {
 	* Unpinned means the pane is 'sliding' - ie, over-top of the adjacent panes
 	*
 	* @see  open(), close()
-	* @param {string}	pane   These are the params returned to callbacks by layout()
-	* @param {boolean}	doPin  True means set the pin 'down', False means 'up'
+	* @param {string}   pane   These are the params returned to callbacks by layout()
+	* @param {boolean}  doPin  True means set the pin 'down', False means 'up'
 	*/
-,	syncPinBtns: function (inst, pane, doPin) {
+,   syncPinBtns: function (inst, pane, doPin) {
 		// REAL METHOD IS _INSIDE_ LAYOUT - THIS IS HERE JUST FOR REFERENCE
 		$.each(state[pane].pins, function (i, selector) {
 			$.layout.buttons.setPinState(inst, $(selector), pane, doPin);
@@ -240,15 +233,15 @@ $.layout.buttons = {
 	}
 
 
-,	_load: function (inst) {
-		//	ADD Button methods to Layout Instance
+,   _load: function (inst) {
+		//  ADD Button methods to Layout Instance
 		$.extend( inst, {
-			bindButton:		function (selector, action, pane) { return $.layout.buttons.bind(inst, selector, action, pane); }
-		//	DEPRECATED METHODS...
-		,	addToggleBtn:	function (selector, pane, slide) { return $.layout.buttons.addToggle(inst, selector, pane, slide); }
-		,	addOpenBtn:		function (selector, pane, slide) { return $.layout.buttons.addOpen(inst, selector, pane, slide); }
-		,	addCloseBtn:	function (selector, pane) { return $.layout.buttons.addClose(inst, selector, pane); }
-		,	addPinBtn:		function (selector, pane) { return $.layout.buttons.addPin(inst, selector, pane); }
+			bindButton:     function (selector, action, pane) { return $.layout.buttons.bind(inst, selector, action, pane); }
+		//  DEPRECATED METHODS...
+		,   addToggleBtn:   function (selector, pane, slide) { return $.layout.buttons.addToggle(inst, selector, pane, slide); }
+		,   addOpenBtn:     function (selector, pane, slide) { return $.layout.buttons.addOpen(inst, selector, pane, slide); }
+		,   addCloseBtn:    function (selector, pane) { return $.layout.buttons.addClose(inst, selector, pane); }
+		,   addPinBtn:      function (selector, pane) { return $.layout.buttons.addPin(inst, selector, pane); }
 		});
 
 		// init state array to hold pin-buttons
@@ -262,7 +255,7 @@ $.layout.buttons = {
 			$.layout.buttons.init(inst);
 	}
 
-,	_unload: function (inst) {
+,   _unload: function (inst) {
 		// TODO: unbind all buttons???
 	}
 
