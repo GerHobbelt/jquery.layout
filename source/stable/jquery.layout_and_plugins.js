@@ -16,7 +16,7 @@
  *
  * Docs: http://layout.jquery-dev.com/documentation.html
  * Tips: http://layout.jquery-dev.com/tips.html
- * Help: http://groups.google.com/group/jquery-ui-layout
+ * Help: https://groups.google.com/forum/#!forum/jquery-ui-layout
  */
 
 /* JavaDoc Info: http://code.google.com/closure/compiler/docs/js-for-compiler.html
@@ -5145,7 +5145,7 @@ $.fn.layout = function (opts) {
  * @requires: UI Layout 1.4.0 or higher
  * @requires: $.ui.cookie (above)
  *
- * @see: http://groups.google.com/group/jquery-ui-layout
+ * @see: https://groups.google.com/forum/#!forum/jquery-ui-layout
  */
 ;(function ($) {
 
@@ -5619,7 +5619,7 @@ $.layout.onUnload.push( $.layout.state._unload );
  *
  * @dependancies: UI Layout 1.3.0.rc30.1 or higher
  *
- * @support: http://groups.google.com/group/jquery-ui-layout
+ * @support: https://groups.google.com/forum/#!forum/jquery-ui-layout
  *
  * Docs: [ to come ]
  * Tips: [ to come ]
@@ -5888,7 +5888,7 @@ $.layout.onLoad.push(  $.layout.buttons._load );
  *
  * @requires: UI Layout 1.3.0.rc30.1 or higher
  *
- * @see: http://groups.google.com/group/jquery-ui-layout
+ * @see: https://groups.google.com/forum/#!forum/jquery-ui-layout
  *
  * TODO: Extend logic to handle other problematic zooming in browsers
  * TODO: Add hotkey/mousewheel bindings to _instantly_ respond to these zoom event

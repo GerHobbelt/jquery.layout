@@ -11,7 +11,7 @@
  * @dependancies: UI Layout 1.3.0.rc30.1 or higher
  * @dependancies: $.ui.cookie (above)
  *
- * @support: http://groups.google.com/group/jquery-ui-layout
+ * @support: https://groups.google.com/forum/#!forum/jquery-ui-layout
  */
 /*
  *	State-management options stored in options.stateManagement, which includes a .cookie hash

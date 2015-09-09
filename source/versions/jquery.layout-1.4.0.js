@@ -16,7 +16,7 @@
  *
  * Docs: http://layout.jquery-dev.com/documentation.html
  * Tips: http://layout.jquery-dev.com/tips.html
- * Help: http://groups.google.com/group/jquery-ui-layout
+ * Help: https://groups.google.com/forum/#!forum/jquery-ui-layout
  */
 
 /* JavaDoc Info: http://code.google.com/closure/compiler/docs/js-for-compiler.html

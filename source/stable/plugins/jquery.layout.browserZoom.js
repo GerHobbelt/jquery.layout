@@ -10,7 +10,7 @@
  *
  * @dependancies: UI Layout 1.3.0.rc30.1 or higher
  *
- * @support: http://groups.google.com/group/jquery-ui-layout
+ * @support: https://groups.google.com/forum/#!forum/jquery-ui-layout
  *
  * @todo: Extend logic to handle other problematic zooming in browsers
  * @todo: Add hotkey/mousewheel bindings to _instantly_ respond to these zoom event

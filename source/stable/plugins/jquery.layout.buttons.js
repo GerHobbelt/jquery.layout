@@ -10,7 +10,7 @@
  *
  * @dependancies: UI Layout 1.3.0.rc30.1 or higher
  *
- * @support: http://groups.google.com/group/jquery-ui-layout
+ * @support: https://groups.google.com/forum/#!forum/jquery-ui-layout
  *
  * Docs: [ to come ]
  * Tips: [ to come ]

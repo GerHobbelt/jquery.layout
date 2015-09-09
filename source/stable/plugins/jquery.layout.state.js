@@ -11,7 +11,7 @@
  * @requires: UI Layout 1.4.0 or higher
  * @requires: $.ui.cookie (above)
  *
- * @see: http://groups.google.com/group/jquery-ui-layout
+ * @see: https://groups.google.com/forum/#!forum/jquery-ui-layout
  */
 
 // NOTE: For best readability, view with a fixed-width font and tabs equal to 4-chars
