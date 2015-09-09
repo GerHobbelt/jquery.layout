@@ -46,3 +46,36 @@ In the meantime you can find information and demos on the widget's old website a
 More information will be added here soon. This is just to get the migration process started...
 
 /Kevin
+
+
+----
+
+# About this clone/fork (@Philzen)
+
+This is a handmade fork of the [jQuery Layout Plugin](http://layout.jquery-dev.com/) as developed by Kevin Dalman.
+
+The official website only includes single file downloads, whilst the author himself [states](https://groups.google.com/forum/#!searchin/jquery-ui-layout/repository/jquery-ui-layout/kOVxn-KYnxk/nGRZ0LKcRpIJ)
+
+> There is not (sic) repository since I am not collaborating on the plugin
+
+Therefore this little handy repo - open for collaboration of course.
+
+>                                                                    
+> ## Update (@GerHobbelt, 2014/2015)
+>
+> Now there [exists a github repo](https://github.com/allpro/layout) for [jQuery Layout Plugin](http://layout.jquery-dev.com/)                                                                      
+> on which this clone (@GerHobbelt) is based: it adds all demos and documentation available on the website and merges a few 
+> fixes from here and there.
+>
+> /GerHobbelt
+>
+
+
+
+# Licence
+
+Dual-licensed under the [GNU](http://www.gnu.org/licenses/gpl.html) and [MIT](http://opensource.org/licenses/mit-license.php)
+
+Links to proprietary-licenced content in the examples have been updated to point to the official website.
+
+/Philzen 

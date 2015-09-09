@@ -249,15 +249,15 @@
 			<li><a href="#" onClick="outerLayout.show('south', false)">Unhide South</a></li>
 			<li><a href="#" onClick="outerLayout.hide('east')"> Hide East</a></li>
 			<li><a href="#" onClick="outerLayout.show('east', false)">Unhide East</a></li>
-			<li><a href="#" onClick="outerLayout.open('east.html')"> Open East</a></li>
-			<li><a href="#" onClick="outerLayout.open('north.html'); outerLayout.sizePane('north', 'auto')">  Resize North="auto"</a></li>
-			<li><a href="#" onClick="outerLayout.sizePane('north', 100); outerLayout.open('north.html')">  Resize North=100</a></li>
-			<li><a href="#" onClick="outerLayout.sizePane('north', 300); outerLayout.open('north.html')">  Resize North=300</a></li>
-			<li><a href="#" onClick="outerLayout.sizePane('north', 10000); outerLayout.open('north.html')">Resize North=10000</a></li>
-			<li><a href="#" onClick="outerLayout.open('south.html'); outerLayout.sizePane('south', 'auto')">  Resize South="auto"</a></li>
-			<li><a href="#" onClick="outerLayout.sizePane('south', 100); outerLayout.open('south.html')">  Resize South=100</a></li>
-			<li><a href="#" onClick="outerLayout.sizePane('south', 300); outerLayout.open('south.html')">  Resize South=300</a></li>
-			<li><a href="#" onClick="outerLayout.sizePane('south', 10000); outerLayout.open('south.html')">Resize South=10000</a></li>
+			<li><a href="#" onClick="outerLayout.open('east')"> Open East</a></li>
+			<li><a href="#" onClick="outerLayout.open('north'); outerLayout.sizePane('north', 'auto')">  Resize North="auto"</a></li>
+			<li><a href="#" onClick="outerLayout.sizePane('north', 100); outerLayout.open('north')">  Resize North=100</a></li>
+			<li><a href="#" onClick="outerLayout.sizePane('north', 300); outerLayout.open('north')">  Resize North=300</a></li>
+			<li><a href="#" onClick="outerLayout.sizePane('north', 10000); outerLayout.open('north')">Resize North=10000</a></li>
+			<li><a href="#" onClick="outerLayout.open('south'); outerLayout.sizePane('south', 'auto')">  Resize South="auto"</a></li>
+			<li><a href="#" onClick="outerLayout.sizePane('south', 100); outerLayout.open('south')">  Resize South=100</a></li>
+			<li><a href="#" onClick="outerLayout.sizePane('south', 300); outerLayout.open('south')">  Resize South=300</a></li>
+			<li><a href="#" onClick="outerLayout.sizePane('south', 10000); outerLayout.open('south')">Resize South=10000</a></li>
 			<li><a href="#" onClick="outerLayout.panes.north.css('backgroundColor','#FCC')">North Color = Red</a></li>
 			<li><a href="#" onClick="outerLayout.panes.north.css('backgroundColor','#CFC')">North Color = Green</a></li>
 			<li><a href="#" onClick="outerLayout.panes.north.css('backgroundColor','')">    North Color = Default</a></li>
@@ -302,12 +302,12 @@
 			<li><a href="#" onClick="innerLayout.hide('west')"> Hide West</a></li>
 			<li><a href="#" onClick="innerLayout.hide('east')"> Hide East</a></li>
 			<li><a href="#" onClick="innerLayout.show('east')"> Show East</a></li>
-			<li><a href="#" onClick="innerLayout.sizePane('north', 50); innerLayout.open('north.html')">   Resize North=50</a></li>
-			<li><a href="#" onClick="innerLayout.sizePane('north', 300); innerLayout.open('north.html')">  Resize North=300</a></li>
-			<li><a href="#" onClick="innerLayout.sizePane('north', 10000); innerLayout.open('north.html')">Resize North=10000</a></li>
-			<li><a href="#" onClick="innerLayout.sizePane('south', 50); innerLayout.open('south.html')">   Resize South=50</a></li>
-			<li><a href="#" onClick="innerLayout.sizePane('south', 300); innerLayout.open('south.html')">  Resize South=300</a></li>
-			<li><a href="#" onClick="innerLayout.sizePane('south', 10000); innerLayout.open('south.html')">Resize South=10000</a></li>
+			<li><a href="#" onClick="innerLayout.sizePane('north', 50); innerLayout.open('north')">   Resize North=50</a></li>
+			<li><a href="#" onClick="innerLayout.sizePane('north', 300); innerLayout.open('north')">  Resize North=300</a></li>
+			<li><a href="#" onClick="innerLayout.sizePane('north', 10000); innerLayout.open('north')">Resize North=10000</a></li>
+			<li><a href="#" onClick="innerLayout.sizePane('south', 50); innerLayout.open('south')">   Resize South=50</a></li>
+			<li><a href="#" onClick="innerLayout.sizePane('south', 300); innerLayout.open('south')">  Resize South=300</a></li>
+			<li><a href="#" onClick="innerLayout.sizePane('south', 10000); innerLayout.open('south')">Resize South=10000</a></li>
 			<li><a href="#" onClick="innerLayout.panes.north.css('backgroundColor','#FCC')">North Color = Red</a></li>
 			<li><a href="#" onClick="innerLayout.panes.north.css('backgroundColor','#CFC')">North Color = Green</a></li>
 			<li><a href="#" onClick="innerLayout.panes.north.css('backgroundColor','')">    North Color = Default</a></li>
@@ -367,7 +367,7 @@
 			<p id="createInner2" style="font-weight: bold;"><a href="#" onClick="createInnerLayout(); return false;"
 				>Click here to CREATE the Inner Layout</a></p><!-- outerLayout.open('east');  -->
 
-			<p>See the <a href="#" onclick="outerLayout.open('east.html'); return false;">Outer-East pane</a> for commands to manipulate the Inner Layout</p>
+			<p>See the <a href="#" onclick="outerLayout.open('east'); return false;">Outer-East pane</a> for commands to manipulate the Inner Layout</p>
 
 			<p><a href="../demos.html">Go to the Demos page</a></p>
 

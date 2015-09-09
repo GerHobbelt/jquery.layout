@@ -356,7 +356,7 @@ $.layout = {
 	 *
 	 * @see $.swap() - swaps CSS, runs callback, resets CSS
 	 * @param  {!Object}        $E              jQuery element
-	 * @param  {boolean=}   [force=false]   Run even if display != none
+	 * @param  {boolean=}   [force=false]       Run even if display != none
 	 * @return {!Object}                        Returns current style props, if applicable
 	 */
 ,   showInvisibly: function ($E, force) {
@@ -518,7 +518,7 @@ $.layout = {
 		if (!$E.jquery) $E = $($E);
 		var CSS = $.layout.showInvisibly($E)
 		,   p   = $.css($E[0], prop, true)
-		,   v   = allowAuto && p=="auto" ? p : Math.round(parseFloat(p) || 0);
+		,   v   = allowAuto && p === "auto" ? p : Math.round(parseFloat(p) || 0);
 		$E.css( CSS ); // RESET
 		return v;
 	}
@@ -649,7 +649,7 @@ $.layout = {
 		,   safari:     b === "webkit"  // webkit (NOT chrome) = safari
 		,   webkit:     b === "chrome"  // chrome = webkit
 		,   msie:       ie
-		,   isIE6:      ie && v == 6
+		,   isIE6:      ie && v === 6
 			// ONLY IE reverts to old box-model - Note that compatMode was deprecated as of IE8
 		,   boxModel:   bm
 		,   boxSizing:  !!(typeof bs === "function" ? bs() : bs)
@@ -804,7 +804,7 @@ $.layout.defaults = {
 	,   resizeChildren:         true        // true = trigger child-layout.resizeAll() when this pane is resized
 	//  EVENT TRIGGERING
 	,   triggerEventsOnLoad:    false       // true = trigger onopen OR onclose callbacks when layout initializes
-	,   triggerEventsDuringLiveResize: true // true = trigger onresize callback REPEATEDLY if livePaneResizing==true
+	,   triggerEventsDuringLiveResize: true // true = trigger onresize callback REPEATEDLY if livePaneResizing == true
 	//  PANE CALLBACKS
 	,   onshow_start:           null        // CALLBACK when pane STARTS to Show    - BEFORE onopen/onhide_start
 	,   onshow_end:             null        // CALLBACK when pane ENDS being Shown  - AFTER  onopen/onhide_end
@@ -1216,7 +1216,7 @@ $.fn.layout = function (opts) {
 	 * @return {number}     Returns the innerHeight/Width of el by subtracting padding and borders
 	 */
 ,   cssSize = function (pane, outerSize) {
-		var fn = _c[pane].dir=="horz" ? cssH : cssW;
+		var fn = _c[pane].dir === "horz" ? cssH : cssW;
 		return fn($Ps[pane], outerSize);
 	}
 
@@ -1309,18 +1309,18 @@ $.fn.layout = function (opts) {
 			return parseInt(size, 10);
 
 		var o = options, avail = 0;
-		if (dir=="horz") // north or south or center.minHeight
+		if (dir === "horz") // north or south or center.minHeight
 			avail = sC.innerHeight - ($Ps.north ? o.north.spacing_open : 0) - ($Ps.south ? o.south.spacing_open : 0);
-		else if (dir=="vert") // east or west or center.minWidth
+		else if (dir === "vert") // east or west or center.minWidth
 			avail = sC.innerWidth - ($Ps.west ? o.west.spacing_open : 0) - ($Ps.east ? o.east.spacing_open : 0);
 
 		if (size === -1) // -1 == 100%
 			return avail;
 		else if (size > 0) // percentage, eg: .25
 			return round(avail * size);
-		else if (pane=="center")
+		else if (pane === "center")
 			return 0;
-		else { // size < 0 || size=='auto' || size==Missing || size==Invalid
+		else { // size < 0 || size === 'auto' || size == Missing || size == Invalid
 			// auto-size the pane
 			var dim = (dir === "horz" ? "height" : "width")
 			,   $P  = $Ps[pane]
@@ -1384,12 +1384,12 @@ $.fn.layout = function (opts) {
 		,   altPane         = _c.oppositeEdge[pane]
 		,   altS            = state[altPane]
 		,   $altP           = $Ps[altPane]
-		,   altPaneSize     = (!$altP || altS.isVisible===false || altS.isSliding ? 0 : (dir=="horz" ? $altP.outerHeight() : $altP.outerWidth()))
+		,   altPaneSize     = (!$altP || altS.isVisible===false || altS.isSliding ? 0 : (dir === "horz" ? $altP.outerHeight() : $altP.outerWidth()))
 		,   altPaneSpacing  = ((!$altP || altS.isHidden ? 0 : options[altPane][ altS.isClosed !== false ? "spacing_closed" : "spacing_open" ]) || 0)
 		//  limitSize prevents this pane from 'overlapping' opposite pane
-		,   containerSize   = (dir=="horz" ? sC.innerHeight : sC.innerWidth)
+		,   containerSize   = (dir === "horz" ? sC.innerHeight : sC.innerWidth)
 		,   minCenterDims   = cssMinDims("center")
-		,   minCenterSize   = dir=="horz" ? max(options.center.minHeight, minCenterDims.minHeight) : max(options.center.minWidth, minCenterDims.minWidth)
+		,   minCenterSize   = dir === "horz" ? max(options.center.minHeight, minCenterDims.minHeight) : max(options.center.minWidth, minCenterDims.minWidth)
 		//  if pane is 'sliding', then ignore center and alt-pane sizes - because 'overlays' them
 		,   limitSize       = (containerSize - paneSpacing - (isSliding ? 0 : (_parseSize("center", minCenterSize, dir) + altPaneSize + altPaneSpacing)))
 		,   minSize         = s.minSize = max( _parseSize(pane, o.minSize), cssMinDims(pane).minSize )
@@ -1469,7 +1469,7 @@ $.fn.layout = function (opts) {
 		if (allStates) // when 'removing' classes, also remove alternate-state classes
 			classes += (root+_alt+_hover) + (root+_pane+_alt+_hover);
 
-		if (type=="resizer" && $El.hasClass(root+_slide))
+		if (type === "resizer" && $El.hasClass(root+_slide))
 			classes += (root+_slide+_hover) + (root+_pane+_slide+_hover);
 
 		return $.trim(classes);
@@ -2341,7 +2341,7 @@ $.fn.layout = function (opts) {
 		//else if (isCenter) {}
 
 		$P.css(CSS); // apply size -- top, bottom & height will be set by sizeMidPanes
-		if (dir != "horz") sizeMidPanes(pane, true); // true = skipCallback
+		if (dir !== "horz") sizeMidPanes(pane, true); // true = skipCallback
 
 		// if manually adding a pane AFTER layout initialization, then...
 		if (state.initialized) {
@@ -2633,7 +2633,7 @@ $.fn.layout = function (opts) {
 			var s       = state[pane]
 			,   z       = options.zIndexes
 			,   c       = _c[pane]
-			,   side    = c.dir == "horz" ? "top" : "left"
+			,   side    = c.dir === "horz" ? "top" : "left"
 			,   $P      = $Ps[pane]
 			,   $R      = $Rs[pane]
 			,   base    = o.resizerClass
@@ -2656,7 +2656,7 @@ $.fn.layout = function (opts) {
 
 			$R.draggable({
 				containment:    $N[0] // limit resizing to layout container
-			,   axis:           (c.dir == "horz" ? "y" : "x") // limit resizing to horz or vert axis
+			,   axis:           (c.dir === "horz" ? "y" : "x") // limit resizing to horz or vert axis
 			,   delay:          0
 			,   distance:       1
 			,   grid:           o.resizingGrid
@@ -2803,7 +2803,7 @@ $.fn.layout = function (opts) {
 		,   s       = state[pane]
 		;
 		// only masks over an IFRAME-pane need manual resizing
-		if (s && s.tagName == "IFRAME" && s.isVisible) // no need to mask closed/hidden panes
+		if (s && s.tagName === "IFRAME" && s.isVisible) // no need to mask closed/hidden panes
 			$M.css({
 				top:    s.offsetTop
 			,   left:   s.offsetLeft
@@ -2916,8 +2916,8 @@ $.fn.layout = function (opts) {
 		;
 		if (!o.maskContents && !o.maskObjects) return $([]);
 		// if o.maskObjects=true, then loop TWICE to create BOTH kinds of mask, else only create a DIV
-		for (i=0; i < (o.maskObjects ? 2 : 1); i++) {
-			isIframe = o.maskObjects && i==0;
+		for (i = 0; i < (o.maskObjects ? 2 : 1); i++) {
+			isIframe = o.maskObjects && i === 0;
 			el = document.createElement( isIframe ? "iframe" : "div" );
 			$M = $(el).data("layoutMask", pane); // add data to relate mask to pane
 			el.className = "ui-layout-mask ui-layout-mask-"+ pane; // for user styling
@@ -2939,7 +2939,7 @@ $.fn.layout = function (opts) {
 				css.filter  = "Alpha(Opacity='1')";
 			}
 			// if pane IS an IFRAME, then must mask the pane itself
-			if (s.tagName == "IFRAME") {
+			if (s.tagName === "IFRAME") {
 				// NOTE sizing done by a subroutine so can be called during live-resizing
 				css.zIndex  = z.pane_normal+1; // 1-higher than pane
 				$N.append( el ); // append to LAYOUT CONTAINER
@@ -3171,9 +3171,9 @@ $.fn.layout = function (opts) {
 		$P  .show() // ALWAYS show, just in case
 			.removeData(_c.offscreenReset);
 		if (o.useOffscreenClose && old) {
-			if (s.left == off.left)
+			if (s.left === off.left)
 				s.left = old.left;
-			if (s.right == off.right)
+			if (s.right === off.right)
 				s.right = old.right;
 		}
 	}
@@ -3344,7 +3344,7 @@ $.fn.layout = function (opts) {
 
 			if (abort) return queueNext();
 
-			doFX        = !noAnimation && !s.isClosed && (o.fxName_close != "none");
+			doFX        = !noAnimation && !s.isClosed && (o.fxName_close !== "none");
 			s.isMoving  = true;
 			s.isClosed  = true;
 			s.isVisible = false;
@@ -3491,7 +3491,7 @@ $.fn.layout = function (opts) {
 				return;
 			}
 
-			if (s.autoResize && s.size != o.size) // resize pane to original size set in options
+			if (s.autoResize && s.size !== o.size) // resize pane to original size set in options
 				sizePane(pane, o.size, true, true, true); // true=skipCallback/noAnimation/forceResize
 			else
 				// make sure there is enough space available to open the pane
@@ -3529,7 +3529,7 @@ $.fn.layout = function (opts) {
 			// now clear the logic var
 			delete s.isShowing;
 
-			doFX        = !noAnimation && s.isClosed && (o.fxName_open != "none");
+			doFX        = !noAnimation && s.isClosed && (o.fxName_open !== "none");
 			s.isMoving  = true;
 			s.isVisible = true;
 			s.isClosed  = false;
@@ -3561,7 +3561,7 @@ $.fn.layout = function (opts) {
 
 			// NOTE: if isSliding, then other panes are NOT 'resized'
 			if (!s.isSliding) { // resize all panes adjacent to this one
-				sizeMidPanes(_c[pane].dir=="vert" ? "center" : "", false); // false = NOT skipCallback
+				sizeMidPanes(_c[pane].dir === "vert" ? "center" : "", false); // false = NOT skipCallback
 			}
 
 			// set classes, position handles and execute callbacks...
@@ -3736,21 +3736,21 @@ $.fn.layout = function (opts) {
 		if (doLock) {
 			showMasks( pane, { animation: true, objectsOnly: true });
 			$P.css({ zIndex: z.pane_animate }); // overlay all elements during animation
-			if (pane=="south")
+			if (pane === "south")
 				$P.css({ top: sC.inset.top + sC.innerHeight - $P.outerHeight() });
-			else if (pane=="east")
+			else if (pane === "east")
 				$P.css({ left: sC.inset.left + sC.innerWidth - $P.outerWidth() });
 		}
 		else { // animation DONE - RESET CSS
 			hideMasks();
 			$P.css({ zIndex: (s.isSliding ? z.pane_sliding : z.pane_normal) });
-			if (pane=="south")
+			if (pane === "south")
 				$P.css({ top: "auto" });
 			// if pane is positioned 'off-screen', then DO NOT screw with it!
-			else if (pane=="east" && !$P.css("left").match(/\-99999/))
+			else if (pane === "east" && !$P.css("left").match(/\-99999/))
 				$P.css({ left: "auto" });
 			// fix anti-aliasing in IE - only needed for animations that change opacity
-			if (browser.msie && o.fxOpacityFix && o.fxName_open != "slide" && $P.css("filter") && $P.css("opacity") == 1)
+			if (browser.msie && o.fxOpacityFix && o.fxName_open !== "slide" && $P.css("filter") && $P.css("opacity") == 1)
 				$P[0].style.removeAttribute('filter');
 		}
 	}
@@ -4083,7 +4083,7 @@ $.fn.layout = function (opts) {
 				thisTry.cssSize = cssSize(pane, thisTry.attempt);
 				$P.css( dimName, thisTry.cssSize );
 
-				thisTry.actual  = dimName=='width' ? $P.outerWidth() : $P.outerHeight();
+				thisTry.actual  = dimName === 'width' ? $P.outerWidth() : $P.outerHeight();
 				thisTry.correct = (size === thisTry.actual);
 
 				// log attempts and alert the user of this *non-fatal error* (if showDebugMessages)
@@ -4118,7 +4118,7 @@ $.fn.layout = function (opts) {
 			// when skipCallback passed, it means the controlling method will handle 'other panes'
 			if (!skipCallback) {
 				// also no callback if live-resize is in progress and NOT triggerEventsDuringLiveResize
-				if (!s.isSliding) sizeMidPanes(_c[pane].dir=="horz" ? "" : "center", skipResizeWhileDragging, force);
+				if (!s.isSliding) sizeMidPanes(_c[pane].dir === "horz" ? "" : "center", skipResizeWhileDragging, force);
 				sizeHandles();
 			}
 
@@ -4151,7 +4151,7 @@ $.fn.layout = function (opts) {
 			,   s       = state[pane]
 			,   $P      = $Ps[pane]
 			,   $R      = $Rs[pane]
-			,   isCenter= (pane=="center")
+			,   isCenter= (pane === "center")
 			,   hasRoom = true
 			,   CSS     = {}
 			//  if pane is not visible, show it invisibly NOW rather than for *each call* in this script
@@ -4203,9 +4203,9 @@ $.fn.layout = function (opts) {
 					}
 					// IF we found enough extra space, then resize the border panes as calculated
 					if (reqPx === 0) {
-						if (sizeE && sizeE != minE)
+						if (sizeE && sizeE !== minE)
 							sizePane('east', newE, true, true, force); // true = skipCallback/noAnimation - initPanes will handle when done
-						if (sizeW && sizeW != minW)
+						if (sizeW && sizeW !== minW)
 							sizePane('west', newW, true, true, force); // true = skipCallback/noAnimation
 						// now start over!
 						sizeMidPanes('center', skipCallback, force);
@@ -4270,9 +4270,9 @@ $.fn.layout = function (opts) {
 			 */
 			if (pane === "center") { // finished processing midPanes
 				var fix = browser.isIE6 || !browser.boxModel;
-				if ($Ps.north && (fix || state.north.tagName=="IFRAME")) 
+				if ($Ps.north && (fix || state.north.tagName === "IFRAME")) 
 					$Ps.north.css("width", cssW($Ps.north, sC.innerWidth));
-				if ($Ps.south && (fix || state.south.tagName=="IFRAME"))
+				if ($Ps.south && (fix || state.south.tagName === "IFRAME"))
 					$Ps.south.css("width", cssW($Ps.south, sC.innerWidth));
 			}
 
@@ -4329,7 +4329,7 @@ $.fn.layout = function (opts) {
 			if (!$Ps[pane]) return; // no pane - SKIP
 			o = options[pane];
 			s = state[pane];
-			if (s.autoResize && s.size != o.size) // resize pane to original size set in options
+			if (s.autoResize && s.size !== o.size) // resize pane to original size set in options
 				sizePane(pane, o.size, true, true, true); // true=skipCallback/noAnimation/forceResize
 			else {
 				setSizeLimits(pane);
@@ -4418,7 +4418,7 @@ $.fn.layout = function (opts) {
 			// NOTE: spaceAbove/Below *includes* the pane paddingTop/Bottom, but not pane.borders
 			var newH = s.innerHeight - (m.spaceAbove - s.css.paddingTop) - (m.spaceBelow - s.css.paddingBottom);
 
-			if (!$C.is(":visible") || m.height != newH) {
+			if (!$C.is(":visible") || m.height !== newH) {
 				// size the Content element to fit new pane-size - will autoHide if not enough room
 				setOuterHeight($C, newH, true); // true=autoHide
 				m.height = newH; // save new height
@@ -4825,7 +4825,7 @@ $.fn.layout = function (opts) {
 			initHandles(pane); // create the required resizer & toggler
 
 			// if moving to different orientation, then keep 'target' pane size
-			if (c.dir != _c[oldPane].dir) {
+			if (c.dir !== _c[oldPane].dir) {
 				size = sizes[pane] || 0;
 				setSizeLimits(pane); // update pane-state
 				size = max(size, state[pane].minSize);
@@ -4898,7 +4898,7 @@ $.fn.layout = function (opts) {
 				o = options[p];
 				k = o.customHotkey;
 				m = o.customHotkeyModifier; // if missing or invalid, treated as "CTRL+SHIFT"
-				if ((SHIFT && m=="SHIFT") || (CTRL && m=="CTRL") || (CTRL && SHIFT)) { // Modifier matches
+				if ((SHIFT && m === "SHIFT") || (CTRL && m === "CTRL") || (CTRL && SHIFT)) { // Modifier matches
 					if (k && code === (isNaN(k) || k <= 9 ? k.toUpperCase().charCodeAt(0) : k)) { // Key matches
 						pane = p;
 						return false; // BREAK
@@ -4971,7 +4971,7 @@ $.fn.layout = function (opts) {
 		,   ofY     = $P.css("overflowY")
 		;
 		// determine which, if any, overflow settings need to be changed
-		if (of != "visible") {
+		if (of !== "visible") {
 			curCSS.overflow = of;
 			newCSS.overflow = "visible";
 		}
