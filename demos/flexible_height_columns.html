@@ -5,20 +5,17 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-	<title>Flexible-Height Layout</title>
+	<title>Flexible-Height / Custom Layout Test-page</title>
 
-	<link rel="stylesheet" type="text/css" href="../source/stable/layout-default.css">
-
+	<link rel="stylesheet" type="text/css" href="../lib/css/layout-default.css" />
 	<style type="text/css">
-
 	.hidden { display: none; }
 	#content { position: relative; overflow: hidden; }
-
 	</style>
 
 	<script type="text/javascript" src="../lib/js/jquery-latest.js"></script>
 	<script type="text/javascript" src="../lib/js/jquery-ui-latest.js"></script>
-	<script type="text/javascript" src="../source/stable/jquery.layout.js"></script>
+	<script type="text/javascript" src="../lib/js/jquery.layout-latest.js"></script>
 	<script type="text/javascript">
 
 	var myLayout;
@@ -47,9 +44,7 @@
 		sizeCenterPane();
 	}
 
-
 	$(document).ready(function(){
-
 		// first set a 'fixed height' on the container so it does not collapse...
 		var $Container = $('#container')
 		$Container.height( $(window).height() - $Container.offset().top );
@@ -61,7 +56,6 @@
 		
 		// now RESIZE the container to be a perfect fit
 		sizeCenterPane();
-
 	});
 	
 	</script>
@@ -70,8 +64,8 @@
 <body>
 
 <p>
-	<button onclick="addText()">Add Text</button>
-	<button onclick="removeText()">Remove Text</button>
+	<button onclick="addText();">Add Text</button>
+	<button onclick="removeText();">Remove Text</button>
 </p>
 
 <div id="container">
@@ -84,6 +78,7 @@
 				A small sizeCenterPane() function in the source-code of this page provides auto-sizing.
 				This is a sample of how to customize Layout's functionality to suit a special need.
 			</p>
+			center
 			<p>Some text...</p>
 			<p>Some text...</p>
 			<p>Some text...</p>

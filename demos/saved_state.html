@@ -25,9 +25,8 @@
 
 	<script type="text/javascript" src="../lib/js/jquery-latest.js"></script>
 	<script type="text/javascript" src="../lib/js/jquery-ui-latest.js"></script>
-	<script type="text/javascript" src="../lib/js/debug.js"></script>
 	<script type="text/javascript" src="../lib/js/jquery.layout-latest.js"></script>
-	<script type="text/javascript" src="../lib/js/plugins/jquery.layout.state.js"></script>
+	<script type="text/javascript" src="../lib/js/debug.js"></script>
 	<script type="text/javascript">
 
 	function customSaveState (Instance, state, options, name) {
@@ -107,29 +106,6 @@
 			"north.isHidden,south.isHidden,east.isHidden,west.isHidden"
 		);
 
-		testState = {
-			north: {
-				size:		80
-			,	initClosed:	false
-			,	initHidden:	false
-			}
-		,	south: {
-				size:		80
-			,	initClosed:	false
-			,	initHidden:	false
-			}
-		,	east: {
-				size:		375
-			,	initClosed:	false
-			,	initHidden:	false
-			}
-		,	west: {
-				size:		375
-			,	initClosed:	false
-			,	initHidden:	false
-			}
-		}
-
 	});
 
 	</script>
@@ -138,7 +114,6 @@
 <body>
 
 <div class="ui-layout-center hide"><b>Center pane</b>
-	
 	<p class="button"><button onclick="toggleAll()">Toggle All Panes</button></p>
 	<p>
 		Change the 'state' by opening some panes and adjusting their size,
@@ -155,30 +130,19 @@
 		<label for="autoSaveState"><b>options.stateManagement.autoSave</b></label> &ndash; <b>saveState</b> on window.unload ?
 	</p>
 
-	<p class="button"><button onclick="var s=myLayout.readState(), d=this.innerHTML; console.data(s,d); debugData(s,d);"
-		>myLayout.readState()</button>
-		Show <u>current</u> state-data from the layout
-	</p>
-	<p class="button"><button onclick="var s=myLayout.state.stateData, d=this.innerHTML; console.data(s,d); debugData(s,d);"
-		>myLayout.state.stateData</button>
-		Show state-data stored in layout.state object - as last read-from or saved-to the state-cookie
-	</p>
+	<p class="button"><button onclick="debugData( myLayout.readState(),	this.innerHTML )">myLayout.readState()</button>
+		Show <u>current</u> state-data from the layout</p>
+	<p class="button"><button onclick="debugData( myLayout.state.stateData, this.innerHTML )">myLayout.state.stateData</button>
+		Show state-data stored in layout.state object - as last read-from or saved-to the state-cookie</p>
 
-	<p class="button"><button onclick="var c=myLayout.readCookie(), d=this.innerHTML; if (c) { console.data(c,d); debugData(c,d); } else alert('No Cookie');"
-		>myLayout.readCookie()</button>
-		Show data currently saved in the state-cookie
-	</p>
-	<p class="button"><button onclick="var c=myLayout.saveCookie(), d=this.innerHTML; console.data(c,d); debugData(c,d);"
-		>myLayout.saveCookie()</button>
-		Update the state-cookie with current layout state-data
-	</p>
-	<p class="button"><button onclick="myLayout.deleteCookie(); myLayout.state.stateData = {}; alert('Cookie deleted \n\nstate.stateData cleared')"
-		>myLayout.deleteCookie()</button>
-		Delete the state-cookie
-	</p>
+	<p class="button"><button onclick="var d=myLayout.readCookie(); if (d) debugData( myLayout.readCookie(), this.innerHTML ); else alert('No Cookie');">myLayout.readCookie()</button>
+		Show data currently saved in the state-cookie</p>
+	<p class="button"><button onclick="debugData( myLayout.saveCookie(), this.innerHTML )">myLayout.saveCookie()</button>
+		Update the state-cookie with current layout state-data</p>
+	<p class="button"><button onclick="myLayout.deleteCookie(); myLayout.state.stateData = {}; alert('Cookie deleted \n\nstate.stateData cleared')">myLayout.deleteCookie()</button>
+		Delete the state-cookie</p>
 
-	<p class="button"><button onclick="myLayout.deleteCookie(); myLayout.options.stateManagement.autoSave=false; $('#autoSaveState').attr('checked', false); self.location.reload();"
-		>Reset Page to Default</button>
+	<p class="button"><button onclick="myLayout.deleteCookie(); myLayout.options.stateManagement.autoSave=false; $('#autoSaveState').attr('checked', false); self.location.reload();">Reset Page to Default</button>
 		&gt RELOAD page with <u>default layout settings</u> (no state)...
 	</p>
 	<p style="margin: -.75em 0 -.75em 1.5em;">&nbsp; &nbsp; This button triggers 3 steps:</p>
@@ -188,24 +152,19 @@
 		<li><b>Reload the page</b> &mdash; default layout settings used onLoad because there is no cookie</li>
 	</ol>
 
-	<p class="button"><button onclick="myLayout.loadState( window.fullState )"
-									  >myLayout.loadState( fullState )</button>
+	<p class="button"><button onclick="myLayout.loadState( window.fullState, false )"
+									  >myLayout.loadState( fullState, false )</button>
 		&gt RESET layout to 
 		<a href="#" onclick="debugData(window.fullState,'fullState'); return false;">as it was when loaded</a> (instant, no reload)
-	<br /><button onclick="myLayout.loadState( window.fullState, {animateLoad: true})"
-						  >myLayout.loadState( fullState, { animateLoad: true })</button>
-		&nbsp; &gt ditto &ndash; but using pane animations
+	<br /><button onclick="myLayout.loadState( window.fullState, true )"
+						  >myLayout.loadState( fullState, true )</button>
+		&nbsp; &gt ditto &ndash; true = use pane animations
 	</p>
 	<p style="margin: -.75em 0 -.75em 1.5em;">&nbsp; &nbsp; These buttons loads a state-hash that was created onLoad:</p>
 	<ul style="margin-left: 1.5em;">
 		<li><b>window.fullState = myLayout.readState()</b> &mdash; saved after layout loaded</li>
 		<li><b>myLayout.loadState( fullState, true )</b> &mdash; restore the original state &ndash; using animation</li>
 	</ul>
-
-	<p class="button"><button onclick="myLayout.loadState(testState, {animateLoad: true})"
-		>myLayout.loadState( testState )</button>
-		Test loading of a specific state object
-	</p>
 
 	<p>&nbsp;</p>
 </div>

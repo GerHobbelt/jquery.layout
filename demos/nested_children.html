@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<HTML>
+<html>
 
 <!-- Mirrored from layout.jquery-dev.net/demos/nested_children.html by HTTrack Website Copier/3.x [XR&CO'2013], Fri, 23 May 2014 12:45:15 GMT -->
-<HEAD>
-<TITLE>Child Layout Create/Destroy Demo</TITLE>
+<head>
+<title>Child Layout Create/Destroy Demo</title>
 
-	<LINK type="text/css" rel="stylesheet" href="../lib/css/layout-default-latest.css">
-	<STYLE type="text/css">
+	<link type="text/css" rel="stylesheet" href="../lib/css/layout-default-latest.css">
+	<style type="text/css">
 	/* apply container style _only_ when layout is initialized */
 	.container	{ overflow: hidden; position: relative; padding: 0; border: 0; }
 	.no-overflow{ overflow: hidden; }
@@ -30,13 +30,13 @@
 		overflow:	hidden;"
 	}
 
-	</STYLE>
+	</style>
 
-	<SCRIPT type="text/javascript" src="../lib/js/jquery-latest.js"></SCRIPT>
-	<SCRIPT type="text/javascript" src="../lib/js/jquery-ui-latest.js"></SCRIPT>
-	<SCRIPT type="text/javascript" src="../lib/js/jquery.layout-latest.js"></SCRIPT>
-	<SCRIPT type="text/javascript" src="../lib/js/debug.js"></SCRIPT>
-	<SCRIPT type="text/javascript">
+	<script type="text/javascript" src="../lib/js/jquery-latest.js"></script>
+	<script type="text/javascript" src="../lib/js/jquery-ui-latest.js"></script>
+	<script type="text/javascript" src="../lib/js/jquery.layout-latest.js"></script>
+	<script type="text/javascript" src="../lib/js/debug.js"></script>
+	<script type="text/javascript">
 
 	function clearCookies () {
 		var layout_names = 'outer,middle-west,middle-center,middle-east,inner-north,inner-center,inner-south'.split(',');
@@ -117,91 +117,91 @@
 		//alert( 'parent = '+ $.layout.getParentPaneInstance(   outerLayout.west.child.north.child.container ).name );
 	});
 
-	</SCRIPT>
+	</script>
 
-</HEAD>
-<BODY id="body">
+</head>
+<body id="body">
 
-<DIV class="ui-layout-north">
-	<H3 style="margin: 0;" class="no-margins">
+<div class="ui-layout-north">
+	<h3 style="margin: 0;" class="no-margins">
 		Outer North
 		&nbsp; &nbsp;
-		<BUTTON onClick="outerLayout = outerLayout.container.layout( outerLayout.options )">Create Outer</BUTTON>
-		<BUTTON onClick="if (outerLayout.panes) outerLayout.destroy()">Destroy Outer</BUTTON>
+		<button onClick="outerLayout = outerLayout.container.layout( outerLayout.options )">Create Outer</button>
+		<button onClick="if (outerLayout.panes) outerLayout.destroy()">Destroy Outer</button>
 		&nbsp; &nbsp;
-		<BUTTON onClick="if (outerLayout.panes) outerLayout.createChildLayout('west')">Create Middle</BUTTON>
-		<BUTTON onClick="if (outerLayout.panes && outerLayout.west.child.panes) outerLayout.west.child.destroy()">Destroy Middle</BUTTON>
+		<button onClick="if (outerLayout.panes) outerLayout.createChildren('west')">Create Middle</button>
+		<button onClick="if (outerLayout.panes && outerLayout.west.child.panes) outerLayout.west.child.destroy()">Destroy Middle</button>
 		&nbsp; &nbsp;
-		<BUTTON onClick="if (outerLayout.panes && outerLayout.west.child.panes) outerLayout.west.child.createChildLayout('center')">Create Inner</BUTTON>
-		<BUTTON onClick="if (outerLayout.panes && outerLayout.west.child.panes && outerLayout.west.child.center.child.panes) outerLayout.west.child.center.child.destroy()">Destroy Inner</BUTTON>
-	</H3>
-</DIV>
+		<button onClick="if (outerLayout.panes && outerLayout.west.child.panes) outerLayout.west.child.createChildren('center')">Create Inner</button>
+		<button onClick="if (outerLayout.panes && outerLayout.west.child.panes && outerLayout.west.child.center.child.panes) outerLayout.west.child.center.child.destroy()">Destroy Inner</button>
+	</h3>
+</div>
 
-<DIV id="outer-west" class="ui-layout-west blue">
-	<H3>Outer West</H3>
-	<DIV id="middle-north" class="ui-layout-north no-overflow green">
-		<H3>Middle North</H3>
-		<DIV class="ui-layout-west">Inner North West</DIV>
-		<DIV class="ui-layout-east">Inner North East</DIV>
-		<DIV class="ui-layout-center">Inner North Center</DIV>
-	</DIV>
-	<DIV id="middle-west" class="ui-layout-center container green">
-		<H3>Middle Center</H3>
-		<DIV class="ui-layout-west">Inner Center West</DIV>
-		<DIV class="ui-layout-east">Inner Center East</DIV>
-		<DIV class="ui-layout-center">Inner Center Center</DIV>
-	</DIV>
-	<DIV id="middle-south" class="ui-layout-south no-overflow green">
-		<H3>Middle South</H3>
-		<DIV class="ui-layout-west">Inner South West</DIV>
-		<DIV class="ui-layout-east">Inner South East</DIV>
-		<DIV class="ui-layout-center">Inner South Center</DIV>
-	</DIV>
-</DIV>
+<div id="outer-west" class="ui-layout-west blue">
+	<h3>Outer West</h3>
+	<div id="middle-north" class="ui-layout-north no-overflow green">
+		<h3>Middle North</h3>
+		<div class="ui-layout-west">Inner North West</div>
+		<div class="ui-layout-east">Inner North East</div>
+		<div class="ui-layout-center">Inner North Center</div>
+	</div>
+	<div id="middle-west" class="ui-layout-center container green">
+		<h3>Middle Center</h3>
+		<div class="ui-layout-west">Inner Center West</div>
+		<div class="ui-layout-east">Inner Center East</div>
+		<div class="ui-layout-center">Inner Center Center</div>
+	</div>
+	<div id="middle-south" class="ui-layout-south no-overflow green">
+		<h3>Middle South</h3>
+		<div class="ui-layout-west">Inner South West</div>
+		<div class="ui-layout-east">Inner South East</div>
+		<div class="ui-layout-center">Inner South Center</div>
+	</div>
+</div>
 
-<DIV id="outer-center" class="ui-layout-center container blue">
-	<H3 style="padding: 0 10px;">
+<div id="outer-center" class="ui-layout-center container blue">
+	<h3 style="padding: 0 10px;">
 		Outer Center
 		&nbsp; &nbsp;
-		<BUTTON onClick="if (outerLayout.panes) outerLayout.createChildLayout('center')">Create</BUTTON>
-		<BUTTON onClick="if (outerLayout.panes && outerLayout.center.child.panes) outerLayout.center.child = outerLayout.center.child.destroy()">Destroy</BUTTON>
-	</H3> 
-	<P style="padding: 0 10px;"><A href="../demos.html">Go to Demos page</A></P>
-	<DIV id="outer-center-content" class="ui-layout-content no-margins">
-		<DIV class="ui-layout-north">Center North</DIV>
-		<DIV class="ui-layout-center">Center Center <P>This layout is inside a layout content-div</P></DIV>
-		<DIV class="ui-layout-south">Center South</DIV>
-	</DIV>
-</DIV>
+		<button onClick="if (outerLayout.panes) outerLayout.createChildren('center')">Create</button>
+		<button onClick="if (outerLayout.panes && outerLayout.center.child.panes) outerLayout.center.child = outerLayout.center.child.destroy()">Destroy</button>
+	</h3> 
+	<p style="padding: 0 10px;"><a href="../demos.html">Go to Demos page</a></p>
+	<div id="outer-center-content" class="ui-layout-content no-margins">
+		<div class="ui-layout-north">Center North</div>
+		<div class="ui-layout-center">Center Center <p>This layout is inside a layout content-div</p></div>
+		<div class="ui-layout-south">Center South</div>
+	</div>
+</div>
 
-<DIV id="outer-east" class="ui-layout-east no-overflow blue">
-	<H3 style="padding: 0 10px;">
+<div id="outer-east" class="ui-layout-east no-overflow blue">
+	<h3 style="padding: 0 10px;">
 		Outer East
 		&nbsp; &nbsp;
-		<BUTTON onClick="if (outerLayout.panes) outerLayout.createChildLayout('east')">Create</BUTTON>
-		<BUTTON onClick="if (outerLayout.panes && outerLayout.east.child.panes) outerLayout.east.child = outerLayout.east.child.destroy()">Destroy</BUTTON>
-	</H3>
-	<DIV>
-		<DIV class="ui-layout-north">East North</DIV>
-		<DIV id="east-center" class="ui-layout-center">East Center <P>This layout is inside a custom wrapper-div</P></DIV>
-		<DIV class="ui-layout-south">East South</DIV>
-	</DIV>
-</DIV>
+		<button onClick="if (outerLayout.panes) outerLayout.createChildren('east')">Create</button>
+		<button onClick="if (outerLayout.panes && outerLayout.east.child.panes) outerLayout.east.child = outerLayout.east.child.destroy()">Destroy</button>
+	</h3>
+	<div>
+		<div class="ui-layout-north">East North</div>
+		<div id="east-center" class="ui-layout-center">East Center <p>This layout is inside a custom wrapper-div</p></div>
+		<div class="ui-layout-south">East South</div>
+	</div>
+</div>
 
-<DIV id="outer-south" class="ui-layout-south">
-	<H3 class="no-margins">
+<div id="outer-south" class="ui-layout-south">
+	<h3 class="no-margins">
 		Outer South
 		&nbsp; &nbsp;
-		<BUTTON onClick="if (outerLayout.panes) outerLayout.removePane('west')">Remove Outer-West Pane</BUTTON>
-		<BUTTON onClick="if (outerLayout.panes) outerLayout.addPane('west')">Re-Add Outer-West Pane</BUTTON>
+		<button onClick="if (outerLayout.panes) outerLayout.removePane('west')">Remove Outer-West Pane</button>
+		<button onClick="if (outerLayout.panes) outerLayout.addPane('west')">Re-Add Outer-West Pane</button>
 		&nbsp; &nbsp;
-		<BUTTON onClick="$('#outer-west').remove()">Delete Outer-West DIV</BUTTON>
+		<button onClick="$('#outer-west').remove()">Delete Outer-West DIV</button>
 		&nbsp; &nbsp;
-		<BUTTON onClick="clearCookies()">Clear All State Cookies</BUTTON>
-	</H3>
-</DIV>
+		<button onClick="clearCookies()">Clear All State Cookies</button>
+	</h3>
+</div>
 
-</BODY>
+</body>
 
 <!-- Mirrored from layout.jquery-dev.net/demos/nested_children.html by HTTrack Website Copier/3.x [XR&CO'2013], Fri, 23 May 2014 12:45:15 GMT -->
 </HTML>

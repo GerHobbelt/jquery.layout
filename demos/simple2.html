@@ -204,12 +204,36 @@
 			.bindButton('#toggleAllPanes', 'toggle', 'east')
 		;
 
-		// 'Reset State' button requires updated functionality in rc29.15+
-		if ($.layout.revision && $.layout.revision >= 0.032915)
-			$('#btnReset').show();
+
+		/*
+		 *	DISABLE TEXT-SELECTION WHEN DRAGGING (or even _trying_ to drag!)
+		 *	this functionality will be included in RC30.80
+		 */
+		$.layout.disableTextSelection = function(){
+			var $d	= $(document)
+			,	s	= 'textSelectionDisabled'
+			,	x	= 'textSelectionInitialized'
+			;
+			if ($.fn.disableSelection) {
+				if (!$d.data(x)) // document hasn't been initialized yet
+					$d.on('mouseup', $.layout.enableTextSelection ).data(x, true);
+				if (!$d.data(s))
+					$d.disableSelection().data(s, true);
+			}
+			//console.log('$.layout.disableTextSelection');
+		};
+		$.layout.enableTextSelection = function(){
+			var $d	= $(document)
+			,	s	= 'textSelectionDisabled';
+			if ($.fn.enableSelection && $d.data(s))
+				$d.enableSelection().data(s, false);
+			//console.log('$.layout.enableTextSelection');
+		};
+		$(".ui-layout-resizer")
+			.disableSelection() // affects only the resizer element
+			.on('mousedown', $.layout.disableTextSelection ); // affects entire document
 
  	});
-
 	</script>
 
 
@@ -377,7 +401,7 @@
 		&nbsp;
 		<button id="btnToggleState" onclick="toggleStateManagement()">Disable State Cookie</button>
 		&nbsp;
-		<button id="btnReset" class="hidden" onclick="myLayout.loadState(stateResetSettings, true)">Reset State</button>
+		<button id="btnReset" onclick="myLayout.loadState(stateResetSettings, true)">Reset State</button>
 	</p>
 
 	<p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p>
