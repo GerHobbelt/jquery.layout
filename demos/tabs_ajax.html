@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <HTML>
 
 <HEAD>
@@ -7,6 +7,7 @@
 
 	<LINK rel="stylesheet" type="text/css" href="../lib/css/themes/base/jquery.ui.all.css">
 	<LINK rel="stylesheet" type="text/css" href="../source/stable/layout-default.css">
+
 	<STYLE type="text/css">
 
 	/*
@@ -82,8 +83,9 @@
 	-->
 
 	<SCRIPT type="text/javascript" src="../source/stable/jquery.layout.js"></SCRIPT>
-	<SCRIPT type="text/javascript" src="../lib/js/jquery.layout.resizeTabLayout-latest.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="../source/stable/callbacks/jquery.layout.resizeTabLayout.js"></SCRIPT>
 
+	<!-- theme switcher -->
     <SCRIPT type="text/javascript" src="../lib/js/themeswitchertool.js"></SCRIPT> 
 	<SCRIPT type="text/javascript" src="../lib/js/debug.js"></SCRIPT>
 
@@ -103,7 +105,6 @@
 	// onClick event of the Add New Tab button
 	function add_tab () {
 		$Tabs.tabs( "add", "tabs_ajax_new_tab.html", "Tab "+ (++newTabCounter) );
-		
 	};
 
 	// bound to 'X' icon inside NEW tab-buttons
