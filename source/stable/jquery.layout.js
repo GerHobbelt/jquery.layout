@@ -4642,8 +4642,9 @@ $.fn.layout = function (opts) {
 		if (!isInitialized()) return;
 		var pane = evtPane.call(this, evt_or_pane)
 		,   $R  = $Rs[pane]
+		,	isSlidable = $R && ($R.data('draggable') || $R.data('ui-draggable')) // jquery-ui 1.10.2+, uses 'ui-draggable'
 		;
-		if (!$R || !$R.data('draggable')) return;
+		if (!isSlidable) return;
 		options[pane].slidable = true; 
 		if (state[pane].isClosed)
 			bindStartSlidingEvents(pane, true);
@@ -4677,8 +4678,9 @@ $.fn.layout = function (opts) {
 		var pane = evtPane.call(this, evt_or_pane)
 		,   $R  = $Rs[pane]
 		,   o   = options[pane]
+		,	isResizable = $R && ($R.data('draggable') || $R.data('ui-draggable')) // jquery-ui 1.10.2+, uses 'ui-draggable'
 		;
-		if (!$R || !$R.data('draggable')) return;
+		if (!isResizable) return;
 		o.resizable = true; 
 		$R.draggable("enable");
 		if (!state[pane].isClosed)
@@ -4692,8 +4694,9 @@ $.fn.layout = function (opts) {
 		if (!isInitialized()) return;
 		var pane = evtPane.call(this, evt_or_pane)
 		,   $R  = $Rs[pane]
+		,	isResizable = $R && ($R.data('draggable') || $R.data('ui-draggable')) // jquery-ui 1.10.2+, uses 'ui-draggable'
 		;
-		if (!$R || !$R.data('draggable')) return;
+		if (!isResizable) return;
 		options[pane].resizable = false; 
 		$R  .draggable("disable")
 			.css("cursor", "default")
