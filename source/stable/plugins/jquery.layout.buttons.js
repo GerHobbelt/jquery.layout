@@ -15,9 +15,6 @@
  * Docs: [ to come ]
  * Tips: [ to come ]
  */
-
-// NOTE: For best readability, view with a fixed-width font and tabs equal to 4-chars
-
 ;(function ($) {
 
 if (!$.layout) return;
@@ -265,5 +262,5 @@ $.layout.buttons = {
 $.layout.onLoad.push(  $.layout.buttons._load );
 //$.layout.onUnload.push( $.layout.buttons._unload );
 
-
 })( jQuery );
+

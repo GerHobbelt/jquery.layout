@@ -13,8 +13,6 @@
  *
  * @see: https://groups.google.com/forum/#!forum/jquery-ui-layout
  */
-
-// NOTE: For best readability, view with a fixed-width font and tabs equal to 4-chars
 ;(function ($) {
 
 if (!$.layout) return;
