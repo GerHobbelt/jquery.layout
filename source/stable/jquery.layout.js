@@ -10,13 +10,13 @@
  * Dual licensed under the GPL (http://www.gnu.org/licenses/gpl.html)
  * and MIT (http://www.opensource.org/licenses/mit-license.php) licenses.
  *
- * SEE: http://layout.jquery-dev.net/LICENSE.txt
- * 
- * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.79
+ * SEE: http://layout.jquery-dev.com/LICENSE.txt
  *
- * Docs: http://layout.jquery-dev.net/documentation.html
- * Tips: http://layout.jquery-dev.net/tips.html
- * Help: http://groups.google.com/group/jquery-ui-layout
+ * Changelog: http://layout.jquery-dev.com/changelog.cfm#1.3.0.rc30.79
+ *
+ * Docs: http://layout.jquery-dev.com/documentation.html
+ * Tips: http://layout.jquery-dev.com/tips.html
+ * Help: https://groups.google.com/forum/#!forum/jquery-ui-layout
  */
 
 /* JavaDoc Info: http://code.google.com/closure/compiler/docs/js-for-compiler.html
@@ -1565,7 +1565,7 @@ $.fn.layout = function (opts) {
 		if (!$N.is(":visible")) {
 			// handle Chrome bug where popup window 'has no height'
 			// if layout is BODY element, try again in 50ms
-			// SEE: http://layout.jquery-dev.net/samples/test_popup_window.html
+			// SEE: http://layout.jquery-dev.com/samples/test_popup_window.html
 			if ( !retry && browser.webkit && $N[0].tagName === "BODY" )
 				setTimeout(function(){ _initLayoutElements(true); }, 50);
 			return false;
@@ -5115,7 +5115,9 @@ $.fn.layout = function (opts) {
  * @requires: UI Layout 1.3.0.rc30.1 or higher
  * @requires: $.ui.cookie (above)
  *
- * @see: http://groups.google.com/group/jquery-ui-layout
+ * @see: https://groups.google.com/forum/#!forum/jquery-ui-layout
+ *
+ * ----------------------------------------------------------------------
  *
  *	State-management options stored in options.stateManagement, which includes a .cookie hash
  *	Default options saves ALL KEYS for ALL PANES, ie: pane.size, pane.isClosed, pane.isHidden
@@ -5576,7 +5578,7 @@ $.layout.onUnload.push( $.layout.state._unload );
  *
  * @requires: UI Layout 1.3.0.rc30.1 or higher
  *
- * @see: http://groups.google.com/group/jquery-ui-layout
+ * @see: https://groups.google.com/forum/#!forum/jquery-ui-layout
  *
  * Docs: [ to come ]
  * Tips: [ to come ]
@@ -5857,7 +5859,7 @@ $.layout.onLoad.push(  $.layout.buttons._load );
  *
  * @requires: UI Layout 1.3.0.rc30.1 or higher
  *
- * @see: http://groups.google.com/group/jquery-ui-layout
+ * @see: https://groups.google.com/forum/#!forum/jquery-ui-layout
  *
  * TODO: Extend logic to handle other problematic zooming in browsers
  * TODO: Add hotkey/mousewheel bindings to _instantly_ respond to these zoom event
