@@ -1,5 +1,5 @@
 /*
- *	LAYOUT STATE MANAGEMENT
+ *	LAYOUT STATE MANAGEMENT   [THIS SOURCE FILE IS OBSOLETE -- see the related example/demo; it is NOT USED ANYMORE!]
  *
  *	@requires json2.js - http://www.json.org/json2.js
  *
