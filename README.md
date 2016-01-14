@@ -76,6 +76,6 @@ Therefore this little handy repo - open for collaboration of course.
 
 Dual-licensed under the [GNU](http://www.gnu.org/licenses/gpl.html) and [MIT](http://opensource.org/licenses/mit-license.php)
 
-Links to proprietary-licenced content in the examples have been updated to point to the official website.
+Links to proprietary-licensed content in the examples have been updated to point to the official website.
 
 /Philzen 
