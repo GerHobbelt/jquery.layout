@@ -30,7 +30,7 @@ body {
 .ui-layout-pane { /* all 'panes' */
 	background:	#FFF; 
 	border:		1px solid #BBB;
-	padding:	10px; 
+	/*padding:	10px; */
 	overflow:	auto;
 	/* don't create a new stacking context, so that overflowing child elements of a 'pane'
 	   (for example: popups, dropdown lists, tooltips) are correctly displayed
